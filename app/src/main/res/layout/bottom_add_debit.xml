@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_add_debit"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="2dp"
+    android:layout_marginVertical="2dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <EditText
+        android:id="@+id/debitEditValue"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toTopOf="@+id/debitEditImageId"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/debitEditImageId"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/debitEditImageId"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toTopOf="@+id/debitEditCategory"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/debitEditValue" />
+
+    <EditText
+        android:id="@+id/debitEditCategory"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toTopOf="@+id/debitEditTypeOfValue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/debitEditImageId" />
+
+    <EditText
+        android:id="@+id/debitEditTypeOfValue"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toTopOf="@+id/debitEditDate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/debitEditCategory" />
+
+    <!--    android:clickable="false"-->
+    <!--    android:focusable="false"-->
+
+    <EditText
+        android:id="@+id/debitEditDate"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toTopOf="@+id/debitEditComment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/debitEditTypeOfValue" />
+
+    <EditText
+        android:id="@+id/debitEditComment"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonDebitSave"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/debitEditDate" />
+
+    <Button
+        android:id="@+id/buttonDebitSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SAVE"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/debitEditComment" />
+</androidx.constraintlayout.widget.ConstraintLayout>
