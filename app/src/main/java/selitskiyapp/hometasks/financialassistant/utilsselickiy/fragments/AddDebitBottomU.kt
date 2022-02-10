@@ -1,8 +1,8 @@
-package selitskiyapp.hometasks.financialassistant.presentation.fragments
+package selitskiyapp.hometasks.financialassistant.utilsselickiy.fragments
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class AddDebitBottom : BottomSheetDialogFragment() {
+class AddDebitBottomU : BottomSheetDialogFragment() {
 //    companion object {
 //        const val TAG = "BottomRadioGroupFragment"
 //    }

@@ -6,10 +6,10 @@ import selitskiyapp.hometasks.financialassistant.data.storage.AppDatabase
 
 val dataModule = module {
     single {
-        Room.databaseBuilder(get(), AppDatabase::class.java, AppDatabase.POSITIVE_BALANCE)
+        Room.databaseBuilder(get(), AppDatabase::class.java, "USERDB").build()
     }
 
     single {
-        get<AppDatabase>().getDebitCreditLendStorage()
+        get<AppDatabase>().getDataBase()
     }
 }

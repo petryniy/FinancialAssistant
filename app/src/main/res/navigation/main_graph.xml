@@ -3,32 +3,35 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_graph"
-    app:startDestination="@id/debitCreditFragment">
+    app:startDestination="@id/operationsFragment">
+
 
     <fragment
-        android:id="@+id/debitCreditFragment"
-        android:name="selitskiyapp.hometasks.financialassistant.presentation.fragments.DebitCreditFragment"
-        android:label="fragment_debit_credit"
-        tools:layout="@layout/fragment_debit_credit">
+        android:id="@+id/operationsFragment"
+        android:name="selitskiyapp.hometasks.financialassistant.presentation.fragments.OperationsFragment"
+        android:label="fragment_operations"
+        tools:layout="@layout/fragment_operations" >
         <action
-            android:id="@+id/to_addDebitFragment"
-            app:destination="@id/addDebitFragment" />
+            android:id="@+id/to_addOperationBottom"
+            app:destination="@id/addOperationBottom" />
         <action
-            android:id="@+id/to_editBottom"
-            app:destination="@id/editBottom" />
+            android:id="@+id/to_editOperationBottom"
+            app:destination="@id/editOperationBottom" />
     </fragment>
-
+    <fragment
+        android:id="@+id/moneyHolderFragment"
+        android:name="selitskiyapp.hometasks.financialassistant.presentation.fragments.MoneyHolderFragment"
+        android:label="fragment_money_holder"
+        tools:layout="@layout/fragment_money_holder" />
     <dialog
-        android:id="@+id/addDebitFragment"
-        android:name="selitskiyapp.hometasks.financialassistant.presentation.fragments.AddDebitBottom"
-        android:label="AddDebitFragment"
-        tools:layout="@layout/bottom_add_debit">
-
-    </dialog>
-
-    <dialog
-        android:id="@+id/editBottom"
+        android:id="@+id/editOperationBottom"
         android:name="selitskiyapp.hometasks.financialassistant.presentation.fragments.EditBottom"
         android:label="EditBottom"
-        tools:layout="@layout/bottom_edit"/>
+        tools:layout="@layout/bottom_edit_operation" />
+    <dialog
+        android:id="@+id/addOperationBottom"
+        android:name="selitskiyapp.hometasks.financialassistant.presentation.fragments.AddDebitBottom"
+        android:label="AddDebitBottom"
+        tools:layout="@layout/bottom_add_operation" />
+
 </navigation>
