@@ -10,6 +10,10 @@ val dataModule = module {
     }
 
     single {
-        get<AppDatabase>().getDataBase()
+        get<AppDatabase>().getOperationsDAO()
+    }
+
+    single {
+        get<AppDatabase>().getMoneyHolderDAO()
     }
 }

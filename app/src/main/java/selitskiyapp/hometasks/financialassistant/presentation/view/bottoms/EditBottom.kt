@@ -1,4 +1,4 @@
-package selitskiyapp.hometasks.financialassistant.presentation.fragments
+package selitskiyapp.hometasks.financialassistant.presentation.view.bottoms
 
 import android.os.Bundle
 import android.view.LayoutInflater

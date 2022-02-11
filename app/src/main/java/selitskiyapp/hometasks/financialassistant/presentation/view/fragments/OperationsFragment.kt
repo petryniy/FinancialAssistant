@@ -1,11 +1,8 @@
-package selitskiyapp.hometasks.financialassistant.presentation.fragments
+package selitskiyapp.hometasks.financialassistant.presentation.view.fragments
 
 import android.os.Bundle
 import android.view.View
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel

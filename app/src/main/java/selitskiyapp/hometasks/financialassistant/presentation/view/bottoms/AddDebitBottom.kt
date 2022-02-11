@@ -1,4 +1,4 @@
-package selitskiyapp.hometasks.financialassistant.presentation.fragments
+package selitskiyapp.hometasks.financialassistant.presentation.view.bottoms
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 

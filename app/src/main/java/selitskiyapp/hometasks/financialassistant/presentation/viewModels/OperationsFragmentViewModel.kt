@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 import selitskiyapp.hometasks.financialassistant.R
 import selitskiyapp.hometasks.financialassistant.domain.models.Operations
 import selitskiyapp.hometasks.financialassistant.domain.repository.Repository
-import selitskiyapp.hometasks.financialassistant.presentation.MainActivity
+import selitskiyapp.hometasks.financialassistant.presentation.view.MainActivity
 
 class OperationsFragmentViewModel(
     private val repository: Repository

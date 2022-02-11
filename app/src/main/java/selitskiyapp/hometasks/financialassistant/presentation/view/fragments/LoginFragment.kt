@@ -1,4 +1,4 @@
-package selitskiyapp.hometasks.financialassistant.presentation.fragments
+package selitskiyapp.hometasks.financialassistant.presentation.view.fragments
 
 import androidx.fragment.app.Fragment
 import by.kirich1409.viewbindingdelegate.viewBinding

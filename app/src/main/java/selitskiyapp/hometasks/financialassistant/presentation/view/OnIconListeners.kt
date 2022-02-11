@@ -1,4 +1,4 @@
-package selitskiyapp.hometasks.financialassistant.presentation.fragments
+package selitskiyapp.hometasks.financialassistant.presentation.view
 
 interface OnIconListeners {
     fun onEditIconListener()
