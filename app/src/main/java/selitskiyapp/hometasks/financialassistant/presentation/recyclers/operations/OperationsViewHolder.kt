@@ -8,13 +8,13 @@ import selitskiyapp.hometasks.financialassistant.domain.models.Operations
 
 class OperationsViewHolder(
     private val binding: ItemOperationBinding,
-    private val itemClickListener: OnItemListener
+    private val itemClickListenerOperations: OperationsOnItemListener
 ) : RecyclerView.ViewHolder(binding.root) {
 
     companion object {
         fun fromParent(
             parent: ViewGroup,
-            itemClickListener: OnItemListener
+            itemClickListenerOperations: OperationsOnItemListener
         ):
                 OperationsViewHolder {
             return OperationsViewHolder(
@@ -22,7 +22,7 @@ class OperationsViewHolder(
                     LayoutInflater.from(parent.context),
                     parent, false
                 ),
-                itemClickListener
+                itemClickListenerOperations
             )
         }
     }
@@ -34,7 +34,7 @@ class OperationsViewHolder(
 //        debitValue.text = item.value.toString()
 
         itemDebit.setOnClickListener {
-            itemClickListener.onItemClickListener(item.id)
+            itemClickListenerOperations.onItemClickListener(item.id)
         }
     }
 }

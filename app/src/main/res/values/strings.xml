@@ -4,4 +4,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="currency">BYN</string>
     <string name="todo">TODO</string>
+    <string name="typeCash">карты</string>
+    <string name="typeNonCash">наличка</string>
 </resources>

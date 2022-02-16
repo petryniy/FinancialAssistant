@@ -5,12 +5,12 @@ import androidx.recyclerview.widget.RecyclerView
 import selitskiyapp.hometasks.financialassistant.domain.models.Operations
 
 class OperationsAdapter(
-    private val itemClickListener: OnItemListener
+    private val itemClickListenerOperations: OperationsOnItemListener
 ) : RecyclerView.Adapter<OperationsViewHolder>() {
     private var items: List<Operations> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OperationsViewHolder =
-        OperationsViewHolder.fromParent(parent, itemClickListener)
+        OperationsViewHolder.fromParent(parent, itemClickListenerOperations)
 
 
     override fun onBindViewHolder(holder: OperationsViewHolder, position: Int) {

@@ -3,21 +3,19 @@ package selitskiyapp.hometasks.financialassistant.presentation.view.fragments
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import selitskiyapp.hometasks.financialassistant.R
 import selitskiyapp.hometasks.financialassistant.databinding.FragmentOperationsBinding
-import selitskiyapp.hometasks.financialassistant.presentation.recyclers.operations.OnItemListener
+import selitskiyapp.hometasks.financialassistant.presentation.recyclers.operations.OperationsOnItemListener
 import selitskiyapp.hometasks.financialassistant.presentation.recyclers.operations.OperationsAdapter
-import selitskiyapp.hometasks.financialassistant.presentation.viewModels.OperationsFragmentViewModel
 
 class OperationsFragment : Fragment(R.layout.fragment_operations) {
 
     private val binding: FragmentOperationsBinding by viewBinding(FragmentOperationsBinding::bind)
-    private val adapter by lazy { OperationsAdapter(itemClickListener) }
+    private val adapter by lazy { OperationsAdapter(itemClickListenerOperations) }
 //    private val viewModel by viewModel<OperationsFragmentViewModel>()
 
-    private val itemClickListener: OnItemListener = object : OnItemListener {
+    private val itemClickListenerOperations: OperationsOnItemListener = object : OperationsOnItemListener {
         override fun onItemClickListener(id: Int) {
 //            viewModel.onItemClicked(id)
         }

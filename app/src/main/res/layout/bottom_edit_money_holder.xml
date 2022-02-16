@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:paddingHorizontal="16dp"
     android:paddingVertical="28dp"
     android:orientation="vertical">
@@ -34,6 +33,20 @@
             android:inputType="none"
             android:textColorHint="#000000"
             android:hint="Выберете категорию"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_balance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Введите текущий баланс">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberSigned" />
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button

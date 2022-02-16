@@ -39,7 +39,7 @@
     android:id="@+id/editMoneyHolderBottomSheet"
     android:name="selitskiyapp.hometasks.financialassistant.presentation.view.bottoms.EditMoneyHolderBottomSheet"
     android:label="EditMoneyHolderBottomSheet"
-        tools:layout="@layout/bottom_sheet_edit_money_holder"/>
+        tools:layout="@layout/bottom_edit_money_holder"/>
 
     <dialog
         android:id="@+id/editOperationBottom"
