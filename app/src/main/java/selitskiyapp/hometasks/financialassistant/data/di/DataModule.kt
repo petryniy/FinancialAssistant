@@ -1,19 +1,33 @@
 package selitskiyapp.hometasks.financialassistant.data.di
 
+import android.content.Context
 import androidx.room.Room
-import org.koin.dsl.module
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import selitskiyapp.hometasks.financialassistant.data.storage.AppDatabase
+import selitskiyapp.hometasks.financialassistant.data.storage.MoneyHolderDao
+import selitskiyapp.hometasks.financialassistant.data.storage.OperationsDAO
+import javax.inject.Singleton
 
-val dataModule = module {
-    single {
-        Room.databaseBuilder(get(), AppDatabase::class.java, "USERDB").build()
-    }
+@Module
+@InstallIn(SingletonComponent::class)
+class DataModule {
 
-    single {
-        get<AppDatabase>().getOperationsDAO()
-    }
+    @Singleton
+    @Provides
+    fun provideAppDatabase(@ApplicationContext appContext: Context): AppDatabase =
+        Room.databaseBuilder(appContext, AppDatabase::class.java, "USERDATA").build()
 
-    single {
-        get<AppDatabase>().getMoneyHolderDAO()
-    }
+    @Singleton
+    @Provides
+    fun provideOperationsDao(appDatabase: AppDatabase): OperationsDAO =
+        appDatabase.getOperationsDAO()
+
+    @Singleton
+    @Provides
+    fun provideMoneyHolderDao(appDatabase: AppDatabase): MoneyHolderDao =
+        appDatabase.getMoneyHolderDAO()
 }

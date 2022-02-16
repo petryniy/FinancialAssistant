@@ -1,14 +1,20 @@
 package selitskiyapp.hometasks.financialassistant.domain.di
 
-import org.koin.core.scope.get
-import org.koin.dsl.module
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ViewModelComponent
 import selitskiyapp.hometasks.financialassistant.data.repository.RepositoryImpl
+import selitskiyapp.hometasks.financialassistant.data.storage.MoneyHolderDao
+import selitskiyapp.hometasks.financialassistant.data.storage.OperationsDAO
 import selitskiyapp.hometasks.financialassistant.domain.repository.Repository
 
-val domainModule = module {
-    single<Repository> {
-        RepositoryImpl(
-            storage = get()
-        )
-    }
+@Module
+@InstallIn(ViewModelComponent::class)
+class DomainModule {
+
+    @Provides
+    fun provideRepository(
+        operationsDAO: OperationsDAO, moneyHolderDao: MoneyHolderDao): Repository =
+        RepositoryImpl(operationsDAO = operationsDAO, moneyHolderDao = moneyHolderDao)
 }

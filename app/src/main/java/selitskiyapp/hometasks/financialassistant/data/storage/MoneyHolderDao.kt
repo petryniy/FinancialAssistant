@@ -6,7 +6,7 @@ import androidx.room.Query
 import selitskiyapp.hometasks.financialassistant.data.storage.models.MoneyHolderEntity
 
 @Dao
-interface MoneyHolderDAO {
+interface MoneyHolderDao {
     @Query("SELECT*FROM moneyHolder")
     fun getMoneyHolders(): List<MoneyHolderEntity>
 

@@ -5,7 +5,6 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import selitskiyapp.hometasks.financialassistant.R
 import selitskiyapp.hometasks.financialassistant.databinding.FragmentOperationsBinding
 import selitskiyapp.hometasks.financialassistant.presentation.recyclers.operations.OnItemListener
@@ -16,11 +15,11 @@ class OperationsFragment : Fragment(R.layout.fragment_operations) {
 
     private val binding: FragmentOperationsBinding by viewBinding(FragmentOperationsBinding::bind)
     private val adapter by lazy { OperationsAdapter(itemClickListener) }
-    private val viewModel by viewModel<OperationsFragmentViewModel>()
+//    private val viewModel by viewModel<OperationsFragmentViewModel>()
 
     private val itemClickListener: OnItemListener = object : OnItemListener {
         override fun onItemClickListener(id: Int) {
-            viewModel.onItemClicked(id)
+//            viewModel.onItemClicked(id)
         }
     }
 
@@ -29,25 +28,25 @@ class OperationsFragment : Fragment(R.layout.fragment_operations) {
 
         initObservers()
 
-        initRecycler()
+//        initRecycler()
 
 //        initFloatingButtons()
 
-        viewModel.getAllOperations()
+//        viewModel.getAllOperations()
     }
 
     private fun initObservers() {
-        viewModel.operationsLiveData.observe(viewLifecycleOwner) { operations ->
-            adapter.submitList(operations)
+//        viewModel.operationsLiveData.observe(viewLifecycleOwner) { operations ->
+//            adapter.submitList(operations)
         }
     }
 
-    private fun initRecycler() {
-        binding.apply {
-            recycler.adapter = adapter
-            recycler.layoutManager = LinearLayoutManager(context)
-        }
-    }
+//    private fun initRecycler() {
+//        binding.apply {
+//            recycler.adapter = adapter
+//            recycler.layoutManager = LinearLayoutManager(context)
+//        }
+//    }
 
 //    private fun initFloatingButtons() = with(binding) {
 //        floatingPlus.setOnClickListener {
@@ -122,4 +121,3 @@ class OperationsFragment : Fragment(R.layout.fragment_operations) {
 //            R.anim.to_bottom_anim
 //        )
 //    }
-}

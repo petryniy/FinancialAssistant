@@ -13,7 +13,7 @@ class MoneyHolderFragment : Fragment(R.layout.fragment_money_holder) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.fab.setOnClickListener {
+        binding.buttonFab.setOnClickListener {
             val action =
                 MoneyHolderFragmentDirections.toEditMoneyHolderBottomSheet()
             findNavController().navigate(action)

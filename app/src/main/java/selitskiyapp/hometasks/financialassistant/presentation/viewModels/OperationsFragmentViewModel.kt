@@ -5,13 +5,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.Navigation.findNavController
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import selitskiyapp.hometasks.financialassistant.R
 import selitskiyapp.hometasks.financialassistant.domain.models.Operations
 import selitskiyapp.hometasks.financialassistant.domain.repository.Repository
 import selitskiyapp.hometasks.financialassistant.presentation.view.MainActivity
+import javax.inject.Inject
 
-class OperationsFragmentViewModel(
+@HiltViewModel
+class OperationsFragmentViewModel @Inject constructor(
     private val repository: Repository
 ) : ViewModel() {
     //    private val _idToEdit = MutableLiveData<Assets>

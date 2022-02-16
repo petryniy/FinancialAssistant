@@ -5,9 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import selitskiyapp.hometasks.financialassistant.databinding.BottomEditOperationBinding
-import selitskiyapp.hometasks.financialassistant.presentation.viewModels.OperationsFragmentViewModel
 
 class EditBottom(
     private var binding: BottomEditOperationBinding,
@@ -15,9 +13,6 @@ class EditBottom(
     companion object {
         const val TAG = "EditBottom"
     }
-
-    private val viewModel by viewModel<OperationsFragmentViewModel>()
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

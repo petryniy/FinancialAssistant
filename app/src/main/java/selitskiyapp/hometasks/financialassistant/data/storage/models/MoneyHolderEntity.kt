@@ -11,7 +11,7 @@ data class MoneyHolderEntity(
     @ColumnInfo(name = "name")
     val name: String,
     @ColumnInfo(name = "type")
-    val type: Int,
+    val type: Int?,
     @ColumnInfo(name = "balance")
     val balance: Long
 )

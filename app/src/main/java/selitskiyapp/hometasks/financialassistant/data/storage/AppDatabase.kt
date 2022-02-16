@@ -21,5 +21,5 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract fun getOperationsDAO(): OperationsDAO
 
-    abstract fun getMoneyHolderDAO(): MoneyHolderDAO
+    abstract fun getMoneyHolderDAO(): MoneyHolderDao
 }
