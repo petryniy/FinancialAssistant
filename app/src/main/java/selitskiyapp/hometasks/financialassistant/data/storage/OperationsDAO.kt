@@ -14,6 +14,5 @@ interface OperationsDAO {
     fun addOperations(operationsEntity: OperationsEntity)
 
     @Query("DELETE FROM operations")
-//    WHERE id
     fun deleteOperations()
 }

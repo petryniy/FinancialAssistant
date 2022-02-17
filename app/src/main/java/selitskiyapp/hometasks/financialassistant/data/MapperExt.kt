@@ -1,4 +1,4 @@
-package selitskiyapp.hometasks.financialassistant.data.repository
+package selitskiyapp.hometasks.financialassistant.data
 
 import selitskiyapp.hometasks.financialassistant.data.storage.models.MoneyHolderEntity
 import selitskiyapp.hometasks.financialassistant.data.storage.models.OperationsEntity

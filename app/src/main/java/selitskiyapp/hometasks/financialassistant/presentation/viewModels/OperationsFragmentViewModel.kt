@@ -17,7 +17,6 @@ import javax.inject.Inject
 class OperationsFragmentViewModel @Inject constructor(
     private val repository: Repository
 ) : ViewModel() {
-    //    private val _idToEdit = MutableLiveData<Assets>
     private val _operationsLiveData = MutableLiveData<List<Operations>>()
     val operationsLiveData: LiveData<List<Operations>> get() = _operationsLiveData
 

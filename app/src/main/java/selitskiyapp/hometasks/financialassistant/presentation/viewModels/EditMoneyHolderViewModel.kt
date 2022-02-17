@@ -1,5 +1,7 @@
 package selitskiyapp.hometasks.financialassistant.presentation.viewModels
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,13 +16,22 @@ import javax.inject.Inject
 class EditMoneyHolderViewModel @Inject constructor(
     private val repository: Repository,
 ) : ViewModel() {
-    private val _moneyHolderSaved = MutableStateFlow<Unit?>(null)
-    val moneyHolderSaved: StateFlow<Unit?> = _moneyHolderSaved
+    private val _moneyHolderSavedFlow = MutableStateFlow<Unit?>(null)
+    val moneyHolderSavedFlow: StateFlow<Unit?> = _moneyHolderSavedFlow
+
+    private val _moneyHolderLiveData = MutableLiveData<List<MoneyHolder>>()
+    val moneyHolderLiveData: LiveData<List<MoneyHolder>> get() = _moneyHolderLiveData
 
     fun addMoneyHolder(moneyHolder: MoneyHolder) {
         viewModelScope.launch {
             repository.addMoneyHolder(moneyHolder)
-            _moneyHolderSaved.value = Unit
+            _moneyHolderSavedFlow.value = Unit
+        }
+    }
+
+     fun getMoneyHolders() {
+        viewModelScope.launch {
+            _moneyHolderLiveData.value = repository.getMoneyHolders()
         }
     }
 }

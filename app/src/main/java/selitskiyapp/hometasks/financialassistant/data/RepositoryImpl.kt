@@ -1,4 +1,4 @@
-package selitskiyapp.hometasks.financialassistant.data.repository
+package selitskiyapp.hometasks.financialassistant.data
 
 import android.util.Log
 import kotlinx.coroutines.Dispatchers

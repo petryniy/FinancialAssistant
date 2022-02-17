@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
-import selitskiyapp.hometasks.financialassistant.data.repository.RepositoryImpl
+import selitskiyapp.hometasks.financialassistant.data.RepositoryImpl
 import selitskiyapp.hometasks.financialassistant.data.storage.MoneyHolderDao
 import selitskiyapp.hometasks.financialassistant.data.storage.OperationsDAO
 import selitskiyapp.hometasks.financialassistant.domain.repository.Repository

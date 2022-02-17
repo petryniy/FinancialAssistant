@@ -1,8 +1,5 @@
 package selitskiyapp.hometasks.financialassistant.domain.repository
 
-import androidx.room.Insert
-import androidx.room.Query
-import selitskiyapp.hometasks.financialassistant.data.storage.models.MoneyHolderEntity
 import selitskiyapp.hometasks.financialassistant.domain.models.MoneyHolder
 import selitskiyapp.hometasks.financialassistant.domain.models.Operations
 

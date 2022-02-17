@@ -8,18 +8,19 @@ import android.widget.ArrayAdapter
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import selitskiyapp.hometasks.financialassistant.R
-import selitskiyapp.hometasks.financialassistant.databinding.BottomEditMoneyHolderBinding
+import selitskiyapp.hometasks.financialassistant.databinding.BottomAddMoneyHolderBinding
 import selitskiyapp.hometasks.financialassistant.domain.models.MoneyHolder
 import selitskiyapp.hometasks.financialassistant.presentation.viewModels.EditMoneyHolderViewModel
 
 @AndroidEntryPoint
-class EditMoneyHolderBottomSheet : BottomSheetDialogFragment() {
+class AddMoneyHolderBottom : BottomSheetDialogFragment() {
 
-    private val viewModelMoneyHolder: EditMoneyHolderViewModel by viewModels()
-    private lateinit var binding: BottomEditMoneyHolderBinding
+    private val viewModel: EditMoneyHolderViewModel by viewModels()
+    private lateinit var binding: BottomAddMoneyHolderBinding
     private var type: Int? = null
 
     override fun onCreateView(
@@ -27,7 +28,7 @@ class EditMoneyHolderBottomSheet : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = BottomEditMoneyHolderBinding.inflate(inflater)
+        binding = BottomAddMoneyHolderBinding.inflate(inflater)
         return binding.root
     }
 
@@ -48,7 +49,7 @@ class EditMoneyHolderBottomSheet : BottomSheetDialogFragment() {
                 tilBalance.editText?.text.isNullOrEmpty() -> tilBalance.error =
                     "Вы не ввели текущий баланс"
                 else -> {
-                    viewModelMoneyHolder.addMoneyHolder(
+                    viewModel.addMoneyHolder(
                         MoneyHolder(
                             name = tilName.editText?.text.toString(),
                             type = type,
@@ -58,8 +59,12 @@ class EditMoneyHolderBottomSheet : BottomSheetDialogFragment() {
                 }
             }
             lifecycleScope.launchWhenResumed {
-                viewModelMoneyHolder.moneyHolderSaved.collect {
-                    if (it != null) dismiss()
+                viewModel.moneyHolderSavedFlow.collect {
+                    if (it != null) {
+                        dismiss()
+                        findNavController().navigate(R.id.to_moneyHolderFragment)
+                        //TODO тапорная херня какая-то, как нстроить исправление?
+                    }
                 }
             }
         }
