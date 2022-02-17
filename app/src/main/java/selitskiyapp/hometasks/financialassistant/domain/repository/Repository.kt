@@ -8,11 +8,11 @@ interface Repository {
 
     suspend fun addOperations(operations: Operations)
 
-    suspend fun deleteOperations(id: Int?)
+    suspend fun deleteOperations(id: Int)
 
     suspend fun getMoneyHolders(): List<MoneyHolder>
 
     suspend fun addMoneyHolder(moneyHolder: MoneyHolder)
 
-    suspend fun deleteMoneyHolder(id: Int?)
+    suspend fun deleteMoneyHolder(id: Int)
 }

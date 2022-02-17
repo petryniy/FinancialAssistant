@@ -13,6 +13,6 @@ interface MoneyHolderDao {
     @Insert
     fun addMoneyHolder(moneyHolderEntity: MoneyHolderEntity)
 
-    @Query("DELETE FROM moneyHolder")
-    fun deleteMoneyHolder()
+    @Query("DELETE FROM moneyHolder WHERE id = :id")
+    fun deleteMoneyHolder(id: Int)
 }

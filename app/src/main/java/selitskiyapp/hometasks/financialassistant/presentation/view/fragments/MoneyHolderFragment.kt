@@ -2,6 +2,7 @@ package selitskiyapp.hometasks.financialassistant.presentation.view.fragments
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -23,7 +24,13 @@ class MoneyHolderFragment : Fragment(R.layout.fragment_money_holder) {
     private val itemClickListenerMoneyHolder: MoneyHolderOnItemListener =
         object : MoneyHolderOnItemListener {
             override fun onItemClickListener(id: Int) {
+//                val action =
+//                    MoneyHolderFragmentDirections.moneyHolderFragmentToEditMoneyHolderBottom()
 
+                findNavController().navigate(
+                    R.id.moneyHolderFragment_to_editMoneyHolderBottom,
+                    bundleOf("id" to id)
+                )
             }
         }
 
@@ -60,7 +67,7 @@ class MoneyHolderFragment : Fragment(R.layout.fragment_money_holder) {
     private fun initAddButton() = with(binding) {
         buttonFab.setOnClickListener {
             val action =
-                MoneyHolderFragmentDirections.toEditMoneyHolderBottomSheet()
+                MoneyHolderFragmentDirections.moneyHolderFragmentToAddMoneyHolderBottom()
             findNavController().navigate(action)
         }
     }

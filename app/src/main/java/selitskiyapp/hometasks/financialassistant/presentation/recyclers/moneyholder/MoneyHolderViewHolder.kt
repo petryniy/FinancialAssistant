@@ -4,9 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import selitskiyapp.hometasks.financialassistant.databinding.ItemMoneyHolderBinding
-import selitskiyapp.hometasks.financialassistant.databinding.ItemOperationBinding
 import selitskiyapp.hometasks.financialassistant.domain.models.MoneyHolder
-import selitskiyapp.hometasks.financialassistant.domain.models.Operations
 
 class MoneyHolderViewHolder(
     private val binding: ItemMoneyHolderBinding,

@@ -34,4 +34,10 @@ class EditMoneyHolderViewModel @Inject constructor(
             _moneyHolderLiveData.value = repository.getMoneyHolders()
         }
     }
+
+    fun deleteMoneyHolder(id: Int) {
+        viewModelScope.launch {
+            repository.deleteMoneyHolder(id)
+        }
+    }
 }

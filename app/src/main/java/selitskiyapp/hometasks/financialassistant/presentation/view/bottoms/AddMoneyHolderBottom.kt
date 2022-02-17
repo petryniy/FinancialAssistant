@@ -62,8 +62,7 @@ class AddMoneyHolderBottom : BottomSheetDialogFragment() {
                 viewModel.moneyHolderSavedFlow.collect {
                     if (it != null) {
                         dismiss()
-                        findNavController().navigate(R.id.to_moneyHolderFragment)
-                        //TODO тапорная херня какая-то, как нстроить исправление?
+                        findNavController().navigate(R.id.addMoneyHolderBottom_to_moneyHolderFragment)
                     }
                 }
             }

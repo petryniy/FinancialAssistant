@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import selitskiyapp.hometasks.financialassistant.databinding.BottomEditOperationBinding
 
-class EditBottom(
+class EditOperationBottom(
     private var binding: BottomEditOperationBinding,
 ) : BottomSheetDialogFragment() {
     companion object {

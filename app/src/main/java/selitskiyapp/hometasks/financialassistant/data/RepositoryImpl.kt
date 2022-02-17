@@ -30,7 +30,7 @@ class RepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun deleteOperations(id: Int?) {
+    override suspend fun deleteOperations(id: Int) {
         withContext(Dispatchers.IO) {
             operationsDAO.deleteOperations()
         }
@@ -51,9 +51,9 @@ class RepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun deleteMoneyHolder(id: Int?) {
+    override suspend fun deleteMoneyHolder(id: Int) {
         withContext(Dispatchers.IO) {
-            moneyHolderDao.deleteMoneyHolder()
+            moneyHolderDao.deleteMoneyHolder(id)
         }
     }
 }
