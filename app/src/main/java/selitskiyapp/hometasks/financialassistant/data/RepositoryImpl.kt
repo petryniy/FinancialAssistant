@@ -6,7 +6,7 @@ import kotlinx.coroutines.withContext
 import selitskiyapp.hometasks.financialassistant.data.storage.MoneyHolderDao
 import selitskiyapp.hometasks.financialassistant.data.storage.OperationsDAO
 import selitskiyapp.hometasks.financialassistant.domain.models.MoneyHolder
-import selitskiyapp.hometasks.financialassistant.domain.models.Operations
+import selitskiyapp.hometasks.financialassistant.domain.models.Operation
 import selitskiyapp.hometasks.financialassistant.domain.repository.Repository
 import javax.inject.Inject
 
@@ -16,23 +16,29 @@ class RepositoryImpl @Inject constructor(
 ) :
     Repository {
 
-    override suspend fun getOperations(): List<Operations> {
+    override suspend fun getOperations(): List<Operation> {
         return withContext(Dispatchers.IO) {
             operationsDAO.getOperations().map { operationsEntity ->
-                operationsEntity.toOperations()
+                operationsEntity.toOperation()
             }
         }
     }
 
-    override suspend fun addOperations(operations: Operations) {
+    override suspend fun getOperationById(id: Int): Operation {
+        return withContext(Dispatchers.IO) {
+            operationsDAO.getOperationById(id).toOperation()
+        }
+    }
+
+    override suspend fun addOperation(operation: Operation) {
         withContext(Dispatchers.IO) {
-            operationsDAO.addOperations(operations.toOperationsEntity())
+            operationsDAO.addOperations(operation.toOperationEntity())
         }
     }
 
     override suspend fun deleteOperations(id: Int) {
         withContext(Dispatchers.IO) {
-            operationsDAO.deleteOperations()
+            operationsDAO.deleteOperations(id)
         }
     }
 
@@ -41,6 +47,12 @@ class RepositoryImpl @Inject constructor(
             moneyHolderDao.getMoneyHolders().map { moneyHolderEntity ->
                 moneyHolderEntity.toMoneyHolder()
             }
+        }
+    }
+
+    override suspend fun getMoneyHolderById(id: Int): MoneyHolder {
+        return withContext(Dispatchers.IO) {
+            moneyHolderDao.getMoneyHolderById(id).toMoneyHolder()
         }
     }
 

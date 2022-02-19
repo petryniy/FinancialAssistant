@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import selitskiyapp.hometasks.financialassistant.databinding.ItemOperationBinding
-import selitskiyapp.hometasks.financialassistant.domain.models.Operations
+import selitskiyapp.hometasks.financialassistant.domain.models.Operation
 
 class OperationsViewHolder(
     private val binding: ItemOperationBinding,
@@ -27,14 +27,14 @@ class OperationsViewHolder(
         }
     }
 
-    fun bindView(item: Operations) = with(binding) {
+    fun bindView(item: Operation) = with(binding) {
 //        debitCategory.text = item.category
 //        debitImageId.text = item.imageId
 //        debitTypeOfValue.text = item.typeOfValue
 //        debitValue.text = item.value.toString()
 
         itemDebit.setOnClickListener {
-            itemClickListenerOperations.onItemClickListener(item.id)
+            item.id?.let { it1 -> itemClickListenerOperations.onItemClickListener(it1) }
         }
     }
 }

@@ -5,6 +5,7 @@ import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -29,11 +30,10 @@ class MoneyHolderFragment : Fragment(R.layout.fragment_money_holder) {
 
                 findNavController().navigate(
                     R.id.moneyHolderFragment_to_editMoneyHolderBottom,
-                    bundleOf("id" to id)
+                    bundleOf(MONEY_HOLDER_ID_FROM_HOLDER to id)
                 )
             }
         }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -52,8 +52,12 @@ class MoneyHolderFragment : Fragment(R.layout.fragment_money_holder) {
     }
 
      private fun initObservers() {
-        viewModel.moneyHolderLiveData.observe(viewLifecycleOwner) { moneyHolders ->
-            adapter.submitList(moneyHolders)
+        viewModel.moneyHoldersList.observe(viewLifecycleOwner) { moneyHoldersList ->
+            adapter.submitList(moneyHoldersList)
+
+//         lifecycleScope.launchWhenResumed {
+//             viewModel.moneyHolderSavedFlow.collect { it ->
+//                 adapter.submitList(it)
         }
     }
 
@@ -70,6 +74,9 @@ class MoneyHolderFragment : Fragment(R.layout.fragment_money_holder) {
                 MoneyHolderFragmentDirections.moneyHolderFragmentToAddMoneyHolderBottom()
             findNavController().navigate(action)
         }
+    }
+    companion object {
+        const val MONEY_HOLDER_ID_FROM_HOLDER = "HOLDER"
     }
 }
 

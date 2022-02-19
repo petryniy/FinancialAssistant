@@ -10,6 +10,9 @@ interface MoneyHolderDao {
     @Query("SELECT*FROM moneyHolder")
     fun getMoneyHolders(): List<MoneyHolderEntity>
 
+    @Query("SELECT*FROM moneyHolder WHERE id = :id")
+    fun getMoneyHolderById(id: Int): MoneyHolderEntity
+
     @Insert
     fun addMoneyHolder(moneyHolderEntity: MoneyHolderEntity)
 

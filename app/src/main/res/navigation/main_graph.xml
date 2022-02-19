@@ -3,82 +3,85 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_graph"
-    app:startDestination="@id/operationsFragment">
+    app:startDestination="@id/navigationOperationsFragment">
 
-    <fragment
-        android:id="@+id/operationsFragment"
-        android:name="selitskiyapp.hometasks.financialassistant.presentation.view.fragments.OperationsFragment"
-        android:label="fragment_operations"
-        tools:layout="@layout/fragment_operations" >
-        <action
-            android:id="@+id/to_addOperationBottom"
-            app:destination="@id/addOperationBottom" />
-        <action
-            android:id="@+id/to_editOperationBottom"
-            app:destination="@id/editOperationBottom" />
-    </fragment>
+    <navigation
+        android:id="@+id/navigationMoneyHolderFragment"
+        app:startDestination="@id/moneyHolderFragment">
+        <fragment
+            android:id="@+id/moneyHolderFragment"
+            android:name="selitskiyapp.hometasks.financialassistant.presentation.view.fragments.MoneyHolderFragment"
+            android:label="fragment_money_holder"
+            tools:layout="@layout/fragment_money_holder">
+            <action
+                android:id="@+id/moneyHolderFragment_to_addMoneyHolderBottom"
+                app:destination="@id/addMoneyHolderBottom" />
+            <action
+                android:id="@+id/moneyHolderFragment_to_editMoneyHolderBottom"
+                app:destination="@id/editMoneyHolderBottom" />
+        </fragment>
+        <dialog
+            android:id="@+id/addMoneyHolderBottom"
+            android:name="selitskiyapp.hometasks.financialassistant.presentation.view.bottoms.AddMoneyHolderBottom"
+            android:label="EditMoneyHolderBottomSheet"
+            tools:layout="@layout/bottom_add_money_holder">
+            <action
+                android:id="@+id/addMoneyHolderBottom_to_moneyHolderFragment"
+                app:destination="@id/moneyHolderFragment" />
+        </dialog>
+        <dialog
+            android:id="@+id/editMoneyHolderBottom"
+            android:name="selitskiyapp.hometasks.financialassistant.presentation.view.bottoms.EditMoneyHolderBottom"
+            android:label="EditMoneyHolderBottom"
+            tools:layout="@layout/bottom_edit_money_holder">
+            <action
+                android:id="@+id/editMoneyHolderBottom_to_moneyHolderFragment"
+                app:destination="@id/moneyHolderFragment" />
+            <action
+                android:id="@+id/editMoneyHolderBottom_to_addMoneyHolderBottom"
+                app:destination="@id/addMoneyHolderBottom" />
+        </dialog>
+    </navigation>
 
-    <dialog
-        android:id="@+id/editOperationBottom"
-        android:name="selitskiyapp.hometasks.financialassistant.presentation.view.bottoms.EditOperationBottom"
-        android:label="EditBottom"
-        tools:layout="@layout/bottom_edit_operation" >
-    </dialog>
+    <navigation
+        android:id="@+id/navigationOperationsFragment"
+        app:startDestination="@id/operationsFragment">
+        <fragment
+            android:id="@+id/operationsFragment"
+            android:name="selitskiyapp.hometasks.financialassistant.presentation.view.fragments.OperationsFragment"
+            android:label="fragment_operations"
+            tools:layout="@layout/fragment_operations">
+            <action
+                android:id="@+id/to_addOperationBottom"
+                app:destination="@id/addOperationBottom" />
+            <action
+                android:id="@+id/to_editOperationBottom"
+                app:destination="@id/editOperationBottom" />
+        </fragment>
+        <dialog
+            android:id="@+id/editOperationBottom"
+            android:name="selitskiyapp.hometasks.financialassistant.presentation.view.bottoms.EditOperationBottom"
+            android:label="EditBottom"
+            tools:layout="@layout/bottom_edit_operation" />
+        <dialog
+            android:id="@+id/addOperationBottom"
+            android:name="selitskiyapp.hometasks.financialassistant.presentation.view.bottoms.AddOperationBottom"
+            android:label="AddDebitBottom"
+            tools:layout="@layout/bottom_add_operation">
+            <action
+                android:id="@+id/addOperationBottom_to_operationsFragment"
+                app:destination="@id/operationsFragment" />
+        </dialog>
+    </navigation>
 
-    <dialog
-        android:id="@+id/addOperationBottom"
-        android:name="selitskiyapp.hometasks.financialassistant.presentation.view.bottoms.AddOperationBottom"
-        android:label="AddDebitBottom"
-        tools:layout="@layout/bottom_add_operation" >
-        <action
-            android:id="@+id/addOperationBottom_to_operationsFragment"
-            app:destination="@id/operationsFragment" />
-    </dialog>
-
-
-
-    <fragment
-        android:id="@+id/moneyHolderFragment"
-        android:name="selitskiyapp.hometasks.financialassistant.presentation.view.fragments.MoneyHolderFragment"
-        android:label="fragment_money_holder"
-        tools:layout="@layout/fragment_money_holder" >
-        <action
-            android:id="@+id/moneyHolderFragment_to_addMoneyHolderBottom"
-            app:destination="@id/addMoneyHolderBottom" />
-        <action
-            android:id="@+id/moneyHolderFragment_to_editMoneyHolderBottom"
-            app:destination="@id/editMoneyHolderBottom" />
-    </fragment>
-
-
-    <dialog
-    android:id="@+id/addMoneyHolderBottom"
-    android:name="selitskiyapp.hometasks.financialassistant.presentation.view.bottoms.AddMoneyHolderBottom"
-    android:label="EditMoneyHolderBottomSheet"
-        tools:layout="@layout/bottom_add_money_holder">
-        <action
-            android:id="@+id/addMoneyHolderBottom_to_moneyHolderFragment"
-            app:destination="@id/moneyHolderFragment" />
-    </dialog>
-
-    <dialog
-        android:id="@+id/editMoneyHolderBottom"
-        android:name="selitskiyapp.hometasks.financialassistant.presentation.view.bottoms.EditMoneyHolderBottom"
-        android:label="EditMoneyHolderBottom"
-        tools:layout="@layout/bottom_edit_money_holder">
-        <action
-            android:id="@+id/editMoneyHolderBottom_to_moneyHolderFragment"
-            app:destination="@id/moneyHolderFragment" />
-        <action
-            android:id="@+id/editMoneyHolderBottom_to_addMoneyHolderBottom"
-            app:destination="@id/addMoneyHolderBottom" />
-    </dialog>
-
-
-    <fragment
-        android:id="@+id/analyticFragment"
-        android:name="selitskiyapp.hometasks.financialassistant.presentation.view.fragments.AnalyticFragment"
-        android:label="fragment_analytic"
-        tools:layout="@layout/fragment_analytic" />
+    <navigation
+        android:id="@+id/navigationAnalyticFragment"
+        app:startDestination="@id/analyticFragment">
+        <fragment
+            android:id="@+id/analyticFragment"
+            android:name="selitskiyapp.hometasks.financialassistant.presentation.view.fragments.AnalyticFragment"
+            android:label="fragment_analytic"
+            tools:layout="@layout/fragment_analytic" />
+    </navigation>
 
 </navigation>

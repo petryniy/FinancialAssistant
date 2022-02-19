@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "moneyHolder")
 data class MoneyHolderEntity(
     @PrimaryKey(autoGenerate = true)
-    var id: Int = 0,
+    var id: Int,
     @ColumnInfo(name = "name")
     val name: String,
     @ColumnInfo(name = "type")

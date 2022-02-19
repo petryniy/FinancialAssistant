@@ -16,11 +16,22 @@ import javax.inject.Inject
 class EditMoneyHolderViewModel @Inject constructor(
     private val repository: Repository,
 ) : ViewModel() {
+//    private val _moneyHolderSavedFlow = MutableStateFlow<List<MoneyHolder>>(emptyList())
+//    val moneyHolderSavedFlow: StateFlow<List<MoneyHolder>> = _moneyHolderSavedFlow
+//
+//    private val _moneyHoldersList = MutableLiveData<List<MoneyHolder>>()
+//    val moneyHoldersList: LiveData<List<MoneyHolder>> get() = _moneyHoldersList
+
+
+
     private val _moneyHolderSavedFlow = MutableStateFlow<Unit?>(null)
     val moneyHolderSavedFlow: StateFlow<Unit?> = _moneyHolderSavedFlow
 
-    private val _moneyHolderLiveData = MutableLiveData<List<MoneyHolder>>()
-    val moneyHolderLiveData: LiveData<List<MoneyHolder>> get() = _moneyHolderLiveData
+    private val _moneyHoldersList = MutableLiveData<List<MoneyHolder>>()
+    val moneyHoldersList: LiveData<List<MoneyHolder>> get() = _moneyHoldersList
+
+    private val _moneyHolder = MutableLiveData<MoneyHolder>()
+    val moneyHolder: LiveData<MoneyHolder> get() = _moneyHolder
 
     fun addMoneyHolder(moneyHolder: MoneyHolder) {
         viewModelScope.launch {
@@ -29,9 +40,15 @@ class EditMoneyHolderViewModel @Inject constructor(
         }
     }
 
-     fun getMoneyHolders() {
+    fun getMoneyHolders() {
         viewModelScope.launch {
-            _moneyHolderLiveData.value = repository.getMoneyHolders()
+            _moneyHoldersList.value = repository.getMoneyHolders()
+        }
+    }
+
+    fun getMoneyHolderById(id: Int) {
+        viewModelScope.launch {
+           _moneyHolder.value =  repository.getMoneyHolderById(id)
         }
     }
 

@@ -8,7 +8,7 @@ import androidx.navigation.Navigation.findNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import selitskiyapp.hometasks.financialassistant.R
-import selitskiyapp.hometasks.financialassistant.domain.models.Operations
+import selitskiyapp.hometasks.financialassistant.domain.models.Operation
 import selitskiyapp.hometasks.financialassistant.domain.repository.Repository
 import selitskiyapp.hometasks.financialassistant.presentation.view.MainActivity
 import javax.inject.Inject
@@ -17,8 +17,8 @@ import javax.inject.Inject
 class OperationsFragmentViewModel @Inject constructor(
     private val repository: Repository
 ) : ViewModel() {
-    private val _operationsLiveData = MutableLiveData<List<Operations>>()
-    val operationsLiveData: LiveData<List<Operations>> get() = _operationsLiveData
+    private val _operationsLiveData = MutableLiveData<List<Operation>>()
+    val operationLiveData: LiveData<List<Operation>> get() = _operationsLiveData
 
     fun onItemClicked(id: Int) {
         toEditBottom(R.id.to_editOperationBottom)
@@ -32,9 +32,9 @@ class OperationsFragmentViewModel @Inject constructor(
         findNavController(MainActivity(), R.id.fragment_container).navigate(id)
     }
 
-    fun saveOperation(operations: Operations) {
+    fun saveOperation(operation: Operation) {
         viewModelScope.launch {
-            repository.addOperations(operations)
+            repository.addOperation(operation)
         }
     }
 

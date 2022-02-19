@@ -5,7 +5,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "operations")
-data class OperationsEntity(
+data class OperationEntity(
+    @PrimaryKey(autoGenerate = true)
+    var id: Int,
     @ColumnInfo(name = "category")
     val category: String,
     @ColumnInfo(name = "moneyHolderId")
@@ -14,7 +16,4 @@ data class OperationsEntity(
     val date: Long,
     @ColumnInfo(name = "comment")
     val comment: String,
-) {
-    @PrimaryKey(autoGenerate = true)
-    var id: Int = 0
-}
+)

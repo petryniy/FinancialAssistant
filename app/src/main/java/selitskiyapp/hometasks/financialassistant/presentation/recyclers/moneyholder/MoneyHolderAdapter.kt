@@ -3,7 +3,6 @@ package selitskiyapp.hometasks.financialassistant.presentation.recyclers.moneyho
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import selitskiyapp.hometasks.financialassistant.domain.models.MoneyHolder
-import selitskiyapp.hometasks.financialassistant.domain.models.Operations
 
 class MoneyHolderAdapter(
     private val itemClickListenerMoneyHolder: MoneyHolderOnItemListener

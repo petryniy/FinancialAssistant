@@ -3,11 +3,11 @@ package selitskiyapp.hometasks.financialassistant.data.storage
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import selitskiyapp.hometasks.financialassistant.data.storage.models.MoneyHolderEntity
-import selitskiyapp.hometasks.financialassistant.data.storage.models.OperationsEntity
+import selitskiyapp.hometasks.financialassistant.data.storage.models.OperationEntity
 
 @Database(
     entities = [
-        OperationsEntity::class,
+        OperationEntity::class,
         MoneyHolderEntity::class
     ],
     exportSchema = false,

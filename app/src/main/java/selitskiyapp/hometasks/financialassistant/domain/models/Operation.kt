@@ -1,13 +1,10 @@
 package selitskiyapp.hometasks.financialassistant.domain.models
 
-import androidx.room.PrimaryKey
-
-data class Operations(
+data class Operation(
+    var id: Int = 0,
     val category: String,
     val moneyHolderId: Int,
     val date: Long,
     val comment: String,
-) {
-    @PrimaryKey(autoGenerate = true)
-    var id: Int = 0
-}
+)
+

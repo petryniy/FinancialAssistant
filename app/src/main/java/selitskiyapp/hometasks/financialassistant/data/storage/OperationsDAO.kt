@@ -3,16 +3,19 @@ package selitskiyapp.hometasks.financialassistant.data.storage
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import selitskiyapp.hometasks.financialassistant.data.storage.models.OperationsEntity
+import selitskiyapp.hometasks.financialassistant.data.storage.models.OperationEntity
 
 @Dao
 interface OperationsDAO {
     @Query("SELECT*FROM operations")
-    fun getOperations(): List<OperationsEntity>
+    fun getOperations(): List<OperationEntity>
+
+    @Query("SELECT*FROM operations WHERE id = :id")
+    fun getOperationById(id: Int): OperationEntity
 
     @Insert
-    fun addOperations(operationsEntity: OperationsEntity)
+    fun addOperations(operationEntity: OperationEntity)
 
-    @Query("DELETE FROM operations")
-    fun deleteOperations()
+    @Query("DELETE FROM operations WHERE id = :id")
+    fun deleteOperations(id: Int)
 }

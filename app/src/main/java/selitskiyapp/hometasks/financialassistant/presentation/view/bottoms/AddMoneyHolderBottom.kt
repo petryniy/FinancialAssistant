@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -14,6 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import selitskiyapp.hometasks.financialassistant.R
 import selitskiyapp.hometasks.financialassistant.databinding.BottomAddMoneyHolderBinding
 import selitskiyapp.hometasks.financialassistant.domain.models.MoneyHolder
+import selitskiyapp.hometasks.financialassistant.presentation.view.fragments.MoneyHolderFragment
 import selitskiyapp.hometasks.financialassistant.presentation.viewModels.EditMoneyHolderViewModel
 
 @AndroidEntryPoint
@@ -34,9 +36,35 @@ class AddMoneyHolderBottom : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         initTypeAdapter()
 
         initSaveButton()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val id: Int = requireArguments().getInt(EditMoneyHolderBottom.MONEY_HOLDER_ID_FROM_EDIT)
+
+        initFields(id)
+    }
+
+    private fun initFields(id: Int?) {
+        if (id != null && id !== 0) {
+            Toast.makeText(
+                context, "getFromEditMoneyHolderBottom $id",
+                Toast.LENGTH_LONG
+            ).show()
+            viewModel.getMoneyHolderById(id)
+            viewModel.moneyHolder.observe(viewLifecycleOwner) { moneyHolder ->
+                binding.run {
+                    tilName.editText?.setText(moneyHolder.name)
+//                    actvType.adapter - как настроить адаптер?
+                    tilBalance.editText?.setText(moneyHolder.balance.toString())
+                }
+            }
+        }
     }
 
     private fun initSaveButton() = with(binding) {
@@ -50,6 +78,7 @@ class AddMoneyHolderBottom : BottomSheetDialogFragment() {
                     "Вы не ввели текущий баланс"
                 else -> {
                     viewModel.addMoneyHolder(
+
                         MoneyHolder(
                             name = tilName.editText?.text.toString(),
                             type = type,
@@ -62,7 +91,8 @@ class AddMoneyHolderBottom : BottomSheetDialogFragment() {
                 viewModel.moneyHolderSavedFlow.collect {
                     if (it != null) {
                         dismiss()
-                        findNavController().navigate(R.id.addMoneyHolderBottom_to_moneyHolderFragment)
+                        findNavController()
+                            .navigate(R.id.addMoneyHolderBottom_to_moneyHolderFragment)
                     }
                 }
             }

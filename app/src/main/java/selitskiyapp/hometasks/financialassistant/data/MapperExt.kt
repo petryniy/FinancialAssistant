@@ -1,20 +1,22 @@
 package selitskiyapp.hometasks.financialassistant.data
 
 import selitskiyapp.hometasks.financialassistant.data.storage.models.MoneyHolderEntity
-import selitskiyapp.hometasks.financialassistant.data.storage.models.OperationsEntity
+import selitskiyapp.hometasks.financialassistant.data.storage.models.OperationEntity
 import selitskiyapp.hometasks.financialassistant.domain.models.MoneyHolder
-import selitskiyapp.hometasks.financialassistant.domain.models.Operations
+import selitskiyapp.hometasks.financialassistant.domain.models.Operation
 
-fun OperationsEntity.toOperations() =
-    Operations(
+fun OperationEntity.toOperation() =
+    Operation(
+        id = id,
         category = category,
         moneyHolderId = moneyHolderId,
         date = date,
         comment = comment
     )
 
-fun Operations.toOperationsEntity() =
-    OperationsEntity(
+fun Operation.toOperationEntity() =
+    OperationEntity(
+        id = id,
         category = category,
         moneyHolderId = moneyHolderId,
         date = date,
