@@ -63,6 +63,13 @@ class RepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun updateMoneyHolder(moneyHolder: MoneyHolder) {
+        withContext(Dispatchers.IO) {
+            moneyHolderDao.updateMoneyHolder(moneyHolder.toMoneyHolderEntity())
+            Log.d("updateMoneyHolder", "Complete")
+        }
+    }
+
     override suspend fun deleteMoneyHolder(id: Int) {
         withContext(Dispatchers.IO) {
             moneyHolderDao.deleteMoneyHolder(id)

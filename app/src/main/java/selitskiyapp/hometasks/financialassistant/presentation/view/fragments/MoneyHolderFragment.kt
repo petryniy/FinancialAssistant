@@ -44,28 +44,27 @@ class MoneyHolderFragment : Fragment(R.layout.fragment_money_holder) {
     override fun onResume() {
         super.onResume()
 
-        viewModel.getMoneyHolders()
-
         initObservers()
 
         initRecycler()
     }
 
-     private fun initObservers() {
-        viewModel.moneyHoldersList.observe(viewLifecycleOwner) { moneyHoldersList ->
-            adapter.submitList(moneyHoldersList)
+    private fun initObservers() {
+//        viewModel.moneyHoldersList.observe(viewLifecycleOwner) { moneyHoldersList ->
+//            adapter.submitList(moneyHoldersList)
 
-//         lifecycleScope.launchWhenResumed {
-//             viewModel.moneyHolderSavedFlow.collect { it ->
-//                 adapter.submitList(it)
+        lifecycleScope.launchWhenResumed {
+            viewModel.moneyHoldersListFlow.collect {
+                adapter.submitList(it)
+            }
         }
     }
 
-    private fun initRecycler() {
-        binding.run {
-            recyclerMoneyHolder.adapter = adapter
-            recyclerMoneyHolder.layoutManager = LinearLayoutManager(context)
-        }
+
+    private fun initRecycler() = with(binding) {
+        recyclerMoneyHolder.adapter = adapter
+        recyclerMoneyHolder.layoutManager = LinearLayoutManager(context)
+
     }
 
     private fun initAddButton() = with(binding) {

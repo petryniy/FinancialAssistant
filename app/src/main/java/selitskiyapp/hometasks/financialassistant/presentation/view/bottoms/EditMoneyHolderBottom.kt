@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,16 +47,17 @@ class EditMoneyHolderBottom : BottomSheetDialogFragment() {
     private fun initFields(id: Int?) {
         if (id != null && id !== 0) {
             viewModel.getMoneyHolderById(id)
-            viewModel.moneyHolder.observe(viewLifecycleOwner) { moneyHolder ->
-                binding.run {
 
-                    when (moneyHolder.type) {
-                        1 -> imageViewEdType.setImageResource(R.drawable.ic_credit_card)
-                        2 -> imageViewEdType.setImageResource(R.drawable.ic_cash)
+            lifecycleScope.launchWhenResumed {
+                viewModel.moneyHolder.collect { moneyHolder ->
+                    binding.run {
+                        when (moneyHolder.type) {
+                            1 -> imageViewEdType.setImageResource(R.drawable.ic_credit_card)
+                            2 -> imageViewEdType.setImageResource(R.drawable.ic_cash)
+                        }
+                        textEdViewName.text = moneyHolder.name
+                        textViewEdBalance.text = moneyHolder.balance.toInt().toString()
                     }
-
-                    textEdViewName.text = moneyHolder.name
-                    textViewEdBalance.text = moneyHolder.balance.toInt().toString()
                 }
             }
         }

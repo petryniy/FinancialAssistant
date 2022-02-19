@@ -15,7 +15,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import selitskiyapp.hometasks.financialassistant.R
 import selitskiyapp.hometasks.financialassistant.databinding.BottomAddMoneyHolderBinding
 import selitskiyapp.hometasks.financialassistant.domain.models.MoneyHolder
-import selitskiyapp.hometasks.financialassistant.presentation.view.fragments.MoneyHolderFragment
 import selitskiyapp.hometasks.financialassistant.presentation.viewModels.EditMoneyHolderViewModel
 
 @AndroidEntryPoint
@@ -39,13 +38,13 @@ class AddMoneyHolderBottom : BottomSheetDialogFragment() {
 
         initTypeAdapter()
 
-        initSaveButton()
     }
 
     override fun onResume() {
         super.onResume()
-
         val id: Int = requireArguments().getInt(EditMoneyHolderBottom.MONEY_HOLDER_ID_FROM_EDIT)
+
+        initSaveButton(id)
 
         initFields(id)
     }
@@ -57,18 +56,20 @@ class AddMoneyHolderBottom : BottomSheetDialogFragment() {
                 Toast.LENGTH_LONG
             ).show()
             viewModel.getMoneyHolderById(id)
-            viewModel.moneyHolder.observe(viewLifecycleOwner) { moneyHolder ->
-                binding.run {
-                    tilName.editText?.setText(moneyHolder.name)
-//                    actvType.adapter - как настроить адаптер?
-                    tilBalance.editText?.setText(moneyHolder.balance.toString())
+            lifecycleScope.launchWhenResumed {
+                viewModel.moneyHolder.collect { moneyHolder ->
+                    binding.run {
+                        tilName.editText?.setText(moneyHolder.name)
+                        //TODO напиши показ типа
+                        tilBalance.editText?.setText(moneyHolder.balance.toString())
+                    }
                 }
             }
         }
     }
 
-    private fun initSaveButton() = with(binding) {
-        fieldsIsEmpty()
+    private fun initSaveButton(id: Int?) = with(binding) {
+        cleanErrors()
 
         button.setOnClickListener {
             when {
@@ -77,29 +78,36 @@ class AddMoneyHolderBottom : BottomSheetDialogFragment() {
                 tilBalance.editText?.text.isNullOrEmpty() -> tilBalance.error =
                     "Вы не ввели текущий баланс"
                 else -> {
-                    viewModel.addMoneyHolder(
-
-                        MoneyHolder(
-                            name = tilName.editText?.text.toString(),
-                            type = type,
-                            balance = tilBalance.editText?.text.toString().toLong()
-                        )
-                    )
-                }
-            }
-            lifecycleScope.launchWhenResumed {
-                viewModel.moneyHolderSavedFlow.collect {
-                    if (it != null) {
-                        dismiss()
-                        findNavController()
-                            .navigate(R.id.addMoneyHolderBottom_to_moneyHolderFragment)
-                    }
+                    if (id != null && id !== 0) updateMoneyHolder(id) else addMoneyHolder()
+                    dismiss()
+                    findNavController().navigate(R.id.addMoneyHolderBottom_to_moneyHolderFragment)
                 }
             }
         }
     }
 
-    private fun fieldsIsEmpty() = with(binding) {
+    private fun updateMoneyHolder(id: Int) = with(binding) {
+        val toUpdate =
+            MoneyHolder(
+                id = id,
+                name = tilName.editText?.text.toString(),
+                type = type,
+                balance = tilBalance.editText?.text.toString().toLong()
+            )
+        viewModel.updateMoneyHolder(toUpdate)
+    }
+
+    private fun addMoneyHolder() = with(binding) {
+        viewModel.addMoneyHolder(
+            MoneyHolder(
+                name = tilName.editText?.text.toString(),
+                type = type,
+                balance = tilBalance.editText?.text.toString().toLong()
+            )
+        )
+    }
+
+    private fun cleanErrors() = with(binding) {
         tilName.editText?.doAfterTextChanged { tilName.error = null }
         tilType.editText?.doAfterTextChanged { tilType.error = null }
         tilBalance.editText?.doAfterTextChanged { tilBalance.error = null }
@@ -119,7 +127,7 @@ class AddMoneyHolderBottom : BottomSheetDialogFragment() {
     private val operationStatusAdapter: ArrayAdapter<String> by lazy {
         ArrayAdapter(
             requireContext(),
-            R.layout.item_text_adapter,
+            R.layout.item_type_menu_money_holder,
             listOf(
                 getString(R.string.typeCash),
                 getString(R.string.typeNonCash)

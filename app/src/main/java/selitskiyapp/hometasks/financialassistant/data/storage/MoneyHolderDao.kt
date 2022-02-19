@@ -3,19 +3,23 @@ package selitskiyapp.hometasks.financialassistant.data.storage
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import selitskiyapp.hometasks.financialassistant.data.storage.models.MoneyHolderEntity
 
 @Dao
 interface MoneyHolderDao {
     @Query("SELECT*FROM moneyHolder")
-    fun getMoneyHolders(): List<MoneyHolderEntity>
+    suspend fun getMoneyHolders(): List<MoneyHolderEntity>
 
     @Query("SELECT*FROM moneyHolder WHERE id = :id")
-    fun getMoneyHolderById(id: Int): MoneyHolderEntity
+    suspend fun getMoneyHolderById(id: Int): MoneyHolderEntity
 
     @Insert
-    fun addMoneyHolder(moneyHolderEntity: MoneyHolderEntity)
+    suspend fun addMoneyHolder(moneyHolderEntity: MoneyHolderEntity)
+
+    @Update
+    suspend fun updateMoneyHolder(moneyHolderEntity: MoneyHolderEntity)
 
     @Query("DELETE FROM moneyHolder WHERE id = :id")
-    fun deleteMoneyHolder(id: Int)
+    suspend fun deleteMoneyHolder(id: Int)
 }

@@ -1,7 +1,5 @@
 package selitskiyapp.hometasks.financialassistant.presentation.viewModels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,35 +14,33 @@ import javax.inject.Inject
 class EditMoneyHolderViewModel @Inject constructor(
     private val repository: Repository,
 ) : ViewModel() {
-//    private val _moneyHolderSavedFlow = MutableStateFlow<List<MoneyHolder>>(emptyList())
-//    val moneyHolderSavedFlow: StateFlow<List<MoneyHolder>> = _moneyHolderSavedFlow
-//
-//    private val _moneyHoldersList = MutableLiveData<List<MoneyHolder>>()
-//    val moneyHoldersList: LiveData<List<MoneyHolder>> get() = _moneyHoldersList
+    private val _moneyHoldersListFlow = MutableStateFlow<List<MoneyHolder>>(emptyList())
+    val moneyHoldersListFlow: StateFlow<List<MoneyHolder>> get() = _moneyHoldersListFlow
 
+    private val _moneyHolder = MutableStateFlow(MoneyHolder(0, "0",0,0))
+    val moneyHolder: StateFlow<MoneyHolder> get() = _moneyHolder
 
-
-    private val _moneyHolderSavedFlow = MutableStateFlow<Unit?>(null)
-    val moneyHolderSavedFlow: StateFlow<Unit?> = _moneyHolderSavedFlow
-
-    private val _moneyHoldersList = MutableLiveData<List<MoneyHolder>>()
-    val moneyHoldersList: LiveData<List<MoneyHolder>> get() = _moneyHoldersList
-
-    private val _moneyHolder = MutableLiveData<MoneyHolder>()
-    val moneyHolder: LiveData<MoneyHolder> get() = _moneyHolder
+    init {
+        getMoneyHolders()
+    }
 
     fun addMoneyHolder(moneyHolder: MoneyHolder) {
         viewModelScope.launch {
             repository.addMoneyHolder(moneyHolder)
-            _moneyHolderSavedFlow.value = Unit
         }
     }
 
-    fun getMoneyHolders() {
+    fun updateMoneyHolder(moneyHolder: MoneyHolder) {
         viewModelScope.launch {
-            _moneyHoldersList.value = repository.getMoneyHolders()
+            repository.updateMoneyHolder(moneyHolder)
         }
     }
+
+    private fun getMoneyHolders() {
+        viewModelScope.launch {
+            _moneyHoldersListFlow.value = repository.getMoneyHolders()
+            }
+        }
 
     fun getMoneyHolderById(id: Int) {
         viewModelScope.launch {

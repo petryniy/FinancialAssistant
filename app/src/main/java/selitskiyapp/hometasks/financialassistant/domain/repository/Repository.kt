@@ -1,5 +1,7 @@
 package selitskiyapp.hometasks.financialassistant.domain.repository
 
+import androidx.room.Update
+import selitskiyapp.hometasks.financialassistant.data.storage.models.MoneyHolderEntity
 import selitskiyapp.hometasks.financialassistant.domain.models.MoneyHolder
 import selitskiyapp.hometasks.financialassistant.domain.models.Operation
 
@@ -17,6 +19,8 @@ interface Repository {
     suspend fun getMoneyHolderById(id: Int): MoneyHolder
 
     suspend fun addMoneyHolder(moneyHolder: MoneyHolder)
+
+    suspend fun updateMoneyHolder(moneyHolder: MoneyHolder)
 
     suspend fun deleteMoneyHolder(id: Int)
 }
