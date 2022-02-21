@@ -1,78 +1,186 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bottom_add_operation"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginHorizontal="2dp"
     android:layout_marginVertical="2dp"
+    android:orientation="vertical"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-    <EditText
-        android:id="@+id/debitEditValue"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        app:layout_constraintBottom_toTopOf="@+id/debitEditImageId"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/debitEditImageId"
-        app:layout_constraintTop_toTopOf="parent" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/addValue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="20dp"
+        android:hint="Введите значение">
 
-    <EditText
-        android:id="@+id/debitEditImageId"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        app:layout_constraintBottom_toTopOf="@+id/debitEditCategory"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/debitEditValue" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberSigned" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/debitEditCategory"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        app:layout_constraintBottom_toTopOf="@+id/debitEditTypeOfValue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/debitEditImageId" />
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-    <EditText
-        android:id="@+id/debitEditTypeOfValue"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        app:layout_constraintBottom_toTopOf="@+id/debitEditDate"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/debitEditCategory" />
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="75dp"
+            app:checkedChip="@id/chip1"
+            app:selectionRequired="true"
+            app:singleSelection="true"
+            app:singleLine="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip1"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="60dp"
+                android:layout_height="74dp"
+                android:layout_marginHorizontal="8dp"
+                android:checkable="true"
+                app:chipIcon="@drawable/ic_car"
+                app:chipIconSize="50dp"
+                app:chipIconVisible="true"
+                app:chipMinHeight="35dp"
+                app:chipStartPadding="6dp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip2"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="60dp"
+                android:layout_height="74dp"
+                android:layout_marginHorizontal="8dp"
+                android:checkable="true"
+                app:chipIcon="@drawable/ic_products"
+                app:chipIconSize="45dp"
+                app:chipIconVisible="true"
+                app:chipMinHeight="35dp"
+                app:chipStartPadding="6dp"
+                app:iconStartPadding="4dp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_3"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="60dp"
+                android:layout_height="74dp"
+                android:layout_marginHorizontal="8dp"
+                android:checkable="true"
+                app:chipIcon="@drawable/ic_car"
+                app:chipIconSize="50dp"
+                app:chipIconVisible="true"
+                app:chipMinHeight="35dp"
+                app:chipStartPadding="6dp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_4"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="60dp"
+                android:layout_height="74dp"
+                android:layout_marginHorizontal="8dp"
+                android:checkable="true"
+                app:chipIcon="@drawable/ic_car"
+                app:chipIconSize="50dp"
+                app:chipIconVisible="true"
+                app:chipMinHeight="35dp"
+                app:chipStartPadding="6dp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_5"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="60dp"
+                android:layout_height="74dp"
+                android:layout_marginHorizontal="8dp"
+                android:checkable="true"
+                app:chipIcon="@drawable/ic_car"
+                app:chipIconSize="50dp"
+                app:chipIconVisible="true"
+                app:chipMinHeight="35dp"
+                app:chipStartPadding="6dp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_6"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="60dp"
+                android:layout_height="74dp"
+                android:layout_marginHorizontal="8dp"
+                android:checkable="true"
+                app:chipIcon="@drawable/ic_car"
+                app:chipIconSize="50dp"
+                app:chipIconVisible="true"
+                app:chipMinHeight="35dp"
+                app:chipStartPadding="6dp" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+    </HorizontalScrollView>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_marginTop="20dp"
+        android:id="@+id/tilAddOperation"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="false"
+        android:hint="Выберите счёт"
+        >
+
+        <AutoCompleteTextView
+            android:focusable="false"
+
+            android:id="@+id/actvAddOperation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/addDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="20dp"
+        android:hint="Выберете дату">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:clickable="false"
+            android:focusable="false"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <!--    android:clickable="false"-->
     <!--    android:focusable="false"-->
 
-    <EditText
-        android:id="@+id/debitEditDate"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        app:layout_constraintBottom_toTopOf="@+id/debitEditComment"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/debitEditTypeOfValue" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/addComments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="20dp"
+        android:hint="Комментарий">
 
-    <EditText
-        android:id="@+id/debitEditComment"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonDebitSave"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/debitEditDate" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/buttonDebitSave"
+        android:layout_gravity="center"
+        android:id="@+id/buttonOperationSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SAVE"
+        android:text="Сохранить"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/debitEditComment" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

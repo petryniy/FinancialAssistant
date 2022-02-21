@@ -50,8 +50,6 @@ class MoneyHolderFragment : Fragment(R.layout.fragment_money_holder) {
     }
 
     private fun initObservers() {
-//        viewModel.moneyHoldersList.observe(viewLifecycleOwner) { moneyHoldersList ->
-//            adapter.submitList(moneyHoldersList)
 
         lifecycleScope.launchWhenResumed {
             viewModel.moneyHoldersListFlow.collect {
@@ -59,7 +57,6 @@ class MoneyHolderFragment : Fragment(R.layout.fragment_money_holder) {
             }
         }
     }
-
 
     private fun initRecycler() = with(binding) {
         recyclerMoneyHolder.adapter = adapter
@@ -72,10 +69,10 @@ class MoneyHolderFragment : Fragment(R.layout.fragment_money_holder) {
             val action =
                 MoneyHolderFragmentDirections.moneyHolderFragmentToAddMoneyHolderBottom()
             findNavController().navigate(action)
+
         }
     }
     companion object {
         const val MONEY_HOLDER_ID_FROM_HOLDER = "HOLDER"
     }
 }
-

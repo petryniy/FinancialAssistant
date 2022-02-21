@@ -22,7 +22,7 @@ class AddMoneyHolderBottom : BottomSheetDialogFragment() {
 
     private val viewModel: EditMoneyHolderViewModel by viewModels()
     private lateinit var binding: BottomAddMoneyHolderBinding
-    private var type: Int? = null
+    private var type: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -119,7 +119,7 @@ class AddMoneyHolderBottom : BottomSheetDialogFragment() {
             type = when (operationStatusAdapter.getItem(position)) {
                 getString(R.string.typeCash) -> CASH
                 getString(R.string.typeNonCash) -> NON_CASH
-                else -> null
+                else -> 0
             }
         }
     }

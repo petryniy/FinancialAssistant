@@ -11,7 +11,7 @@ interface MoneyHolderDao {
     @Query("SELECT*FROM moneyHolder")
     suspend fun getMoneyHolders(): List<MoneyHolderEntity>
 
-    @Query("SELECT*FROM moneyHolder WHERE id = :id")
+    @Query("SELECT*FROM moneyHolder WHERE moneyId = :id")
     suspend fun getMoneyHolderById(id: Int): MoneyHolderEntity
 
     @Insert
@@ -20,6 +20,6 @@ interface MoneyHolderDao {
     @Update
     suspend fun updateMoneyHolder(moneyHolderEntity: MoneyHolderEntity)
 
-    @Query("DELETE FROM moneyHolder WHERE id = :id")
+    @Query("DELETE FROM moneyHolder WHERE moneyId = :id")
     suspend fun deleteMoneyHolder(id: Int)
 }

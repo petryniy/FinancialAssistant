@@ -32,7 +32,7 @@ class MoneyHolderViewHolder(
         textViewBalance.text = item.balance.toString()
 
         itemMoneyHolder.setOnClickListener {
-            item.id?.let { it1 -> itemClickListenerMoneyHolder.onItemClickListener(it1) }
+            item.id.let { it1 -> itemClickListenerMoneyHolder.onItemClickListener(it1) }
         }
     }
 }

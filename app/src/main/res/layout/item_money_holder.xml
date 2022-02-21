@@ -29,6 +29,9 @@
             android:layout_alignParentTop="true"
             android:layout_marginHorizontal="4dp"
             android:layout_marginVertical="4dp"
+            android:layout_marginStart="37dp"
+            android:layout_marginTop="13dp"
+            android:layout_marginEnd="-20dp"
             android:layout_toStartOf="@+id/textViewCurrency"
             android:layout_toEndOf="@+id/textViewName"
             android:gravity="end" />

@@ -2,54 +2,78 @@ package selitskiyapp.hometasks.financialassistant.presentation.view.fragments
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import selitskiyapp.hometasks.financialassistant.R
+import selitskiyapp.hometasks.financialassistant.databinding.FragmentMoneyHolderBinding
 import selitskiyapp.hometasks.financialassistant.databinding.FragmentOperationsBinding
+import selitskiyapp.hometasks.financialassistant.presentation.recyclers.moneyholder.MoneyHolderAdapter
+import selitskiyapp.hometasks.financialassistant.presentation.recyclers.moneyholder.MoneyHolderOnItemListener
 import selitskiyapp.hometasks.financialassistant.presentation.recyclers.operations.OperationsAdapter
 import selitskiyapp.hometasks.financialassistant.presentation.recyclers.operations.OperationsOnItemListener
+import selitskiyapp.hometasks.financialassistant.presentation.viewModels.EditMoneyHolderViewModel
 import selitskiyapp.hometasks.financialassistant.presentation.viewModels.OperationsFragmentViewModel
 
 @AndroidEntryPoint
 class OperationsFragment : Fragment(R.layout.fragment_operations) {
 
-    private val binding: FragmentOperationsBinding by viewBinding(FragmentOperationsBinding::bind)
+    private val binding: FragmentOperationsBinding by viewBinding()
     private val adapter by lazy { OperationsAdapter(itemClickListenerOperations) }
-//    private val viewModel: OperationsFragmentViewModel by viewModels()
-
+    private val viewModel: OperationsFragmentViewModel by viewModels()
 
     private val itemClickListenerOperations: OperationsOnItemListener =
         object : OperationsOnItemListener {
             override fun onItemClickListener(id: Int) {
-//                viewModel.onItemClicked(id)
+                findNavController().navigate(
+                    R.id.moneyHolderFragment_to_editMoneyHolderBottom,
+                    bundleOf(MONEY_HOLDER_ID_FROM_HOLDER to id)
+                )
             }
         }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        initObservers()
-//
-//        initRecycler()
-
-//        initFloatingButtons()
-
-//        viewModel.getAllOperations()
+        initAddButton()
     }
 
-//    private fun initObservers() {
-//        viewModel.operationsLiveData.observe(viewLifecycleOwner) { operations ->
-//            adapter.submitList(operations)
-//        }
+    override fun onResume() {
+        super.onResume()
 
-//    private fun initRecycler() {
-//        binding.apply {
-//            recycler.adapter = adapter
-//            recycler.layoutManager = LinearLayoutManager(context)
-//        }
-//    }
+        initObservers()
+
+        initRecycler()
+    }
+
+    private fun initObservers() {
+
+        lifecycleScope.launchWhenResumed {
+            viewModel.operationsListFlow().collect {
+                adapter.submitList(it)
+            }
+        }
+    }
+
+    private fun initRecycler() = with(binding) {
+        recyclerOperations.adapter = adapter
+        recyclerOperations.layoutManager = LinearLayoutManager(context)
+    }
+
+    private fun initAddButton() = with(binding) {
+        buttonFab.setOnClickListener {
+            findNavController().navigate(R.id.to_addOperationBottom)
+        }
+    }
+    companion object {
+        const val MONEY_HOLDER_ID_FROM_HOLDER = "HOLDER"
+    }
+}
 
 //    private fun initFloatingButtons() = with(binding) {
 //        floatingPlus.setOnClickListener {
@@ -123,4 +147,4 @@ class OperationsFragment : Fragment(R.layout.fragment_operations) {
 //            activity?.applicationContext,
 //            R.anim.to_bottom_anim
 //        )
-}
+

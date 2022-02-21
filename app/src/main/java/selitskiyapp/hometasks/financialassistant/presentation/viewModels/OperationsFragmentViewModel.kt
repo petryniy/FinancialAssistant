@@ -1,52 +1,44 @@
 package selitskiyapp.hometasks.financialassistant.presentation.viewModels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.Navigation.findNavController
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import selitskiyapp.hometasks.financialassistant.R
 import selitskiyapp.hometasks.financialassistant.domain.models.Operation
-import selitskiyapp.hometasks.financialassistant.domain.repository.Repository
-import selitskiyapp.hometasks.financialassistant.presentation.view.MainActivity
+import selitskiyapp.hometasks.financialassistant.domain.repository.OperationsRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class OperationsFragmentViewModel @Inject constructor(
-    private val repository: Repository
+    private val operationsRepository: OperationsRepository
 ) : ViewModel() {
-    private val _operationsLiveData = MutableLiveData<List<Operation>>()
-    val operationLiveData: LiveData<List<Operation>> get() = _operationsLiveData
+    fun operationsListFlow() = operationsRepository.getOperations()
 
-    fun onItemClicked(id: Int) {
-        toEditBottom(R.id.to_editOperationBottom)
+
+    fun getOperationById(id: Int) {
         viewModelScope.launch {
-//            repository.getOperationById(id)
-        }
-
-    }
-
-    private fun toEditBottom(id: Int) {
-        findNavController(MainActivity(), R.id.fragment_container).navigate(id)
-    }
-
-    fun saveOperation(operation: Operation) {
-        viewModelScope.launch {
-            repository.addOperation(operation)
+//            _operation.value = operationsRepository.getOperationById(id)
         }
     }
 
-    fun getAllOperations() {
+    fun addOperation(operation: Operation) {
         viewModelScope.launch {
-            _operationsLiveData.value = repository.getOperations()
+            operationsRepository.addOperation(operation)
+
         }
     }
 
-    fun deleteOperation(idOperation: Int) {
+    fun updateOperation(operation: Operation) {
         viewModelScope.launch {
-            repository.deleteOperations(idOperation)
+            operationsRepository.updateOperation(operation)
+        }
+    }
+
+    fun deleteOperation(id: Int) {
+        viewModelScope.launch {
+            operationsRepository.deleteOperation(id)
         }
     }
 }

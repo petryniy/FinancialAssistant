@@ -10,6 +10,8 @@ fun OperationEntity.toOperation() =
         id = id,
         category = category,
         moneyHolderId = moneyHolderId,
+        value = value,
+        categoryImageId = categoryImageId,
         date = date,
         comment = comment
     )
@@ -19,21 +21,23 @@ fun Operation.toOperationEntity() =
         id = id,
         category = category,
         moneyHolderId = moneyHolderId,
+        value = value,
+        categoryImageId = categoryImageId,
         date = date,
         comment = comment
     )
 
 fun MoneyHolderEntity.toMoneyHolder() =
     MoneyHolder(
-        id = id,
-        name = name,
+        id = moneyId!!,
+        name = name!!,
         type = type,
-        balance = balance
+        balance = balance!!
     )
 
 fun MoneyHolder.toMoneyHolderEntity() =
     MoneyHolderEntity(
-        id = id,
+        moneyId = if (id == 0) null else id,
         name = name,
         type = type,
         balance = balance

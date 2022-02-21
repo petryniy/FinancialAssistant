@@ -7,12 +7,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import selitskiyapp.hometasks.financialassistant.domain.models.MoneyHolder
-import selitskiyapp.hometasks.financialassistant.domain.repository.Repository
+import selitskiyapp.hometasks.financialassistant.domain.repository.MoneyHoldersRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class EditMoneyHolderViewModel @Inject constructor(
-    private val repository: Repository,
+    private val moneyHoldersRepository: MoneyHoldersRepository,
 ) : ViewModel() {
     private val _moneyHoldersListFlow = MutableStateFlow<List<MoneyHolder>>(emptyList())
     val moneyHoldersListFlow: StateFlow<List<MoneyHolder>> get() = _moneyHoldersListFlow
@@ -21,36 +21,36 @@ class EditMoneyHolderViewModel @Inject constructor(
     val moneyHolder: StateFlow<MoneyHolder> get() = _moneyHolder
 
     init {
-        getMoneyHolders()
+        getAllMoneyHolders()
+    }
+
+    private fun getAllMoneyHolders() {
+        viewModelScope.launch {
+            _moneyHoldersListFlow.value = moneyHoldersRepository.getMoneyHolders()
+        }
+    }
+
+    fun getMoneyHolderById(id: Int) {
+        viewModelScope.launch {
+            _moneyHolder.value =  moneyHoldersRepository.getMoneyHolderById(id)
+        }
     }
 
     fun addMoneyHolder(moneyHolder: MoneyHolder) {
         viewModelScope.launch {
-            repository.addMoneyHolder(moneyHolder)
+            moneyHoldersRepository.addMoneyHolder(moneyHolder)
         }
     }
 
     fun updateMoneyHolder(moneyHolder: MoneyHolder) {
         viewModelScope.launch {
-            repository.updateMoneyHolder(moneyHolder)
-        }
-    }
-
-    private fun getMoneyHolders() {
-        viewModelScope.launch {
-            _moneyHoldersListFlow.value = repository.getMoneyHolders()
-            }
-        }
-
-    fun getMoneyHolderById(id: Int) {
-        viewModelScope.launch {
-           _moneyHolder.value =  repository.getMoneyHolderById(id)
+            moneyHoldersRepository.updateMoneyHolder(moneyHolder)
         }
     }
 
     fun deleteMoneyHolder(id: Int) {
         viewModelScope.launch {
-            repository.deleteMoneyHolder(id)
+            moneyHoldersRepository.deleteMoneyHolder(id)
         }
     }
 }

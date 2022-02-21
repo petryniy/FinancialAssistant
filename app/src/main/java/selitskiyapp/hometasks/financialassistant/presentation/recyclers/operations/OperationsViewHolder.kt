@@ -3,8 +3,9 @@ package selitskiyapp.hometasks.financialassistant.presentation.recyclers.operati
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import selitskiyapp.hometasks.financialassistant.R
+import selitskiyapp.hometasks.financialassistant.data.storage.models.OperationWithMoneyHolderEntity
 import selitskiyapp.hometasks.financialassistant.databinding.ItemOperationBinding
-import selitskiyapp.hometasks.financialassistant.domain.models.Operation
 
 class OperationsViewHolder(
     private val binding: ItemOperationBinding,
@@ -27,14 +28,20 @@ class OperationsViewHolder(
         }
     }
 
-    fun bindView(item: Operation) = with(binding) {
-//        debitCategory.text = item.category
-//        debitImageId.text = item.imageId
-//        debitTypeOfValue.text = item.typeOfValue
-//        debitValue.text = item.value.toString()
+    fun bindView(item: OperationWithMoneyHolderEntity) = with(binding) {
+        itemCategory.text = item.operationEntity.category
+        itemTypeOfValue.text = item.moneyHolderEntity.name
+        itemValue.text = item.operationEntity.value.toString()
+        itemImageId.setImageResource(
+            when (item.operationEntity.categoryImageId) {
+                1 -> R.drawable.ic_car
+                2 -> R.drawable.ic_products
+                else -> R.drawable.ic_add
+            }
+        )
 
         itemDebit.setOnClickListener {
-            item.id?.let { it1 -> itemClickListenerOperations.onItemClickListener(it1) }
+            item.operationEntity.id.let { it1 -> itemClickListenerOperations.onItemClickListener(it1) }
         }
     }
 }

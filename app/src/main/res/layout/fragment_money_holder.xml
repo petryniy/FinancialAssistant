@@ -32,7 +32,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerMoneyHolder"
         android:layout_width="0dp"
-        android:layout_height="300dp"
+        android:layout_height="match_parent"
         android:layout_above="@+id/buttonFab"
         android:layout_below="@+id/textView"
         android:layout_alignParentStart="true"
@@ -53,7 +53,7 @@
         android:layout_gravity="bottom|center"
         android:layout_marginHorizontal="8dp"
         android:layout_marginVertical="8dp"
-        android:text="Button" />
+        android:text="Добавить баланс(вместо ФАБ)" />
 
 
 </RelativeLayout>

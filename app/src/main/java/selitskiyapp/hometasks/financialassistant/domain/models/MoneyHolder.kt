@@ -5,4 +5,8 @@ data class MoneyHolder(
     val name: String,
     val type: Int?,
     val balance: Long
-)
+) {
+    override fun toString(): String {
+        return name
+    }
+}

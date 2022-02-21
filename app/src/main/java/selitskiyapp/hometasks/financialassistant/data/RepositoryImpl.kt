@@ -2,26 +2,34 @@ package selitskiyapp.hometasks.financialassistant.data
 
 import android.util.Log
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import selitskiyapp.hometasks.financialassistant.data.storage.MoneyHolderDao
 import selitskiyapp.hometasks.financialassistant.data.storage.OperationsDAO
+import selitskiyapp.hometasks.financialassistant.data.storage.models.OperationWithMoneyHolderEntity
 import selitskiyapp.hometasks.financialassistant.domain.models.MoneyHolder
 import selitskiyapp.hometasks.financialassistant.domain.models.Operation
-import selitskiyapp.hometasks.financialassistant.domain.repository.Repository
+import selitskiyapp.hometasks.financialassistant.domain.repository.OperationsRepository
+import selitskiyapp.hometasks.financialassistant.domain.repository.MoneyHoldersRepository
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
     private val operationsDAO: OperationsDAO,
     private val moneyHolderDao: MoneyHolderDao
 ) :
-    Repository {
+    MoneyHoldersRepository, OperationsRepository {
 
-    override suspend fun getOperations(): List<Operation> {
-        return withContext(Dispatchers.IO) {
-            operationsDAO.getOperations().map { operationsEntity ->
-                operationsEntity.toOperation()
-            }
-        }
+//    override fun getOperations(): Flow<List<Operation>> {
+//        return operationsDAO.getOperations().map {
+//                it.map { operationsEntity ->
+//                    operationsEntity.toOperation()
+//                }
+//        }
+//    }
+    override fun getOperations(): Flow<List<OperationWithMoneyHolderEntity>> {
+        return operationsDAO.getOperations()
     }
 
     override suspend fun getOperationById(id: Int): Operation {
@@ -34,9 +42,16 @@ class RepositoryImpl @Inject constructor(
         withContext(Dispatchers.IO) {
             operationsDAO.addOperations(operation.toOperationEntity())
         }
+        Log.d("operationsDAO.addOperations", " Complete")
     }
 
-    override suspend fun deleteOperations(id: Int) {
+    override suspend fun updateOperation(operation: Operation) {
+        withContext(Dispatchers.IO) {
+            operationsDAO.updateOperation(operation.toOperationEntity())
+        }
+    }
+
+    override suspend fun deleteOperation(id: Int) {
         withContext(Dispatchers.IO) {
             operationsDAO.deleteOperations(id)
         }

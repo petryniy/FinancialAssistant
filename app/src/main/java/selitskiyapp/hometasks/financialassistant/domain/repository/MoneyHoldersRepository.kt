@@ -1,18 +1,8 @@
 package selitskiyapp.hometasks.financialassistant.domain.repository
 
-import androidx.room.Update
-import selitskiyapp.hometasks.financialassistant.data.storage.models.MoneyHolderEntity
 import selitskiyapp.hometasks.financialassistant.domain.models.MoneyHolder
-import selitskiyapp.hometasks.financialassistant.domain.models.Operation
 
-interface Repository {
-    suspend fun getOperations(): List<Operation>
-
-    suspend fun getOperationById(id: Int): Operation
-
-    suspend fun addOperation(operation: Operation)
-
-    suspend fun deleteOperations(id: Int)
+interface MoneyHoldersRepository {
 
     suspend fun getMoneyHolders(): List<MoneyHolder>
 
