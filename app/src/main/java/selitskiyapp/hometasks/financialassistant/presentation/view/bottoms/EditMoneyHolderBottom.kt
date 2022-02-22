@@ -51,10 +51,13 @@ class EditMoneyHolderBottom : BottomSheetDialogFragment() {
             lifecycleScope.launchWhenResumed {
                 viewModel.moneyHolder.collect { moneyHolder ->
                     binding.run {
-                        when (moneyHolder.type) {
-                            1 -> imageViewEdType.setImageResource(R.drawable.ic_credit_card)
-                            2 -> imageViewEdType.setImageResource(R.drawable.ic_cash)
-                        }
+                        imageViewEdType.setImageResource(
+                            when (moneyHolder.type) {
+                                1 -> R.drawable.ic_credit_card
+                                2 -> R.drawable.ic_cash
+                                else -> R.drawable.ic_add
+                            }
+                        )
                         textEdViewName.text = moneyHolder.name
                         textViewEdBalance.text = moneyHolder.balance.toInt().toString()
                     }

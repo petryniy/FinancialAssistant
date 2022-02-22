@@ -25,8 +25,6 @@ class MoneyHolderFragment : Fragment(R.layout.fragment_money_holder) {
     private val itemClickListenerMoneyHolder: MoneyHolderOnItemListener =
         object : MoneyHolderOnItemListener {
             override fun onItemClickListener(id: Int) {
-//                val action =
-//                    MoneyHolderFragmentDirections.moneyHolderFragmentToEditMoneyHolderBottom()
 
                 findNavController().navigate(
                     R.id.moneyHolderFragment_to_editMoneyHolderBottom,
@@ -65,7 +63,7 @@ class MoneyHolderFragment : Fragment(R.layout.fragment_money_holder) {
     }
 
     private fun initAddButton() = with(binding) {
-        buttonFab.setOnClickListener {
+        fab.setOnClickListener {
             val action =
                 MoneyHolderFragmentDirections.moneyHolderFragmentToAddMoneyHolderBottom()
             findNavController().navigate(action)

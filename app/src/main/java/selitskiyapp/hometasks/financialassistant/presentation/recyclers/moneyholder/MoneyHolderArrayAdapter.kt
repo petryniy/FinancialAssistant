@@ -20,12 +20,17 @@ class MoneyHolderArrayAdapter(
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val view = LayoutInflater.from(mContext)
             .inflate(R.layout.item_money_holder_autocomplete, parent,false)
-//        if (convertView == null) return null
         val dto = list[position]
 
 
         return ItemMoneyHolderAutocompleteBinding.bind(view).apply {
-            imageView.setImageResource(R.drawable.ic_credit_card)
+            imageView.setImageResource(
+                when (dto.type) {
+                    1 -> R.drawable.ic_credit_card
+                    2 -> R.drawable.ic_cash
+                    else -> R.drawable.ic_add
+                }
+            )
             textView.text = dto.name
         }.root
     }

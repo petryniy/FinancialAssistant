@@ -66,7 +66,7 @@ class OperationsFragment : Fragment(R.layout.fragment_operations) {
     }
 
     private fun initAddButton() = with(binding) {
-        buttonFab.setOnClickListener {
+        fab.setOnClickListener {
             findNavController().navigate(R.id.to_addOperationBottom)
         }
     }

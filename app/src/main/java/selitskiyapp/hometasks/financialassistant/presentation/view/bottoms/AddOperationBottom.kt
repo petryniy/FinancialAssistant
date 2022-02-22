@@ -36,20 +36,10 @@ class AddOperationBottom : BottomSheetDialogFragment() {
     private lateinit var binding: BottomAddOperationBinding
     private val operationsViewModel: OperationsFragmentViewModel by viewModels()
     private val moneyHoldersViewModel: EditMoneyHolderViewModel by viewModels()
-    private val adapter by lazy { MoneyHolderAdapter(itemClickListenerMoneyHolder) }
 
     private var category: String = "0"
-    private var items: List<String> = emptyList()
-    private var itemCheck: String = "0"
     private var categoryImageId: Int = 0
     private var moneyHolderId: Int? = null
-
-    private val itemClickListenerMoneyHolder: MoneyHolderOnItemListener =
-        object : MoneyHolderOnItemListener {
-            override fun onItemClickListener(id: Int) {
-
-            }
-        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,13 +57,14 @@ class AddOperationBottom : BottomSheetDialogFragment() {
 
         initCategory()
 
-//        getCategoryImageId()
+        initSaveButton()
 
+        }
 
-        binding.run {
+    private fun initSaveButton() = with(binding) {
             buttonOperationSave.setOnClickListener {
-            // todo validation
-               val op =  Operation(
+                // todo validation
+                val operation = Operation(
                     category = category,
                     moneyHolderId = moneyHolderId!!,
                     value = addValue.editText?.text.toString().toLong(),
@@ -81,42 +72,20 @@ class AddOperationBottom : BottomSheetDialogFragment() {
                     date = getDate(),
                     comment = addComments.editText?.text.toString()
                 )
-                Log.d("sadfasd", op.toString())
-            operationsViewModel.addOperation(op)
 
-        }
-        }
-    }
+                Log.d("addOperation complete: ", operation.toString())
 
-    private fun initSaveButton() = with(binding) {
-        buttonOperationSave.setOnClickListener {
-            initCategory()
+                operationsViewModel.addOperation(operation)
 
-
-
-//            addOperation()
-            dismiss()
-            findNavController().navigate(R.id.addOperationBottom_to_operationsFragment)
-        }
-    }
-
-    private fun addOperation() = with(binding) {
-        operationsViewModel.addOperation(
-            Operation(
-                category = category,
-                moneyHolderId = 0,
-                value = addValue.editText?.text.toString().toLong(),
-                categoryImageId = categoryImageId,
-                date = getDate(),
-                comment = addComments.editText?.text.toString()
-            )
-        )
+                dismiss()
+            }
     }
 
     private fun initCategory() = with(binding) {
-
         chipGroup.setOnCheckedChangeListener { group, checkedId ->
+
             Toast.makeText(requireContext(), "che", Toast.LENGTH_SHORT).show()
+
             when (checkedId) {
                 chip1.id -> {
                     category = "Расходы на машину"
@@ -128,9 +97,9 @@ class AddOperationBottom : BottomSheetDialogFragment() {
                 }
                 //                chip3.id -> chip3.chipIcon.toString()
                 //                chip4.id -> chip4.chipIcon.toString()
-                //                chip2.id -> chip2.chipIcon.toString()
-                //                chip2.id -> chip2.chipIcon.toString()
-                //                chip2.id -> chip2.chipIcon.toString()
+                //                chip5.id -> chip2.chipIcon.toString()
+                //                chip6.id -> chip2.chipIcon.toString()
+                //                chip7.id -> chip2.chipIcon.toString()
 
                 //                chip2.id -> chip2.chipIcon.toString()
                 else -> "Не верные расходы"
