@@ -2,8 +2,10 @@ package selitskiyapp.hometasks.financialassistant.data
 
 import selitskiyapp.hometasks.financialassistant.data.storage.models.MoneyHolderEntity
 import selitskiyapp.hometasks.financialassistant.data.storage.models.OperationEntity
+import selitskiyapp.hometasks.financialassistant.data.storage.models.OperationWithMoneyHolderEntity
 import selitskiyapp.hometasks.financialassistant.domain.models.MoneyHolder
 import selitskiyapp.hometasks.financialassistant.domain.models.Operation
+import selitskiyapp.hometasks.financialassistant.domain.models.OperationWithMoneyHolder
 
 fun OperationEntity.toOperation() =
     Operation(
@@ -41,5 +43,17 @@ fun MoneyHolder.toMoneyHolderEntity() =
         name = name,
         type = type,
         balance = balance
+    )
+
+fun OperationWithMoneyHolderEntity.toOperationWithMoneyHolder() =
+    OperationWithMoneyHolder(
+        operationEntity = operationEntity,
+        moneyHolderEntity = moneyHolderEntity
+    )
+
+fun OperationWithMoneyHolder.toOperationWithMoneyHolderEntity() =
+    OperationWithMoneyHolderEntity(
+        operationEntity = operationEntity,
+        moneyHolderEntity = moneyHolderEntity
     )
 

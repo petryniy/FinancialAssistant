@@ -4,12 +4,13 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
+import kotlinx.coroutines.flow.Flow
 import selitskiyapp.hometasks.financialassistant.data.storage.models.MoneyHolderEntity
 
 @Dao
 interface MoneyHolderDao {
     @Query("SELECT*FROM moneyHolder")
-    suspend fun getMoneyHolders(): List<MoneyHolderEntity>
+    fun getMoneyHolders(): Flow<List<MoneyHolderEntity>>
 
     @Query("SELECT*FROM moneyHolder WHERE moneyId = :id")
     suspend fun getMoneyHolderById(id: Int): MoneyHolderEntity
@@ -22,4 +23,7 @@ interface MoneyHolderDao {
 
     @Query("DELETE FROM moneyHolder WHERE moneyId = :id")
     suspend fun deleteMoneyHolder(id: Int)
+
+    @Query("SELECT SUM(balance) FROM moneyHolder")
+    fun getMoneyHoldersSumBalance(): Flow<Long>
 }

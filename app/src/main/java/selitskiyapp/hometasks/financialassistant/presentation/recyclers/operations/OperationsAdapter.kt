@@ -2,13 +2,12 @@ package selitskiyapp.hometasks.financialassistant.presentation.recyclers.operati
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import selitskiyapp.hometasks.financialassistant.data.storage.models.OperationWithMoneyHolderEntity
-import selitskiyapp.hometasks.financialassistant.domain.models.Operation
+import selitskiyapp.hometasks.financialassistant.domain.models.OperationWithMoneyHolder
 
 class OperationsAdapter(
     private val itemClickListenerOperations: OperationsOnItemListener
 ) : RecyclerView.Adapter<OperationsViewHolder>() {
-    private var items: List<OperationWithMoneyHolderEntity> = emptyList()
+    private var items: List<OperationWithMoneyHolder> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OperationsViewHolder =
         OperationsViewHolder.fromParent(parent, itemClickListenerOperations)
@@ -19,7 +18,7 @@ class OperationsAdapter(
 
     override fun getItemCount() = items.size
 
-    fun submitList(data: List<OperationWithMoneyHolderEntity>) {
+    fun submitList(data: List<OperationWithMoneyHolder>) {
         items = data
         notifyDataSetChanged()
     }

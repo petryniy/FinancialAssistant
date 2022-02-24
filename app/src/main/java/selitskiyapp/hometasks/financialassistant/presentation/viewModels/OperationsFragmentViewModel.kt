@@ -3,8 +3,6 @@ package selitskiyapp.hometasks.financialassistant.presentation.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import selitskiyapp.hometasks.financialassistant.domain.models.Operation
 import selitskiyapp.hometasks.financialassistant.domain.repository.OperationsRepository
@@ -13,9 +11,12 @@ import javax.inject.Inject
 @HiltViewModel
 class OperationsFragmentViewModel @Inject constructor(
     private val operationsRepository: OperationsRepository
-) : ViewModel() {
-    fun operationsListFlow() = operationsRepository.getOperations()
 
+    ): ViewModel() {
+
+    fun getOperationsListFlow() = operationsRepository.getOperations()
+
+    val operationsSumValue = operationsRepository.getOperationsSumValue()
 
     fun getOperationById(id: Int) {
         viewModelScope.launch {

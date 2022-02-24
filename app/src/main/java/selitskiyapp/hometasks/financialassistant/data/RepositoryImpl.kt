@@ -1,6 +1,5 @@
 package selitskiyapp.hometasks.financialassistant.data
 
-import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
@@ -8,11 +7,11 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import selitskiyapp.hometasks.financialassistant.data.storage.MoneyHolderDao
 import selitskiyapp.hometasks.financialassistant.data.storage.OperationsDAO
-import selitskiyapp.hometasks.financialassistant.data.storage.models.OperationWithMoneyHolderEntity
 import selitskiyapp.hometasks.financialassistant.domain.models.MoneyHolder
 import selitskiyapp.hometasks.financialassistant.domain.models.Operation
-import selitskiyapp.hometasks.financialassistant.domain.repository.OperationsRepository
+import selitskiyapp.hometasks.financialassistant.domain.models.OperationWithMoneyHolder
 import selitskiyapp.hometasks.financialassistant.domain.repository.MoneyHoldersRepository
+import selitskiyapp.hometasks.financialassistant.domain.repository.OperationsRepository
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
@@ -21,15 +20,12 @@ class RepositoryImpl @Inject constructor(
 ) :
     MoneyHoldersRepository, OperationsRepository {
 
-//    override fun getOperations(): Flow<List<Operation>> {
-//        return operationsDAO.getOperations().map {
-//                it.map { operationsEntity ->
-//                    operationsEntity.toOperation()
-//                }
-//        }
-//    }
-    override fun getOperations(): Flow<List<OperationWithMoneyHolderEntity>> {
-        return operationsDAO.getOperations()
+    override fun getOperations(): Flow<List<OperationWithMoneyHolder>> {
+        return operationsDAO.getOperations().map {
+            it.map { operationWithMoneyHolderEntity ->
+                operationWithMoneyHolderEntity.toOperationWithMoneyHolder()
+            }
+        }.flowOn(Dispatchers.IO)
     }
 
     override suspend fun getOperationById(id: Int): Operation {
@@ -42,7 +38,6 @@ class RepositoryImpl @Inject constructor(
         withContext(Dispatchers.IO) {
             operationsDAO.addOperations(operation.toOperationEntity())
         }
-        Log.d("operationsDAO.addOperations", " Complete")
     }
 
     override suspend fun updateOperation(operation: Operation) {
@@ -57,12 +52,16 @@ class RepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getMoneyHolders(): List<MoneyHolder> {
-        return withContext(Dispatchers.IO) {
-            moneyHolderDao.getMoneyHolders().map { moneyHolderEntity ->
+    override fun getOperationsSumValue(): Flow<Long?> {
+        return operationsDAO.getOperationsSumValue().flowOn(Dispatchers.IO)
+    }
+
+    override fun getMoneyHolders(): Flow<List<MoneyHolder>> {
+        return moneyHolderDao.getMoneyHolders().map {
+            it.map { moneyHolderEntity ->
                 moneyHolderEntity.toMoneyHolder()
             }
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
     override suspend fun getMoneyHolderById(id: Int): MoneyHolder {
@@ -74,14 +73,12 @@ class RepositoryImpl @Inject constructor(
     override suspend fun addMoneyHolder(moneyHolder: MoneyHolder) {
         withContext(Dispatchers.IO) {
             moneyHolderDao.addMoneyHolder(moneyHolder.toMoneyHolderEntity())
-            Log.d("addMoneyHolder", "Complete")
         }
     }
 
     override suspend fun updateMoneyHolder(moneyHolder: MoneyHolder) {
         withContext(Dispatchers.IO) {
             moneyHolderDao.updateMoneyHolder(moneyHolder.toMoneyHolderEntity())
-            Log.d("updateMoneyHolder", "Complete")
         }
     }
 
@@ -89,5 +86,9 @@ class RepositoryImpl @Inject constructor(
         withContext(Dispatchers.IO) {
             moneyHolderDao.deleteMoneyHolder(id)
         }
+    }
+
+    override fun getMoneyHoldersSumBalance(): Flow<Long?> {
+        return moneyHolderDao.getMoneyHoldersSumBalance().flowOn(Dispatchers.IO)
     }
 }

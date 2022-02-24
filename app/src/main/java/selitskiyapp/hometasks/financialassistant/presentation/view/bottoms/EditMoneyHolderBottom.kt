@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -14,12 +13,12 @@ import dagger.hilt.android.AndroidEntryPoint
 import selitskiyapp.hometasks.financialassistant.R
 import selitskiyapp.hometasks.financialassistant.databinding.BottomEditMoneyHolderBinding
 import selitskiyapp.hometasks.financialassistant.presentation.view.fragments.MoneyHolderFragment
-import selitskiyapp.hometasks.financialassistant.presentation.viewModels.EditMoneyHolderViewModel
+import selitskiyapp.hometasks.financialassistant.presentation.viewModels.MoneyHolderFragmentViewModel
 
 @AndroidEntryPoint
 class EditMoneyHolderBottom : BottomSheetDialogFragment() {
     private lateinit var binding: BottomEditMoneyHolderBinding
-    private val viewModel: EditMoneyHolderViewModel by viewModels()
+    private val viewModel: MoneyHolderFragmentViewModel by viewModels()
 
 
     override fun onCreateView(
@@ -34,10 +33,6 @@ class EditMoneyHolderBottom : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val id: Int = requireArguments().getInt(MoneyHolderFragment.MONEY_HOLDER_ID_FROM_HOLDER)
-        Toast.makeText(
-            context, "MONEY_HOLDER_ID_FROM_HOLDER $id",
-            Toast.LENGTH_LONG
-        ).show()
 
         initClickOnIcon(id)
 
@@ -45,7 +40,7 @@ class EditMoneyHolderBottom : BottomSheetDialogFragment() {
     }
 
     private fun initFields(id: Int?) {
-        if (id != null && id !== 0) {
+        if (id != null && id != 0) {
             viewModel.getMoneyHolderById(id)
 
             lifecycleScope.launchWhenResumed {

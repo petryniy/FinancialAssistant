@@ -11,24 +11,16 @@ import selitskiyapp.hometasks.financialassistant.domain.repository.MoneyHoldersR
 import javax.inject.Inject
 
 @HiltViewModel
-class EditMoneyHolderViewModel @Inject constructor(
+class MoneyHolderFragmentViewModel @Inject constructor(
     private val moneyHoldersRepository: MoneyHoldersRepository,
 ) : ViewModel() {
-    private val _moneyHoldersListFlow = MutableStateFlow<List<MoneyHolder>>(emptyList())
-    val moneyHoldersListFlow: StateFlow<List<MoneyHolder>> get() = _moneyHoldersListFlow
 
     private val _moneyHolder = MutableStateFlow(MoneyHolder(0, "0",0,0))
     val moneyHolder: StateFlow<MoneyHolder> get() = _moneyHolder
 
-    init {
-        getAllMoneyHolders()
-    }
+    val moneyHoldersSumBalance = moneyHoldersRepository.getMoneyHoldersSumBalance()
 
-    private fun getAllMoneyHolders() {
-        viewModelScope.launch {
-            _moneyHoldersListFlow.value = moneyHoldersRepository.getMoneyHolders()
-        }
-    }
+    fun getAllMoneyHoldersListFlow() = moneyHoldersRepository.getMoneyHolders()
 
     fun getMoneyHolderById(id: Int) {
         viewModelScope.launch {

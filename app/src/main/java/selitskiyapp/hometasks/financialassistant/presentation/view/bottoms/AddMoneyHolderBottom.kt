@@ -15,12 +15,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import selitskiyapp.hometasks.financialassistant.R
 import selitskiyapp.hometasks.financialassistant.databinding.BottomAddMoneyHolderBinding
 import selitskiyapp.hometasks.financialassistant.domain.models.MoneyHolder
-import selitskiyapp.hometasks.financialassistant.presentation.viewModels.EditMoneyHolderViewModel
+import selitskiyapp.hometasks.financialassistant.presentation.utils.AmountInputFilter
+import selitskiyapp.hometasks.financialassistant.presentation.viewModels.MoneyHolderFragmentViewModel
 
 @AndroidEntryPoint
 class AddMoneyHolderBottom : BottomSheetDialogFragment() {
 
-    private val viewModel: EditMoneyHolderViewModel by viewModels()
+    private val viewModel: MoneyHolderFragmentViewModel by viewModels()
     private lateinit var binding: BottomAddMoneyHolderBinding
     private var type: Int = 0
 
@@ -36,13 +37,11 @@ class AddMoneyHolderBottom : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val id: Int = requireArguments().getInt(EditMoneyHolderBottom.MONEY_HOLDER_ID_FROM_EDIT)
+
         initTypeAdapter()
 
-    }
-
-    override fun onResume() {
-        super.onResume()
-        val id: Int = requireArguments().getInt(EditMoneyHolderBottom.MONEY_HOLDER_ID_FROM_EDIT)
+        initTextFields()
 
         initSaveButton(id)
 
@@ -50,7 +49,7 @@ class AddMoneyHolderBottom : BottomSheetDialogFragment() {
     }
 
     private fun initFields(id: Int?) {
-        if (id != null && id !== 0) {
+        if (id != null && id != 0) {
             Toast.makeText(
                 context, "getFromEditMoneyHolderBottom $id",
                 Toast.LENGTH_LONG
@@ -60,7 +59,6 @@ class AddMoneyHolderBottom : BottomSheetDialogFragment() {
                 viewModel.moneyHolder.collect { moneyHolder ->
                     binding.run {
                         tilName.editText?.setText(moneyHolder.name)
-                        //TODO напиши показ типа
                         tilBalance.editText?.setText(moneyHolder.balance.toString())
                     }
                 }
@@ -69,7 +67,6 @@ class AddMoneyHolderBottom : BottomSheetDialogFragment() {
     }
 
     private fun initSaveButton(id: Int?) = with(binding) {
-        cleanErrors()
 
         button.setOnClickListener {
             when {
@@ -78,7 +75,7 @@ class AddMoneyHolderBottom : BottomSheetDialogFragment() {
                 tilBalance.editText?.text.isNullOrEmpty() -> tilBalance.error =
                     "Вы не ввели текущий баланс"
                 else -> {
-                    if (id != null && id !== 0) updateMoneyHolder(id) else addMoneyHolder()
+                    if (id != null && id != 0) updateMoneyHolder(id) else addMoneyHolder()
                     dismiss()
                     findNavController().navigate(R.id.addMoneyHolderBottom_to_moneyHolderFragment)
                 }
@@ -87,14 +84,14 @@ class AddMoneyHolderBottom : BottomSheetDialogFragment() {
     }
 
     private fun updateMoneyHolder(id: Int) = with(binding) {
-        val toUpdate =
+        viewModel.updateMoneyHolder(
             MoneyHolder(
                 id = id,
                 name = tilName.editText?.text.toString(),
                 type = type,
-                balance = tilBalance.editText?.text.toString().toLong()
+                balance = tilBalance.editText?.text.toString().toFloat().let { (it * 100).toLong() }
             )
-        viewModel.updateMoneyHolder(toUpdate)
+        )
     }
 
     private fun addMoneyHolder() = with(binding) {
@@ -102,15 +99,16 @@ class AddMoneyHolderBottom : BottomSheetDialogFragment() {
             MoneyHolder(
                 name = tilName.editText?.text.toString(),
                 type = type,
-                balance = tilBalance.editText?.text.toString().toLong()
+                balance = tilBalance.editText?.text.toString().toFloat().let { (it * 100).toLong() }
             )
         )
     }
 
-    private fun cleanErrors() = with(binding) {
+    private fun initTextFields() = with(binding) {
         tilName.editText?.doAfterTextChanged { tilName.error = null }
         tilType.editText?.doAfterTextChanged { tilType.error = null }
         tilBalance.editText?.doAfterTextChanged { tilBalance.error = null }
+        tilBalance.editText?.filters = arrayOf(AmountInputFilter())
     }
 
     private fun initTypeAdapter() = with(binding) {

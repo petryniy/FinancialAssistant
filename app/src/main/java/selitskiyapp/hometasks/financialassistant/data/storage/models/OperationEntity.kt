@@ -18,7 +18,7 @@ data class OperationEntity(
     @ColumnInfo(name = "categoryImageId")
     val categoryImageId: Int,
     @ColumnInfo(name = "date")
-    val date: Long,
+    val date: String,
     @ColumnInfo(name = "comment")
     val comment: String,
 )
