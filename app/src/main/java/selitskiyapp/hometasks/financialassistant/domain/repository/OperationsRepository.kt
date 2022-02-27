@@ -2,12 +2,13 @@ package selitskiyapp.hometasks.financialassistant.domain.repository
 
 import kotlinx.coroutines.flow.Flow
 import selitskiyapp.hometasks.financialassistant.data.storage.models.OperationWithMoneyHolderEntity
+import selitskiyapp.hometasks.financialassistant.domain.models.Filter
 import selitskiyapp.hometasks.financialassistant.domain.models.Operation
 import selitskiyapp.hometasks.financialassistant.domain.models.OperationWithMoneyHolder
 
 interface OperationsRepository {
 
-    fun getOperations(): Flow<List<OperationWithMoneyHolder>>
+    fun getAllOperations(): Flow<List<OperationWithMoneyHolder>>
 
     suspend fun getOperationById(id: Int): Operation
 
@@ -18,5 +19,7 @@ interface OperationsRepository {
     suspend fun deleteOperation(id: Int)
 
     fun getOperationsSumValue(): Flow<Long?>
+
+    suspend fun getFilteredOperationsListFlow(filter: Filter): Flow<List<OperationWithMoneyHolder>>
 
 }

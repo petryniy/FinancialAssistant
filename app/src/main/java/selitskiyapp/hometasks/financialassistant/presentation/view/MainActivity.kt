@@ -1,11 +1,14 @@
 package selitskiyapp.hometasks.financialassistant.presentation.view
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
+import android.view.View.GONE
+import android.view.View.VISIBLE
+import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -14,7 +17,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import selitskiyapp.hometasks.financialassistant.R
 import selitskiyapp.hometasks.financialassistant.databinding.ActivityMainBinding
-import selitskiyapp.hometasks.financialassistant.presentation.view.fragments.OperationsFragment
 import selitskiyapp.hometasks.financialassistant.presentation.viewModels.ActivityMainViewModel
 
 @AndroidEntryPoint
@@ -27,16 +29,35 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        setContentView(binding.root)
+        initBottomMenu()
 
+        initBalance()
+
+        initFilterButton()
+
+    }
+
+    private fun initFilterButton() {
+        binding.imageViewFilter.setOnClickListener {
+            findNavController(R.id.fragment_container).navigate(R.id.operationsFragment_to_bottomSheetFilterFragment)
+        }
+    }
+
+    private fun initBottomMenu() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
         val navController = navHostFragment.navController
         findViewById<BottomNavigationView>(R.id.bottom_nav_menu)
             .setupWithNavController(navController)
 
-        initBalance()
-
+        navController.addOnDestinationChangedListener { _, navDestenetion, _ ->
+            binding.apply {
+                when (navDestenetion.id) {
+                    R.id.operationsFragment -> imageViewFilter.visibility = VISIBLE
+                    else -> findViewById<ImageView>(R.id.imageViewFilter).visibility = GONE
+                }
+            }
+        }
     }
 
     private fun initBalance() {

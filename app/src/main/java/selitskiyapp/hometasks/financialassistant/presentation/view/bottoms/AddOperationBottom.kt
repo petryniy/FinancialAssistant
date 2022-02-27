@@ -29,11 +29,11 @@ class AddOperationBottom : BottomSheetDialogFragment() {
     private lateinit var binding: BottomAddOperationBinding
     private val operationsViewModel: OperationsFragmentViewModel by viewModels()
     private val moneyHoldersFragmentViewModel: MoneyHolderFragmentViewModel by viewModels()
-
     private var category: String = "0"
     private var categoryImageId: Int = 0
     private var moneyHolderId: Int? = null
-    private var result = false
+    private var initCategoryBoolean = false
+    private var initTypeItemBoolean = false
     private var currentSelectedDate: Long? = null
     private var value: Long = 0
 
@@ -64,33 +64,67 @@ class AddOperationBottom : BottomSheetDialogFragment() {
 
     private fun initSaveButton() = with(binding) {
         buttonOperationSave.setOnClickListener {
+            when {
+                !initTypeItem() -> Toast.makeText(
+                    context,
+                    "Вы не выбрали расход/доход!",
+                    Toast.LENGTH_LONG
+                ).show()
 
-            isFieldsEmpty()
+                tilAddValue.editText?.text.isNullOrEmpty() ->
+                    tilAddValue.error = "Вы не ввели значение"
 
-            val operation = Operation(
+                !initCategory() -> Toast.makeText(
+                    context,
+                    "Вы не выбрали категорию расхода!",
+                    Toast.LENGTH_LONG
+                ).show()
+
+                tilAddOperation.editText?.text.isNullOrEmpty() ->
+                    tilAddOperation.error = "Вы не выбрали счёт"
+
+                tilAddDate.editText?.text.isNullOrEmpty() ->
+                    tilAddDate.error = "Вы не выбрали дату"
+
+                else -> {
+                    addOperation()
+
+
+                    dismiss()
+                }
+            }
+        }
+    }
+
+    private fun addOperation() = with(binding) {
+        val operation = moneyHolderId?.let { it1 ->
+            Operation(
                 category = category,
-                moneyHolderId = moneyHolderId!!,
+                moneyHolderId = it1,
                 value = tilAddValue.editText?.text.toString().toFloat()
                     .let { (it * value).toLong() },
                 categoryImageId = categoryImageId,
                 date = tilAddDate.editText?.text.toString(),
                 comment = tilAddComments.editText?.text.toString()
             )
+        }
 
-            Log.d("nnjdnf!", operation.toString())
+        Toast.makeText(requireContext(), "Операция добавлена!", Toast.LENGTH_SHORT)
+            .show()
 
-            Toast.makeText(requireContext(), operation.toString(), Toast.LENGTH_LONG)
-                .show()
-
+        if (operation != null) {
             operationsViewModel.addOperation(operation)
-
-            dismiss()
         }
     }
 
     private fun isFieldsEmpty(): Boolean = with(binding) {
-
         when {
+            !initTypeItem() -> Toast.makeText(
+                context,
+                "Вы не выбрали расход/доход!",
+                Toast.LENGTH_LONG
+            ).show()
+
             tilAddValue.editText?.text.isNullOrEmpty() ->
                 tilAddValue.error = "Вы не ввели значение"
 
@@ -109,7 +143,6 @@ class AddOperationBottom : BottomSheetDialogFragment() {
         return true
     }
 
-
     private fun initTextFields() = with(binding) {
         tilAddValue.editText?.doAfterTextChanged { tilAddValue.error = null }
         tilAddOperation.editText?.doAfterTextChanged { tilAddOperation.error = null }
@@ -120,57 +153,66 @@ class AddOperationBottom : BottomSheetDialogFragment() {
 
     private fun initCategory(): Boolean = with(binding) {
         chipGroupType.setOnCheckedChangeListener { group, checkedId ->
-
             when (checkedId) {
                 chipCar.id -> {
                     category = "Машина"
                     categoryImageId = 1
-                    result = true
-
+                    initCategoryBoolean = true
                 }
+
                 chipProducts.id -> {
                     category = "Продукты"
                     categoryImageId = 2
-                    result = true
-
+                    initCategoryBoolean = true
                 }
+
                 chipPets.id -> {
                     category = "Животные"
                     categoryImageId = 3
-                    result = true
+                    initCategoryBoolean = true
                 }
+
                 chipChildren.id -> {
                     category = "Дети"
                     categoryImageId = 2
-                    result = true
+                    initCategoryBoolean = true
                 }
+
                 chipHouse.id -> {
                     category = "Дом"
                     categoryImageId = 2
-                    result = true
+                    initCategoryBoolean = true
                 }
+
                 chipRelax.id -> {
                     category = "Отдых"
                     categoryImageId = 2
-                    result = true
+                    initCategoryBoolean = true
                 }
-                else -> result = false
+                else -> initCategoryBoolean = false
             }
         }
-        return result
+        return initCategoryBoolean
     }
 
-    private fun initTypeItem() = with(binding) {
-        chipGroupDC.setOnCheckedChangeListener { group, checkedId ->
+    private fun initTypeItem(): Boolean = with(binding) {
+        chipGroupDC.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
 
-                chipCredit.id -> value = 1 * 100 * -1
+                chipCredit.id -> {
+                    value = 1 * 100 * -1
+                    initTypeItemBoolean = true
+                }
 
-                chipDebit.id -> value = 1 * 100
+                chipDebit.id -> {
+                    value = 1 * 100
+                    initTypeItemBoolean = true
+                }
 
+                else -> initTypeItemBoolean = false
             }
-
         }
+        return initTypeItemBoolean
     }
 
     private fun showDatePicker() {
@@ -207,9 +249,11 @@ class AddOperationBottom : BottomSheetDialogFragment() {
         lifecycleScope.launchWhenResumed {
             moneyHoldersFragmentViewModel.getAllMoneyHoldersListFlow().collect { list ->
                 val adapter = MoneyHolderArrayAdapter(requireContext(), list)
-                binding.actvAddOperation.setAdapter(adapter)
-                binding.actvAddOperation.setOnItemClickListener { _, _, position, _ ->
-                    moneyHolderId = adapter.getItem(position)?.id
+                binding.run {
+                    actvAddOperation.setAdapter(adapter)
+                    actvAddOperation.setOnItemClickListener { _, _, position, _ ->
+                        moneyHolderId = adapter.getItem(position)?.id
+                    }
                 }
             }
         }

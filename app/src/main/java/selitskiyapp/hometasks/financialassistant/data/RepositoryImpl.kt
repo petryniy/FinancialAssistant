@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import selitskiyapp.hometasks.financialassistant.data.storage.MoneyHolderDao
 import selitskiyapp.hometasks.financialassistant.data.storage.OperationsDAO
+import selitskiyapp.hometasks.financialassistant.domain.models.Filter
 import selitskiyapp.hometasks.financialassistant.domain.models.MoneyHolder
 import selitskiyapp.hometasks.financialassistant.domain.models.Operation
 import selitskiyapp.hometasks.financialassistant.domain.models.OperationWithMoneyHolder
@@ -20,7 +21,7 @@ class RepositoryImpl @Inject constructor(
 ) :
     MoneyHoldersRepository, OperationsRepository {
 
-    override fun getOperations(): Flow<List<OperationWithMoneyHolder>> {
+    override fun getAllOperations(): Flow<List<OperationWithMoneyHolder>> {
         return operationsDAO.getOperations().map {
             it.map { operationWithMoneyHolderEntity ->
                 operationWithMoneyHolderEntity.toOperationWithMoneyHolder()
@@ -54,6 +55,33 @@ class RepositoryImpl @Inject constructor(
 
     override fun getOperationsSumValue(): Flow<Long?> {
         return operationsDAO.getOperationsSumValue().flowOn(Dispatchers.IO)
+    }
+
+    override suspend fun getFilteredOperationsListFlow(filter: Filter): Flow<List<OperationWithMoneyHolder>> {
+        getAllOperations()
+        return when (filter) {
+            is Filter.EmptyFilter -> getAllOperations()
+
+            is Filter.DateFilter -> getAllOperations().map {
+                it.filter { operationWithMoneyHolder ->
+                    operationWithMoneyHolder.operationEntity.date.contains(filter.date)
+                }
+            }
+
+            is Filter.CategoryFilter -> getAllOperations().map {
+                it.filter { operationWithMoneyHolder ->
+                    operationWithMoneyHolder.operationEntity.category
+                        .lowercase()
+                        .contains(filter.category.lowercase())
+                }
+            }
+
+            is Filter.MoneyHolderFilter -> getAllOperations().map {
+                it.filter { operationWithMoneyHolder ->
+                    operationWithMoneyHolder.operationEntity.moneyHolderId == filter.id
+                }
+            }
+        }
     }
 
     override fun getMoneyHolders(): Flow<List<MoneyHolder>> {

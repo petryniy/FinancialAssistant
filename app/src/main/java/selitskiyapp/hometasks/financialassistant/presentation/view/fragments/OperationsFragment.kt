@@ -5,18 +5,21 @@ import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import selitskiyapp.hometasks.financialassistant.R
 import selitskiyapp.hometasks.financialassistant.databinding.FragmentOperationsBinding
+import selitskiyapp.hometasks.financialassistant.domain.models.Filter
 import selitskiyapp.hometasks.financialassistant.presentation.recyclers.operations.OperationsAdapter
 import selitskiyapp.hometasks.financialassistant.presentation.recyclers.operations.OperationsOnItemListener
+import selitskiyapp.hometasks.financialassistant.presentation.viewModels.FilterSharedViewModel
 import selitskiyapp.hometasks.financialassistant.presentation.viewModels.OperationsFragmentViewModel
 
 @AndroidEntryPoint
@@ -25,8 +28,7 @@ class OperationsFragment : Fragment(R.layout.fragment_operations) {
     private val binding: FragmentOperationsBinding by viewBinding()
     private val adapter by lazy { OperationsAdapter(itemClickListenerOperations) }
     private val viewModel: OperationsFragmentViewModel by viewModels()
-
-
+    private val sharedViewModel: FilterSharedViewModel by activityViewModels()
 
     private val itemClickListenerOperations: OperationsOnItemListener =
         object : OperationsOnItemListener {
@@ -51,7 +53,7 @@ class OperationsFragment : Fragment(R.layout.fragment_operations) {
     private fun initObservers() {
 
         viewModel.viewModelScope.launch {
-            viewModel.getOperationsListFlow().collect {
+            viewModel.getFilteredOperationsListFlow(Filter.EmptyFilter).collect {
                 adapter.submitList(it)
             }
         }
@@ -64,6 +66,13 @@ class OperationsFragment : Fragment(R.layout.fragment_operations) {
                 Log.d("balance", "operationsSumValue $operationsSumValue")
             }
         }
+
+        sharedViewModel.filter.observe(viewLifecycleOwner) { filter ->
+            viewModel.viewModelScope.launch{ viewModel.getFilteredOperationsListFlow(filter).collect{
+                adapter.submitList(it)
+            }}
+        }
+
     }
 
     private fun initRecycler() = with(binding) {
@@ -73,7 +82,7 @@ class OperationsFragment : Fragment(R.layout.fragment_operations) {
 
     private fun initAddButton() = with(binding) {
         fabOperation.setOnClickListener {
-            findNavController().navigate(R.id.to_addOperationBottom)
+            findNavController().navigate(R.id.operationsFragment_to_addOperationBottom)
         }
     }
     companion object {

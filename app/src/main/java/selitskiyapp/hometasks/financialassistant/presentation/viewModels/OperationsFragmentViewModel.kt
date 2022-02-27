@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import selitskiyapp.hometasks.financialassistant.domain.models.Filter
 import selitskiyapp.hometasks.financialassistant.domain.models.Operation
 import selitskiyapp.hometasks.financialassistant.domain.repository.OperationsRepository
 import javax.inject.Inject
@@ -14,7 +15,7 @@ class OperationsFragmentViewModel @Inject constructor(
 
     ): ViewModel() {
 
-    fun getOperationsListFlow() = operationsRepository.getOperations()
+    suspend fun getFilteredOperationsListFlow(filter: Filter) = operationsRepository.getFilteredOperationsListFlow(filter)
 
     val operationsSumValue = operationsRepository.getOperationsSumValue()
 
