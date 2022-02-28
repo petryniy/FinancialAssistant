@@ -59,7 +59,7 @@ class MoneyHolderFragment : Fragment(R.layout.fragment_money_holder) {
                 if (it != null) {
                     moneyHoldersSumBalance = it
                 }
-                Log.d("balance", "moneyHoldersSumBalance $moneyHoldersSumBalance")
+                Log.d("myDebug", "moneyHoldersSumBalance $moneyHoldersSumBalance")
             }
         }
     }

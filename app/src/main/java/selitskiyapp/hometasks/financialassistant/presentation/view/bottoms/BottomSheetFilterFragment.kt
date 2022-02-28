@@ -1,12 +1,14 @@
 package selitskiyapp.hometasks.financialassistant.presentation.view.bottoms
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo.IME_ACTION_DONE
+import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.TextView
 import androidx.core.widget.doAfterTextChanged
@@ -64,7 +66,7 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment() {
 
                     filterDate.setOnClickListener {
 //                        DatePicker().showDatePicker(childFragmentManager, TAG)
-                    showDatePicker()
+                        showDatePicker()
                     }
 
                     filterDate.doAfterTextChanged { date ->
@@ -86,16 +88,18 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment() {
 
                     tilFilterMoneyHolder.visibility = VISIBLE
 
-                    actvFilterMoneyHolder.doAfterTextChanged {
+                    actvFilterMoneyHolder.setOnDismissListener {
+                        Log.d("observe", "$moneyHolderId")
                         moneyHolderId?.let { it1 -> Filter.MoneyHolderFilter(it1) }?.let { it2 ->
                             sharedViewModel.setFilter(
                                 it2
                             )
                         }
-
-                        dismiss()
                     }
-                }
+
+
+//                        dismiss()
+                    }
 
                 radioClean.id -> {
                     sharedViewModel.setFilter(Filter.EmptyFilter)

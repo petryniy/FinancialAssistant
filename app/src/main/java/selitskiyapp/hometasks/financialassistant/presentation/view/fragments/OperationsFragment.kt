@@ -3,7 +3,6 @@ package selitskiyapp.hometasks.financialassistant.presentation.view.fragments
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -12,15 +11,21 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import selitskiyapp.hometasks.financialassistant.R
 import selitskiyapp.hometasks.financialassistant.databinding.FragmentOperationsBinding
+import selitskiyapp.hometasks.financialassistant.domain.models.BaseItem
 import selitskiyapp.hometasks.financialassistant.domain.models.Filter
+import selitskiyapp.hometasks.financialassistant.domain.models.HeadItem
+import selitskiyapp.hometasks.financialassistant.domain.models.OperationWithMoneyHolder
 import selitskiyapp.hometasks.financialassistant.presentation.recyclers.operations.OperationsAdapter
 import selitskiyapp.hometasks.financialassistant.presentation.recyclers.operations.OperationsOnItemListener
 import selitskiyapp.hometasks.financialassistant.presentation.viewModels.FilterSharedViewModel
 import selitskiyapp.hometasks.financialassistant.presentation.viewModels.OperationsFragmentViewModel
+
 
 @AndroidEntryPoint
 class OperationsFragment : Fragment(R.layout.fragment_operations) {
@@ -30,13 +35,18 @@ class OperationsFragment : Fragment(R.layout.fragment_operations) {
     private val viewModel: OperationsFragmentViewModel by viewModels()
     private val sharedViewModel: FilterSharedViewModel by activityViewModels()
 
+    private lateinit var filter: Filter
+    private lateinit var listOperations: List<OperationWithMoneyHolder>
+    private lateinit var listBaseItem: MutableList<BaseItem>
+
+
     private val itemClickListenerOperations: OperationsOnItemListener =
         object : OperationsOnItemListener {
             override fun onItemClickListener(id: Int) {
-                findNavController().navigate(
-                    R.id.moneyHolderFragment_to_editMoneyHolderBottom,
-                    bundleOf(MONEY_HOLDER_ID_FROM_HOLDER to id)
-                )
+//                findNavController().navigate(
+//                    R.id.moneyHolderFragment_to_editMoneyHolderBottom,
+//                    bundleOf(MONEY_HOLDER_ID_FROM_HOLDER to id)
+//                )
             }
         }
 
@@ -44,35 +54,62 @@ class OperationsFragment : Fragment(R.layout.fragment_operations) {
         super.onViewCreated(view, savedInstanceState)
 
         initAddButton()
-
+    viewModel.viewModelScope.launch {
         initObservers()
+    }
 
         initRecycler()
     }
 
-    private fun initObservers() {
-
-        viewModel.viewModelScope.launch {
-            viewModel.getFilteredOperationsListFlow(Filter.EmptyFilter).collect {
-                adapter.submitList(it)
+    private suspend fun initObservers() = coroutineScope {
+       launch {
+            sharedViewModel.filter.collect { newFilter ->
+                filter = newFilter
+                viewModel.viewModelScope.launch {
+                    viewModel.getFilteredOperationsListFlow(filter).collect {
+                        listOperations = it.sortedByDescending { operationWithMoneyHolder ->
+                            operationWithMoneyHolder.operationEntity.date
+                        }
+                        launch {
+//                            listBaseItem.addAll(0, listOperations)
+                            adapter.submitList(listOperations)
+                    }
+                }
             }
         }
+
+       }
+
+
+
+
+//        var listOperations = listOf(
+//            OperationWithMoneyHolder(
+//                operationEntity = OperationEntity(
+//                id = 20,
+//                category = "Животные",
+//                moneyHolderId = 3,
+//                value = 2500,
+//                categoryImageId = 2,
+//                date = "28.02.2023",
+//                comment = "создал сам"
+//            ),
+//            MoneyHolderEntity(moneyId = 1, name = "3", type = 2, balance = 200000)
+//            ),
+//            HeadItem(date = "2020")
+//        )
+//
+//        adapter.submitList(listOperations)
+
 
         viewModel.viewModelScope.launch {
             viewModel.operationsSumValue.collect {
                 if (it != null) {
                     operationsSumValue = it
                 }
-                Log.d("balance", "operationsSumValue $operationsSumValue")
+                Log.d("myDebug", "operationsSumValue $operationsSumValue")
             }
         }
-
-        sharedViewModel.filter.observe(viewLifecycleOwner) { filter ->
-            viewModel.viewModelScope.launch{ viewModel.getFilteredOperationsListFlow(filter).collect{
-                adapter.submitList(it)
-            }}
-        }
-
     }
 
     private fun initRecycler() = with(binding) {
@@ -85,8 +122,9 @@ class OperationsFragment : Fragment(R.layout.fragment_operations) {
             findNavController().navigate(R.id.operationsFragment_to_addOperationBottom)
         }
     }
+
     companion object {
-        const val MONEY_HOLDER_ID_FROM_HOLDER = "HOLDER"
+        const val ID_FROM_OPERATIONS_FRAGMENT = "HOLDER"
         var operationsSumValue: Long = 0
     }
 }

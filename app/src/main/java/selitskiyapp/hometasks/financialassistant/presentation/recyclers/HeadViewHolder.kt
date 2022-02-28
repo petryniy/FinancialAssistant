@@ -5,6 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import selitskiyapp.hometasks.financialassistant.R
+import selitskiyapp.hometasks.financialassistant.domain.models.BaseItem
+import selitskiyapp.hometasks.financialassistant.domain.models.HeadItem
 
 
 class HeadViewHolder(view: View) : BaseViewHolder(view) {

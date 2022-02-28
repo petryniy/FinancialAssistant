@@ -152,7 +152,7 @@ class AddOperationBottom : BottomSheetDialogFragment() {
     }
 
     private fun initCategory(): Boolean = with(binding) {
-        chipGroupType.setOnCheckedChangeListener { group, checkedId ->
+        chipGroupType.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 chipCar.id -> {
                     category = "Машина"
@@ -174,19 +174,19 @@ class AddOperationBottom : BottomSheetDialogFragment() {
 
                 chipChildren.id -> {
                     category = "Дети"
-                    categoryImageId = 2
+                    categoryImageId = 4
                     initCategoryBoolean = true
                 }
 
                 chipHouse.id -> {
                     category = "Дом"
-                    categoryImageId = 2
+                    categoryImageId = 5
                     initCategoryBoolean = true
                 }
 
                 chipRelax.id -> {
                     category = "Отдых"
-                    categoryImageId = 2
+                    categoryImageId = 6
                     initCategoryBoolean = true
                 }
                 else -> initCategoryBoolean = false
