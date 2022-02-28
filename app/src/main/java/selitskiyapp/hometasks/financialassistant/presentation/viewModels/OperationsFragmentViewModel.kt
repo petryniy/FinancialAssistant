@@ -4,8 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import selitskiyapp.hometasks.financialassistant.data.storage.models.MoneyHolderEntity
+import selitskiyapp.hometasks.financialassistant.data.storage.models.OperationEntity
 import selitskiyapp.hometasks.financialassistant.domain.models.Filter
 import selitskiyapp.hometasks.financialassistant.domain.models.Operation
 import selitskiyapp.hometasks.financialassistant.domain.models.OperationWithMoneyHolder
@@ -15,9 +19,17 @@ import javax.inject.Inject
 @HiltViewModel
 class OperationsFragmentViewModel @Inject constructor(
 
-    private val operationsRepository: OperationsRepository
+    private val operationsRepository: OperationsRepository,
 
-    ): ViewModel() {
+    ) : ViewModel() {
+
+    private val _operation = MutableStateFlow(OperationWithMoneyHolder(
+        OperationEntity(
+            0,"0",0, 0,0,"0","0"
+        ),
+    MoneyHolderEntity(0,"0", 0, 0)
+    ))
+    val operation: StateFlow<OperationWithMoneyHolder> get() = _operation
 
     fun getFilteredOperationsListFlow(filter: Filter): Flow<List<OperationWithMoneyHolder>> {
 
@@ -54,14 +66,15 @@ class OperationsFragmentViewModel @Inject constructor(
 
     fun getOperationById(id: Int) {
         viewModelScope.launch {
-//            _operation.value = operationsRepository.getOperationById(id)
+             operationsRepository.getOperationById(id).collect{
+                 _operation.value = it
+             }
         }
     }
 
     fun addOperation(operation: Operation) {
         viewModelScope.launch {
             operationsRepository.addOperation(operation)
-
         }
     }
 

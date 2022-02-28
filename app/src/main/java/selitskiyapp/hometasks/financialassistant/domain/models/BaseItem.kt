@@ -1,6 +1,5 @@
 package selitskiyapp.hometasks.financialassistant.domain.models
 
-import kotlinx.coroutines.flow.MutableStateFlow
 import selitskiyapp.hometasks.financialassistant.data.storage.models.MoneyHolderEntity
 import selitskiyapp.hometasks.financialassistant.data.storage.models.OperationEntity
 

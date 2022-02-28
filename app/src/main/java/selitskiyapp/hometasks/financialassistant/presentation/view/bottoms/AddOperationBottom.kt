@@ -1,7 +1,6 @@
 package selitskiyapp.hometasks.financialassistant.presentation.view.bottoms
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -103,7 +102,7 @@ class AddOperationBottom : BottomSheetDialogFragment() {
                 moneyHolderId = it1,
                 value = tilAddValue.editText?.text.toString().toFloat()
                     .let { (it * value).toLong() },
-                categoryImageId = categoryImageId,
+                categoryDrawable = categoryImageId,
                 date = tilAddDate.editText?.text.toString(),
                 comment = tilAddComments.editText?.text.toString()
             )

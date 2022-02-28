@@ -8,7 +8,6 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo.IME_ACTION_DONE
-import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.TextView
 import androidx.core.widget.doAfterTextChanged
@@ -95,11 +94,9 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment() {
                                 it2
                             )
                         }
+                        dismiss()
                     }
-
-
-//                        dismiss()
-                    }
+                }
 
                 radioClean.id -> {
                     sharedViewModel.setFilter(Filter.EmptyFilter)
@@ -125,7 +122,6 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment() {
                         )
                     }
                 }
-
         dataPicker.show(childFragmentManager, TAG)
     }
 

@@ -17,9 +17,9 @@ import selitskiyapp.hometasks.financialassistant.presentation.viewModels.MoneyHo
 
 @AndroidEntryPoint
 class EditMoneyHolderBottom : BottomSheetDialogFragment() {
+
     private lateinit var binding: BottomEditMoneyHolderBinding
     private val viewModel: MoneyHolderFragmentViewModel by viewModels()
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

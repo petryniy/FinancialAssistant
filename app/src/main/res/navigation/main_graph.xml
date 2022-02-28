@@ -64,7 +64,7 @@
         <dialog
             android:id="@+id/editOperationBottom"
             android:name="selitskiyapp.hometasks.financialassistant.presentation.view.bottoms.EditOperationBottom"
-            android:label="EditBottom"
+            android:label="EditOperationBottom"
             tools:layout="@layout/bottom_edit_operation" />
         <dialog
             android:id="@+id/addOperationBottom"

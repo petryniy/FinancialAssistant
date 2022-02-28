@@ -9,8 +9,11 @@ import selitskiyapp.hometasks.financialassistant.presentation.recyclers.BaseView
 import selitskiyapp.hometasks.financialassistant.presentation.recyclers.HeadViewHolder
 
 class OperationsAdapter(
+
     private val itemClickListenerOperations: OperationsOnItemListener
+
 ) : RecyclerView.Adapter<BaseViewHolder>() {
+
     private var items: List<BaseItem> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder =

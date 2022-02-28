@@ -37,7 +37,7 @@ class OperationsViewHolder(
 //        itemTypeOfValue.text = item.moneyHolderEntity.name
 //        itemValue.text = root.context.getString(R.string.msg_currency_byn_amount_format, item.operationEntity.value / 100f)
 //        itemImageId.setImageResource(
-//            when (item.operationEntity.categoryImageId) {
+//            when (item.operationEntity.categoryDrawable) {
 //                1 -> R.drawable.ic_car
 //                2 -> R.drawable.ic_products
 //                3 -> R.drawable.ic_pets
@@ -48,9 +48,7 @@ class OperationsViewHolder(
 //            }
 //        )
 //
-//        itemDebit.setOnClickListener {
-//            item.operationEntity.id.let { it1 -> itemClickListenerOperations.onItemClickListener(it1) }
-//        }
+
 //    }
 
     override fun bindViewHolder(item: BaseItem) {
@@ -63,7 +61,7 @@ class OperationsViewHolder(
                 item.operationEntity.value / 100f
             )
             itemImageId.setImageResource(
-                when (operationItem.operationEntity.categoryImageId) {
+                when (operationItem.operationEntity.categoryDrawable) {
                     1 -> R.drawable.ic_car
                     2 -> R.drawable.ic_products
                     3 -> R.drawable.ic_pets
@@ -73,6 +71,12 @@ class OperationsViewHolder(
                     else -> R.drawable.ic_add
                 }
             )
+
+            itemOperation.setOnClickListener {
+                item.operationEntity.id.let { it1 ->
+                    itemClickListenerOperations.onItemClickListener(it1)
+                }
+            }
         }
     }
 }

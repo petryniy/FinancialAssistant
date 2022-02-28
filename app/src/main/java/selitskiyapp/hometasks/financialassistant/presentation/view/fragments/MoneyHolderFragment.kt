@@ -27,12 +27,14 @@ class MoneyHolderFragment : Fragment(R.layout.fragment_money_holder) {
 
     private val itemClickListenerMoneyHolder: MoneyHolderOnItemListener =
         object : MoneyHolderOnItemListener {
+
             override fun onItemClickListener(id: Int) {
 
                 findNavController().navigate(
                     R.id.moneyHolderFragment_to_editMoneyHolderBottom,
                     bundleOf(MONEY_HOLDER_ID_FROM_HOLDER to id)
                 )
+
             }
         }
 

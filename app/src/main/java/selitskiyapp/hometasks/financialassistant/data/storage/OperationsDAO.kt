@@ -16,7 +16,7 @@ interface OperationsDAO {
     fun getOperations(): Flow<List<OperationWithMoneyHolderEntity>>
 
     @Query("SELECT*FROM operations WHERE id = :id")
-    suspend fun getOperationById(id: Int): OperationEntity
+    fun getOperationById(id: Int): Flow<OperationWithMoneyHolderEntity>
 
     @Insert
     suspend fun addOperations(operationEntity: OperationEntity)

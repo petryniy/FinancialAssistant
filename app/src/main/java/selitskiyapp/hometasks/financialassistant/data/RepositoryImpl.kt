@@ -1,10 +1,14 @@
 package selitskiyapp.hometasks.financialassistant.data
 
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.withContext
 import selitskiyapp.hometasks.financialassistant.data.storage.MoneyHolderDao
 import selitskiyapp.hometasks.financialassistant.data.storage.OperationsDAO
+import selitskiyapp.hometasks.financialassistant.data.storage.models.OperationEntity
 import selitskiyapp.hometasks.financialassistant.domain.models.MoneyHolder
 import selitskiyapp.hometasks.financialassistant.domain.models.Operation
 import selitskiyapp.hometasks.financialassistant.domain.models.OperationWithMoneyHolder
@@ -13,8 +17,10 @@ import selitskiyapp.hometasks.financialassistant.domain.repository.OperationsRep
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
+
     private val operationsDAO: OperationsDAO,
     private val moneyHolderDao: MoneyHolderDao
+
 ) :
     MoneyHoldersRepository, OperationsRepository {
 
@@ -26,11 +32,10 @@ class RepositoryImpl @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-    override suspend fun getOperationById(id: Int): Operation {
-        return withContext(Dispatchers.IO) {
-            operationsDAO.getOperationById(id).toOperation()
-        }
+    override fun getOperationById(id: Int): Flow<OperationWithMoneyHolder> {
+        return operationsDAO.getOperationById(id).transform { it.toOperationWithMoneyHolder() }
     }
+
 
     override suspend fun addOperation(operation: Operation) {
         withContext(Dispatchers.IO) {
@@ -89,4 +94,5 @@ class RepositoryImpl @Inject constructor(
     override fun getMoneyHoldersSumBalance(): Flow<Long?> {
         return moneyHolderDao.getMoneyHoldersSumBalance().flowOn(Dispatchers.IO)
     }
+
 }

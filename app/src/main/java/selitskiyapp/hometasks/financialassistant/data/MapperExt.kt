@@ -13,7 +13,7 @@ fun OperationEntity.toOperation() =
         category = category,
         moneyHolderId = moneyHolderId,
         value = value,
-        categoryImageId = categoryImageId,
+        categoryDrawable = categoryDrawable,
         date = date,
         comment = comment
     )
@@ -24,7 +24,7 @@ fun Operation.toOperationEntity() =
         category = category,
         moneyHolderId = moneyHolderId,
         value = value,
-        categoryImageId = categoryImageId,
+        categoryDrawable = categoryDrawable,
         date = date,
         comment = comment
     )

@@ -1,6 +1,5 @@
 package selitskiyapp.hometasks.financialassistant.data.storage.models
 
-import android.graphics.drawable.Drawable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -15,8 +14,8 @@ data class OperationEntity(
     val moneyHolderId: Int,
     @ColumnInfo(name = "value")
     val value: Long,
-    @ColumnInfo(name = "categoryImageId")
-    val categoryImageId: Int,
+    @ColumnInfo(name = "categoryDrawable")
+    val categoryDrawable: Int,
     @ColumnInfo(name = "date")
     val date: String,
     @ColumnInfo(name = "comment")

@@ -5,7 +5,7 @@ data class Operation(
     val category: String,
     val moneyHolderId: Int,
     val value: Long,
-    val categoryImageId: Int,
+    val categoryDrawable: Int,
     val date: String,
     val comment: String,
 )
