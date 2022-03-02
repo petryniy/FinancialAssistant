@@ -9,7 +9,7 @@ interface OperationsRepository {
 
     fun getAllOperations(): Flow<List<OperationWithMoneyHolder>>
 
-    fun getOperationById(id: Int): Flow<OperationWithMoneyHolder>
+    fun getOperationById(id: Int): Flow<OperationWithMoneyHolder?>
 
     suspend fun addOperation(operation: Operation)
 

@@ -10,7 +10,7 @@ class MoneyHolderAdapter(
 
 ) : RecyclerView.Adapter<MoneyHolderViewHolder>() {
 
-    private var items: List<MoneyHolder> = emptyList()
+    private var items: List<MoneyHolder?> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoneyHolderViewHolder =
         MoneyHolderViewHolder.fromParent(parent, itemClickListenerMoneyHolder)
@@ -21,7 +21,7 @@ class MoneyHolderAdapter(
 
     override fun getItemCount() = items.size
 
-    fun submitList(data: List<MoneyHolder>) {
+    fun submitList(data: List<MoneyHolder?>) {
         items = data
         notifyDataSetChanged()
     }

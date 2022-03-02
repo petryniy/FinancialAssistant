@@ -7,6 +7,7 @@ import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 import selitskiyapp.hometasks.financialassistant.data.storage.models.OperationEntity
 import selitskiyapp.hometasks.financialassistant.data.storage.models.OperationWithMoneyHolderEntity
+import selitskiyapp.hometasks.financialassistant.domain.models.OperationWithMoneyHolder
 
 @Dao
 interface OperationsDAO {
@@ -15,8 +16,9 @@ interface OperationsDAO {
             "JOIN operations as emb_ ON moneyHolder.moneyId = emb_.moneyHolderId")
     fun getOperations(): Flow<List<OperationWithMoneyHolderEntity>>
 
-    @Query("SELECT*FROM operations WHERE id = :id")
-    fun getOperationById(id: Int): Flow<OperationWithMoneyHolderEntity>
+    @Query("SELECT * FROM operations " +
+            "JOIN moneyHolder as emb_ ON operations.id = :id")
+    fun getOperationById(id: Int): Flow<OperationWithMoneyHolderEntity?>
 
     @Insert
     suspend fun addOperations(operationEntity: OperationEntity)

@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ActivityMainViewModel @Inject constructor(): ViewModel() {
 
-    private val _balance = MutableStateFlow(0L)
+    private val _balance = MutableStateFlow<Long?>(null)
     val balance: StateFlow<Long?> get() = _balance
 
     init {

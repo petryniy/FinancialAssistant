@@ -8,9 +8,11 @@ import selitskiyapp.hometasks.financialassistant.databinding.ItemMoneyHolderBind
 import selitskiyapp.hometasks.financialassistant.domain.models.MoneyHolder
 
 class MoneyHolderViewHolder(
+
     private val binding: ItemMoneyHolderBinding,
     private val itemClickListenerMoneyHolder: MoneyHolderOnItemListener
-) : RecyclerView.ViewHolder(binding.root) {
+
+    ) : RecyclerView.ViewHolder(binding.root) {
 
     companion object {
         fun fromParent(
@@ -28,12 +30,18 @@ class MoneyHolderViewHolder(
         }
     }
 
-    fun bindView(item: MoneyHolder) = with(binding) {
-        textViewName.text = item.name
-        textViewBalance.text = root.context.getString(R.string.msg_currency_byn_amount_format, item.balance / 100f)
+    fun bindView(item: MoneyHolder?) = with(binding) {
+        textViewName.text = item?.name
+        textViewBalance.text = root.context.getString(R.string.msg_currency_byn_amount_format,
+            item?.balance?.div(100f) ?: 100f
+        )
 
         itemMoneyHolder.setOnClickListener {
-            item.id.let { it1 -> itemClickListenerMoneyHolder.onItemClickListener(it1) }
+            item?.id.let { it1 ->
+                if (it1 != null) {
+                    itemClickListenerMoneyHolder.onItemClickListener(it1)
+                }
+            }
         }
     }
 }

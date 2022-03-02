@@ -32,36 +32,31 @@ class EditMoneyHolderBottom : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val id: Int = requireArguments().getInt(MoneyHolderFragment.MONEY_HOLDER_ID_FROM_HOLDER)
+        val moneyHolderId: Int = requireArguments().getInt(MoneyHolderFragment.MONEY_HOLDER_ID_FROM_HOLDER)
 
-        initClickOnIcon(id)
+        initButtons(moneyHolderId)
 
-        initFields(id)
+        initFields(moneyHolderId)
     }
 
-    private fun initFields(id: Int?) {
-        if (id != null && id != 0) {
-            viewModel.getMoneyHolderById(id)
+    private fun initFields(moneyHolderId: Int?) {
+        if (moneyHolderId != null && moneyHolderId != 0) {
+            viewModel.getMoneyHolderById(moneyHolderId)
 
             lifecycleScope.launchWhenResumed {
                 viewModel.moneyHolder.collect { moneyHolder ->
                     binding.run {
-                        imageViewEdType.setImageResource(
-                            when (moneyHolder.type) {
-                                1 -> R.drawable.ic_credit_card
-                                2 -> R.drawable.ic_cash
-                                else -> R.drawable.ic_add
-                            }
-                        )
-                        textEdViewName.text = moneyHolder.name
-                        textViewEdBalance.text = moneyHolder.balance.toInt().toString()
+                        moneyHolder?.type?.let { imageViewEdType.setImageResource(it) }
+                        textEdViewName.text = moneyHolder?.name
+                        textViewEdBalance.text = root.context.getString(R.string.msg_currency_byn_amount_format,
+                            moneyHolder?.balance?.div(100f) ?: 100f)
                     }
                 }
             }
         }
     }
 
-    private fun initClickOnIcon(moneyHolderId: Int) = with(binding) {
+    private fun initButtons(moneyHolderId: Int?) = with(binding) {
         imageViewBack.setOnClickListener {
             findNavController().navigate(R.id.editMoneyHolderBottom_to_moneyHolderFragment)
         }
@@ -74,8 +69,10 @@ class EditMoneyHolderBottom : BottomSheetDialogFragment() {
         }
 
         imageViewEdDelete.setOnClickListener {
-            viewModel.deleteMoneyHolder(id = moneyHolderId)
-            findNavController().navigate(R.id.editMoneyHolderBottom_to_moneyHolderFragment)
+            if (moneyHolderId != null) {
+                viewModel.deleteMoneyHolder(id = moneyHolderId)
+                findNavController().navigate(R.id.editMoneyHolderBottom_to_moneyHolderFragment)
+            }
         }
     }
 

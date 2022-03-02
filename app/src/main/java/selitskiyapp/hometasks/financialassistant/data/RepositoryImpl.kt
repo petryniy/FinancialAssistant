@@ -4,11 +4,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.withContext
 import selitskiyapp.hometasks.financialassistant.data.storage.MoneyHolderDao
 import selitskiyapp.hometasks.financialassistant.data.storage.OperationsDAO
-import selitskiyapp.hometasks.financialassistant.data.storage.models.OperationEntity
 import selitskiyapp.hometasks.financialassistant.domain.models.MoneyHolder
 import selitskiyapp.hometasks.financialassistant.domain.models.Operation
 import selitskiyapp.hometasks.financialassistant.domain.models.OperationWithMoneyHolder
@@ -32,10 +30,10 @@ class RepositoryImpl @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-    override fun getOperationById(id: Int): Flow<OperationWithMoneyHolder> {
-        return operationsDAO.getOperationById(id).transform { it.toOperationWithMoneyHolder() }
+    override fun getOperationById(id: Int): Flow<OperationWithMoneyHolder?> {
+        return operationsDAO.getOperationById(id).map { it?.toOperationWithMoneyHolder() }
+            .flowOn(Dispatchers.IO)
     }
-
 
     override suspend fun addOperation(operation: Operation) {
         withContext(Dispatchers.IO) {
@@ -59,7 +57,7 @@ class RepositoryImpl @Inject constructor(
         return operationsDAO.getOperationsSumValue().flowOn(Dispatchers.IO)
     }
 
-    override fun getMoneyHolders(): Flow<List<MoneyHolder>> {
+    override fun getMoneyHolders(): Flow<List<MoneyHolder?>> {
         return moneyHolderDao.getMoneyHolders().map {
             it.map { moneyHolderEntity ->
                 moneyHolderEntity.toMoneyHolder()
@@ -67,7 +65,7 @@ class RepositoryImpl @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-    override suspend fun getMoneyHolderById(id: Int): MoneyHolder {
+    override suspend fun getMoneyHolderById(id: Int): MoneyHolder? {
         return withContext(Dispatchers.IO) {
             moneyHolderDao.getMoneyHolderById(id).toMoneyHolder()
         }

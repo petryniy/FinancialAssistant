@@ -21,8 +21,8 @@ import selitskiyapp.hometasks.financialassistant.presentation.viewModels.MoneyHo
 @AndroidEntryPoint
 class AddMoneyHolderBottom : BottomSheetDialogFragment() {
 
-    private val viewModel: MoneyHolderFragmentViewModel by viewModels()
     private lateinit var binding: BottomAddMoneyHolderBinding
+    private val viewModel: MoneyHolderFragmentViewModel by viewModels()
     private var type: Int = 0
 
     override fun onCreateView(
@@ -37,29 +37,29 @@ class AddMoneyHolderBottom : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val id: Int = requireArguments().getInt(EditMoneyHolderBottom.MONEY_HOLDER_ID_FROM_EDIT)
+        val moneyHolderId: Int = requireArguments()
+            .getInt(EditMoneyHolderBottom.MONEY_HOLDER_ID_FROM_EDIT)
 
         initTypeAdapter()
 
         initTextFields()
 
-        initSaveButton(id)
+        initSaveButton(moneyHolderId)
 
-        initFields(id)
+        putFieldsFromMoneyHolder(moneyHolderId)
     }
 
-    private fun initFields(id: Int?) {
-        if (id != null && id != 0) {
-            Toast.makeText(
-                context, "getFromEditMoneyHolderBottom $id",
-                Toast.LENGTH_LONG
-            ).show()
-            viewModel.getMoneyHolderById(id)
+    private fun putFieldsFromMoneyHolder(moneyHolderId: Int?) {
+
+        if (moneyHolderId != null && moneyHolderId != 0) {
+
+            viewModel.getMoneyHolderById(moneyHolderId)
             lifecycleScope.launchWhenResumed {
                 viewModel.moneyHolder.collect { moneyHolder ->
                     binding.run {
-                        tilName.editText?.setText(moneyHolder.name)
-                        tilBalance.editText?.setText(moneyHolder.balance.toString())
+                        tilName.editText?.setText(moneyHolder?.name)
+                        tilBalance.editText?.setText((moneyHolder?.balance?.div(100f))
+                            .toString())
                     }
                 }
             }
@@ -115,8 +115,8 @@ class AddMoneyHolderBottom : BottomSheetDialogFragment() {
         actvType.setAdapter(operationStatusAdapter)
         actvType.setOnItemClickListener { _, _, position, _ ->
             type = when (operationStatusAdapter.getItem(position)) {
-                getString(R.string.typeCash) -> CASH
-                getString(R.string.typeNonCash) -> NON_CASH
+                getString(R.string.typeCash) -> R.drawable.ic_cash
+                getString(R.string.typeNonCash) -> R.drawable.ic_credit_card
                 else -> 0
             }
         }
@@ -131,10 +131,5 @@ class AddMoneyHolderBottom : BottomSheetDialogFragment() {
                 getString(R.string.typeNonCash)
             )
         )
-    }
-
-    companion object {
-        const val CASH = 1
-        const val NON_CASH = 2
     }
 }

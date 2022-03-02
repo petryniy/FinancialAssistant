@@ -14,7 +14,7 @@ class OperationsAdapter(
 
 ) : RecyclerView.Adapter<BaseViewHolder>() {
 
-    private var items: List<BaseItem> = emptyList()
+    private var items: List<BaseItem?> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder =
         if (viewType == HeadViewHolder.VIEW_TYPE_HEAD) HeadViewHolder.createViewHolder(parent)
@@ -31,10 +31,11 @@ class OperationsAdapter(
         return when (items[position]) {
             is HeadItem -> HeadViewHolder.VIEW_TYPE_HEAD
             is OperationWithMoneyHolder -> OperationsViewHolder.VIEW_TYPE_OPERATION
+            else -> {0}
         }
     }
 
-    fun submitList(data: List<BaseItem>) {
+    fun submitList(data: List<BaseItem?>) {
         items = data
         notifyDataSetChanged()
     }

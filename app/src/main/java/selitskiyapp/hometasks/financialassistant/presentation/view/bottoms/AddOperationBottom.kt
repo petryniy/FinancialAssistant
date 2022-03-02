@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
+import selitskiyapp.hometasks.financialassistant.R
 import selitskiyapp.hometasks.financialassistant.databinding.BottomAddOperationBinding
 import selitskiyapp.hometasks.financialassistant.domain.models.Operation
 import selitskiyapp.hometasks.financialassistant.presentation.recyclers.moneyholder.MoneyHolderArrayAdapter
@@ -28,14 +29,6 @@ class AddOperationBottom : BottomSheetDialogFragment() {
     private lateinit var binding: BottomAddOperationBinding
     private val operationsViewModel: OperationsFragmentViewModel by viewModels()
     private val moneyHoldersFragmentViewModel: MoneyHolderFragmentViewModel by viewModels()
-    private var category: String = "0"
-    private var categoryImageId: Int = 0
-    private var moneyHolderId: Int? = null
-    private var initCategoryBoolean = false
-    private var initTypeItemBoolean = false
-    private var currentSelectedDate: Long? = null
-    private var value: Long = 0
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,6 +52,67 @@ class AddOperationBottom : BottomSheetDialogFragment() {
 
         initSaveButton()
 
+        val operationId: Int = requireArguments().getInt(EditOperationBottom.OPERATION_ID_FROM_EDIT)
+
+        putFieldsFromOperation(operationId)
+    }
+
+    private fun putFieldsFromOperation(operationId: Int?) {
+
+        if (operationId != null && operationId != 0) {
+
+            operationsViewModel.getOperationById(operationId)
+
+            lifecycleScope.launchWhenResumed {
+                operationsViewModel.operation.collect {
+                    if (it != null) {
+
+                        val item = it.operationEntity
+
+                        binding.run {
+
+                            if (item.value > 0) {
+                                chipGroupDC.check(chipCredit.id)
+                            } else {
+                                chipGroupDC.check(chipDebit.id)
+                            }
+
+                            tilAddValue.editText?.setText(
+                                root.context
+                                    .getString(
+                                        R.string.msg_currency_byn_amount_format,
+                                        item.value.div(100f)
+                                    )
+                            )
+
+                            chipGroupType.check(
+                                when (item.category) {
+                                    "Машина" -> chipCar.id
+
+                                    "Продукты" -> chipProducts.id
+
+                                    "Животные" -> chipPets.id
+
+                                    "Дети" -> chipChildren.id
+
+                                    "Дом" -> chipHouse.id
+
+                                    "Отдых" -> chipRelax.id
+
+                                    else -> {
+                                        0
+                                    }
+                                }
+                            )
+
+                            tilAddDate.editText?.setText(item.date)
+
+                            tilAddComments.editText?.setText(item.comment)
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun initSaveButton() = with(binding) {
@@ -88,7 +142,6 @@ class AddOperationBottom : BottomSheetDialogFragment() {
                 else -> {
                     addOperation()
 
-
                     dismiss()
                 }
             }
@@ -102,7 +155,7 @@ class AddOperationBottom : BottomSheetDialogFragment() {
                 moneyHolderId = it1,
                 value = tilAddValue.editText?.text.toString().toFloat()
                     .let { (it * value).toLong() },
-                categoryDrawable = categoryImageId,
+                categoryDrawable = categoryDrawable,
                 date = tilAddDate.editText?.text.toString(),
                 comment = tilAddComments.editText?.text.toString()
             )
@@ -155,37 +208,37 @@ class AddOperationBottom : BottomSheetDialogFragment() {
             when (checkedId) {
                 chipCar.id -> {
                     category = "Машина"
-                    categoryImageId = 1
+                    categoryDrawable = R.drawable.ic_car
                     initCategoryBoolean = true
                 }
 
                 chipProducts.id -> {
                     category = "Продукты"
-                    categoryImageId = 2
+                    categoryDrawable = R.drawable.ic_products
                     initCategoryBoolean = true
                 }
 
                 chipPets.id -> {
                     category = "Животные"
-                    categoryImageId = 3
+                    categoryDrawable = R.drawable.ic_pets
                     initCategoryBoolean = true
                 }
 
                 chipChildren.id -> {
                     category = "Дети"
-                    categoryImageId = 4
+                    categoryDrawable = R.drawable.ic_child
                     initCategoryBoolean = true
                 }
 
                 chipHouse.id -> {
                     category = "Дом"
-                    categoryImageId = 5
+                    categoryDrawable = R.drawable.ic_house
                     initCategoryBoolean = true
                 }
 
                 chipRelax.id -> {
                     category = "Отдых"
-                    categoryImageId = 6
+                    categoryDrawable = R.drawable.ic_coffee
                     initCategoryBoolean = true
                 }
                 else -> initCategoryBoolean = false
@@ -260,6 +313,13 @@ class AddOperationBottom : BottomSheetDialogFragment() {
 
     companion object {
         const val TAG = "AddOperationBottom"
+        private var category: String = "0"
+        private var categoryDrawable: Int = 0
+        private var moneyHolderId: Int? = null
+        private var initCategoryBoolean = false
+        private var initTypeItemBoolean = false
+        private var currentSelectedDate: Long? = null
+        private var value: Long = 0
     }
 }
 

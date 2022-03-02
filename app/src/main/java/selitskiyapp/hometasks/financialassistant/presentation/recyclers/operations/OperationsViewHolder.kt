@@ -32,45 +32,17 @@ class OperationsViewHolder(
         }
     }
 
-//    fun bindView(item: OperationWithMoneyHolder) = with(binding) {
-//        itemCategory.text = item.operationEntity.category
-//        itemTypeOfValue.text = item.moneyHolderEntity.name
-//        itemValue.text = root.context.getString(R.string.msg_currency_byn_amount_format, item.operationEntity.value / 100f)
-//        itemImageId.setImageResource(
-//            when (item.operationEntity.categoryDrawable) {
-//                1 -> R.drawable.ic_car
-//                2 -> R.drawable.ic_products
-//                3 -> R.drawable.ic_pets
-//                4 -> R.drawable.ic_child
-//                5 -> R.drawable.ic_house
-//                6 -> R.drawable.ic_coffee
-//                else -> R.drawable.ic_add
-//            }
-//        )
-//
-
-//    }
-
-    override fun bindViewHolder(item: BaseItem) {
+    override fun bindViewHolder(item: BaseItem?) {
         val operationItem = item as OperationWithMoneyHolder
         with(binding) {
+
             itemCategory.text = operationItem.operationEntity.category
             itemTypeOfValue.text = operationItem.moneyHolderEntity.name
             itemValue.text = root.context.getString(
                 R.string.msg_currency_byn_amount_format,
                 item.operationEntity.value / 100f
             )
-            itemImageId.setImageResource(
-                when (operationItem.operationEntity.categoryDrawable) {
-                    1 -> R.drawable.ic_car
-                    2 -> R.drawable.ic_products
-                    3 -> R.drawable.ic_pets
-                    4 -> R.drawable.ic_child
-                    5 -> R.drawable.ic_house
-                    6 -> R.drawable.ic_coffee
-                    else -> R.drawable.ic_add
-                }
-            )
+            itemImageId.setImageResource(operationItem.operationEntity.categoryDrawable)
 
             itemOperation.setOnClickListener {
                 item.operationEntity.id.let { it1 ->

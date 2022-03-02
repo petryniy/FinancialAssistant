@@ -28,7 +28,7 @@ class HeadViewHolder(view: View) : BaseViewHolder(view) {
 
     private val headTextView by lazy { view.findViewById<TextView>(R.id.textViewHead) }
 
-    override fun bindViewHolder(item: BaseItem) {
+    override fun bindViewHolder(item: BaseItem?) {
         val headItem = item as HeadItem
 
         headTextView.text = headItem.date

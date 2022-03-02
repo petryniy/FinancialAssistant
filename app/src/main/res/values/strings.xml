@@ -2,8 +2,8 @@
     <string name="app_name">FinancialAssistant</string>
     <string name="currency">BYN</string>
     <string name="todo">TODO</string>
-    <string name="typeCash">Карта</string>
-    <string name="typeNonCash">Наличные</string>
+    <string name="typeCash">Наличные</string>
+    <string name="typeNonCash">Карта</string>
 
     <string name="activity_main_button_text">Фильтровать по</string>
     <string name="activity_main_text">Новостей не найдено! Проверьте значение фильтра!</string>
@@ -14,7 +14,6 @@
     <string name="bottom_text_error">Новостей не найдено! Проверьте значение фильтров!</string>
     <string name="update_news_title">Update news</string>
     <string name="filter_news_title">Filter news</string>
-
 
 
 

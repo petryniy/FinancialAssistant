@@ -31,9 +31,6 @@ class OperationsFragment : Fragment(R.layout.fragment_operations) {
     private val viewModel: OperationsFragmentViewModel by viewModels()
     private val sharedViewModel: FilterSharedViewModel by activityViewModels()
 
-    private lateinit var filter: Filter
-    private lateinit var listOperations: List<OperationWithMoneyHolder>
-
     private val itemClickListenerOperations: OperationsOnItemListener =
         object : OperationsOnItemListener {
 
@@ -62,11 +59,10 @@ class OperationsFragment : Fragment(R.layout.fragment_operations) {
     private fun initObservers() {
         lifecycleScope.launchWhenResumed {
             sharedViewModel.filter.collect { newFilter ->
-                filter = newFilter
                 viewModel.viewModelScope.launch {
-                    viewModel.getFilteredOperationsListFlow(filter).collect {
+                    viewModel.getFilteredOperationsListFlow(newFilter).collect {
                        listOperations = it.sortedByDescending { operationWithMoneyHolder ->
-                            operationWithMoneyHolder.operationEntity.date
+                           operationWithMoneyHolder?.operationEntity?.date
                         }
                         adapter.submitList(listOperations)
                     }
@@ -91,13 +87,15 @@ class OperationsFragment : Fragment(R.layout.fragment_operations) {
 
     private fun initAddButton() = with(binding) {
         fabOperation.setOnClickListener {
-            findNavController().navigate(R.id.operationsFragment_to_addOperationBottom)
+            val action = OperationsFragmentDirections.operationsFragmentToAddOperationBottom()
+            findNavController().navigate(action)
         }
     }
 
     companion object {
         const val ID_FROM_OPERATIONS_FRAGMENT = "OPERATIONS_FRAGMENT"
         var operationsSumValue: Long = 0
+        private var listOperations: List<OperationWithMoneyHolder?> = emptyList()
     }
 }
 

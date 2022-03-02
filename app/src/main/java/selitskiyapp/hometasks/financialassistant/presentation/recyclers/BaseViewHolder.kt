@@ -6,6 +6,6 @@ import selitskiyapp.hometasks.financialassistant.domain.models.BaseItem
 
 abstract class BaseViewHolder(view: View): RecyclerView.ViewHolder(view) {
 
-    abstract fun bindViewHolder(item: BaseItem)
+    abstract fun bindViewHolder(item: BaseItem?)
 
 }

@@ -5,9 +5,9 @@ import selitskiyapp.hometasks.financialassistant.domain.models.MoneyHolder
 
 interface MoneyHoldersRepository {
 
-    fun getMoneyHolders(): Flow<List<MoneyHolder>>
+    fun getMoneyHolders(): Flow<List<MoneyHolder?>>
 
-    suspend fun getMoneyHolderById(id: Int): MoneyHolder
+    suspend fun getMoneyHolderById(id: Int): MoneyHolder?
 
     suspend fun addMoneyHolder(moneyHolder: MoneyHolder)
 

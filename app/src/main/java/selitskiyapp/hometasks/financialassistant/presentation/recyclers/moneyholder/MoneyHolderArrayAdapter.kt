@@ -11,7 +11,7 @@ import selitskiyapp.hometasks.financialassistant.domain.models.MoneyHolder
 
 class MoneyHolderArrayAdapter(
     private val mContext: Context,
-    val list: List<MoneyHolder>,
+    val list: List<MoneyHolder?>,
 
     ) :
     ArrayAdapter<MoneyHolder>(mContext, 0, list) {
@@ -24,14 +24,12 @@ class MoneyHolderArrayAdapter(
 
 
         return ItemMoneyHolderAutocompleteBinding.bind(view).apply {
-            imageView.setImageResource(
-                when (dto.type) {
-                    1 -> R.drawable.ic_credit_card
-                    2 -> R.drawable.ic_cash
-                    else -> R.drawable.ic_add
-                }
-            )
-            textView.text = dto.name
+            if (dto != null) {
+                dto.type?.let { imageView.setImageResource(it) }
+            }
+            if (dto != null) {
+                textView.text = dto.name
+            }
         }.root
     }
 }
