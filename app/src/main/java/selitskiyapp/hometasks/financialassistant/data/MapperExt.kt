@@ -7,17 +7,6 @@ import selitskiyapp.hometasks.financialassistant.domain.models.MoneyHolder
 import selitskiyapp.hometasks.financialassistant.domain.models.Operation
 import selitskiyapp.hometasks.financialassistant.domain.models.OperationWithMoneyHolder
 
-fun OperationEntity.toOperation() =
-    Operation(
-        id = id,
-        category = category,
-        moneyHolderId = moneyHolderId,
-        value = value,
-        categoryDrawable = categoryDrawable,
-        date = date,
-        comment = comment
-    )
-
 fun Operation.toOperationEntity() =
     OperationEntity(
         id = id,
@@ -51,11 +40,6 @@ fun OperationWithMoneyHolderEntity.toOperationWithMoneyHolder() =
         moneyHolderEntity = moneyHolderEntity
     )
 
-fun OperationWithMoneyHolder.toOperationWithMoneyHolderEntity() =
-    OperationWithMoneyHolderEntity(
-        operationEntity = operationEntity,
-        moneyHolderEntity = moneyHolderEntity
-    )
 
 
 

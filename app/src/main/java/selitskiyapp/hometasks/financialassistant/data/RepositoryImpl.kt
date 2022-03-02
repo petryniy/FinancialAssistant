@@ -22,7 +22,7 @@ class RepositoryImpl @Inject constructor(
 ) :
     MoneyHoldersRepository, OperationsRepository {
 
-    override fun getAllOperations(): Flow<List<OperationWithMoneyHolder>> {
+    override fun getAllOperations(): Flow<List<OperationWithMoneyHolder?>> {
         return operationsDAO.getOperations().map {
             it.map { operationWithMoneyHolderEntity ->
                 operationWithMoneyHolderEntity.toOperationWithMoneyHolder()

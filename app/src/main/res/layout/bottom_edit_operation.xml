@@ -18,7 +18,8 @@
         android:layout_marginTop="22dp"
         android:src="@drawable/ic_add"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/description" />
 
     <TextView
         android:id="@+id/textViewValue"
@@ -31,7 +32,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:padding="8dp"
-        android:text="editValue"
+        tools:text="editValue"
         android:textAppearance="?attr/textAppearanceSubtitle1"
         android:textColor="@color/black"
         android:textSize="18sp"
@@ -62,13 +63,13 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="28dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:layout_toEndOf="@+id/imageViewCategory"
         android:ellipsize="end"
         android:gravity="start"
         android:maxLines="1"
         android:padding="8dp"
-        android:text="editCategory"
+        tools:text="editCategory"
         android:textAppearance="?attr/textAppearanceSubtitle1"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
@@ -85,7 +86,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:padding="8dp"
-        android:text="editDate"
+        tools:text="editDate"
         android:textAppearance="?attr/textAppearanceSubtitle1"
         android:textColor="@color/black"
         android:textSize="16sp"
@@ -107,7 +108,8 @@
         app:layout_constraintEnd_toStartOf="@+id/textViewMoneyHolder"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewCategory"
-        tools:src="@drawable/ic_add" />
+        tools:src="@drawable/ic_add"
+        android:contentDescription="@string/description" />
 
     <TextView
         android:id="@+id/textViewMoneyHolder"
@@ -120,7 +122,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:padding="8dp"
-        android:text="editTypeOfValue"
+        tools:text="editTypeOfValue"
         android:textAppearance="?attr/textAppearanceSubtitle1"
         android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/imageViewMoneyHolder"
@@ -136,10 +138,10 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="40dp"
         android:ellipsize="end"
-        android:hint="Комментарий:"
+        android:hint="@string/bottomEditOperationHintComment"
         android:maxLines="1"
         android:padding="8dp"
-        android:text="editComment"
+        tools:text="editComment"
         android:textAppearance="?attr/textAppearanceSubtitle1"
         android:textColor="@color/black"
         android:textSize="14sp"
@@ -165,11 +167,12 @@
             android:layout_height="50dp"
             android:layout_marginHorizontal="40dp"
             android:layout_weight="1"
-            android:src="@drawable/ic_edit" />
+            android:src="@drawable/ic_edit"
+            android:contentDescription="@string/description"/>
 
         <ImageView
             android:id="@+id/imageViewCopy"
-
+            android:contentDescription="@string/description"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginHorizontal="40dp"
@@ -177,6 +180,7 @@
             android:src="@drawable/ic_copy" />
 
         <ImageView
+            android:contentDescription="@string/description"
             android:id="@+id/imageViewDelete"
             android:layout_width="50dp"
             android:layout_height="50dp"

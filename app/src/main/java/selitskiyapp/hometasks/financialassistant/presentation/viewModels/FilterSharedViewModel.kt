@@ -9,6 +9,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FilterSharedViewModel @Inject constructor() : ViewModel() {
+
     private val _filter = MutableStateFlow<Filter>(Filter.EmptyFilter)
     val filter: StateFlow<Filter> get() = _filter
 

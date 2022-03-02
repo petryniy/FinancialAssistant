@@ -16,7 +16,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import selitskiyapp.hometasks.financialassistant.R
 import selitskiyapp.hometasks.financialassistant.databinding.FragmentOperationsBinding
-import selitskiyapp.hometasks.financialassistant.domain.models.Filter
 import selitskiyapp.hometasks.financialassistant.domain.models.OperationWithMoneyHolder
 import selitskiyapp.hometasks.financialassistant.presentation.recyclers.operations.OperationsAdapter
 import selitskiyapp.hometasks.financialassistant.presentation.recyclers.operations.OperationsOnItemListener
@@ -35,8 +34,6 @@ class OperationsFragment : Fragment(R.layout.fragment_operations) {
         object : OperationsOnItemListener {
 
             override fun onItemClickListener(id: Int) {
-
-                Log.d("myDebug", "ID_FROM_OPERATIONS_FRAGMENT $id")
 
                 findNavController().navigate(
                     R.id.operationsFragment_to_editOperationBottom,
@@ -69,15 +66,6 @@ class OperationsFragment : Fragment(R.layout.fragment_operations) {
                 }
             }
         }
-
-        lifecycleScope.launchWhenResumed {
-            viewModel.operationsSumValue.collect {
-                if (it != null) {
-                    operationsSumValue = it
-                }
-                Log.d("myDebug", "operationsSumValue $operationsSumValue")
-            }
-        }
     }
 
     private fun initRecycler() = with(binding) {
@@ -94,7 +82,6 @@ class OperationsFragment : Fragment(R.layout.fragment_operations) {
 
     companion object {
         const val ID_FROM_OPERATIONS_FRAGMENT = "OPERATIONS_FRAGMENT"
-        var operationsSumValue: Long = 0
         private var listOperations: List<OperationWithMoneyHolder?> = emptyList()
     }
 }

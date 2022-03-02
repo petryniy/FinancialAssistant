@@ -35,7 +35,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentBottom="true"
                 android:checkable="true"
-                android:text="Расход"
+                android:text="@string/chipCreditText"
                 android:textAlignment="center"
                 android:textSize="18sp"
                 app:chipMinHeight="50dp" />
@@ -50,7 +50,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginTop="0dp"
                 android:checkable="true"
-                android:text="Доход"
+                android:text="@string/chipDebitText"
                 android:textAlignment="center"
                 android:textSize="18sp"
                 app:chipMinHeight="50dp" />
@@ -63,7 +63,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="20dp"
-        android:hint="Введите значение">
+        android:hint="@string/bottomAddOperationValue">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -170,13 +170,13 @@
     </HorizontalScrollView>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilAddOperation"
+        android:id="@+id/tilAddMoneyHolder"
         android:layout_marginTop="20dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:focusable="false"
-        android:hint="Выберите счёт"
+        android:hint="@string/bottomAddOperationMoneyHolder"
         >
 
         <AutoCompleteTextView
@@ -194,7 +194,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:hint="Выберете дату">
+        android:hint="@string/bottomAddOperationDate">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tilAddDateClick"
@@ -211,7 +211,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:hint="Комментарий">
+        android:hint="@string/bottomAddOperationComment">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -226,7 +226,7 @@
         android:id="@+id/buttonOperationSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Сохранить"
+        android:text="@string/textButtonSave"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

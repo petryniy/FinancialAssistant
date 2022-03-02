@@ -9,8 +9,10 @@ import selitskiyapp.hometasks.financialassistant.domain.models.OperationWithMone
 import selitskiyapp.hometasks.financialassistant.presentation.recyclers.BaseViewHolder
 
 class OperationsViewHolder(
+
     private val binding: ItemOperationBinding,
     private val itemClickListenerOperations: OperationsOnItemListener
+
 ) : BaseViewHolder(binding.root) {
 
     companion object {

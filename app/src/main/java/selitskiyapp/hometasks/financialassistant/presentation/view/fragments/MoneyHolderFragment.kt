@@ -1,12 +1,10 @@
 package selitskiyapp.hometasks.financialassistant.presentation.view.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +19,7 @@ import selitskiyapp.hometasks.financialassistant.presentation.viewModels.MoneyHo
 
 @AndroidEntryPoint
 class MoneyHolderFragment : Fragment(R.layout.fragment_money_holder) {
+
     private val binding: FragmentMoneyHolderBinding by viewBinding()
     private val adapter by lazy { MoneyHolderAdapter(itemClickListenerMoneyHolder) }
     private val viewModel: MoneyHolderFragmentViewModel by viewModels()
@@ -56,24 +55,18 @@ class MoneyHolderFragment : Fragment(R.layout.fragment_money_holder) {
             }
         }
 
-        viewModel.viewModelScope.launch {
-            viewModel.moneyHoldersSumBalance.collect {
-                if (it != null) {
-                    moneyHoldersSumBalance = it
-                }
-                Log.d("myDebug", "moneyHoldersSumBalance $moneyHoldersSumBalance")
-            }
-        }
     }
 
     private fun initRecycler() = with(binding) {
-        recyclerMoneyHolder.adapter = adapter
+
+    recyclerMoneyHolder.adapter = adapter
         recyclerMoneyHolder.layoutManager = LinearLayoutManager(context)
 
     }
 
     private fun initAddButton() = with(binding) {
-        fabMoneyHolder.setOnClickListener {
+
+    fabMoneyHolder.setOnClickListener {
             val action =
                 MoneyHolderFragmentDirections.moneyHolderFragmentToAddMoneyHolderBottom()
             findNavController().navigate(action)
@@ -82,6 +75,5 @@ class MoneyHolderFragment : Fragment(R.layout.fragment_money_holder) {
     }
     companion object {
         const val MONEY_HOLDER_ID_FROM_HOLDER = "HOLDER"
-        var moneyHoldersSumBalance: Long = 0
     }
 }

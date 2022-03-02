@@ -57,9 +57,6 @@ class EditMoneyHolderBottom : BottomSheetDialogFragment() {
     }
 
     private fun initButtons(moneyHolderId: Int?) = with(binding) {
-        imageViewBack.setOnClickListener {
-            findNavController().navigate(R.id.editMoneyHolderBottom_to_moneyHolderFragment)
-        }
 
         imageViewEdEdit.setOnClickListener {
             findNavController().navigate(

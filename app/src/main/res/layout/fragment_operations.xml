@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/teal_200"
+    android:background="#FF007FAC"
     tools:context=".presentation.view.fragments.OperationsFragment">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -15,7 +15,8 @@
         android:layout_marginBottom="52dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_add" />
+        app:srcCompat="@drawable/ic_add"
+        android:contentDescription="@string/description" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerOperations"
@@ -31,77 +32,5 @@
         tools:listitem="@layout/item_operation">
 
     </androidx.recyclerview.widget.RecyclerView>
-
-
-    <!--    <Button-->
-<!--        android:id="@+id/buttonFab"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_alignParentStart="true"-->
-<!--        android:layout_alignParentEnd="true"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:layout_gravity="bottom|center"-->
-<!--        android:layout_marginHorizontal="8dp"-->
-<!--        android:layout_marginVertical="8dp"-->
-<!--        android:text="Добавить операцию(вместо ФАБ)"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/recyclerOperations" />-->
-
-
-<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--        android:id="@+id/floating_plus"-->
-<!--        android:layout_width="500dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginEnd="24dp"-->
-<!--        android:layout_marginBottom="60dp"-->
-<!--        android:clickable="true"-->
-<!--        android:contentDescription="TODO"-->
-<!--        android:focusable="true"-->
-<!--        android:tint="@color/white"-->
-<!--        app:backgroundTint="#2196F3"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:srcCompat="@drawable/ic_add" />-->
-
-<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--        android:id="@+id/floating_add_credit"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginBottom="16dp"-->
-<!--        android:background="#F4F4EF"-->
-<!--        android:clickable="true"-->
-<!--        android:focusable="true"-->
-<!--        android:tint="@color/white"-->
-<!--        android:visibility="gone"-->
-<!--        app:backgroundTint="#2196F3"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/floating_plus"-->
-<!--        app:layout_constraintEnd_toEndOf="@+id/floating_plus"-->
-<!--        tools:visibility="visible"-->
-<!--        android:contentDescription="Добавить операцию" />-->
-
-<!--    app:fab_content = "Расход"-->
-
-
-<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--        android:id="@+id/floating_add_operation"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginBottom="16dp"-->
-<!--        android:clickable="true"-->
-<!--        android:focusable="true"-->
-<!--        android:visibility="gone"-->
-<!--        app:backgroundTint="#03A9F4"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/floating_plus"-->
-<!--        app:layout_constraintEnd_toEndOf="@+id/floating_plus"-->
-<!--        tools:visibility="visible"-->
-<!--        android:contentDescription="Добавить операцию" />-->
-
-    <!--        app:layout_constraintEnd_toEndOf="@+id/floating_add_credit"-->
-
-    <!--    app:fab_content = "Доход"-->
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

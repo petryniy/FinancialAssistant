@@ -1,5 +1,6 @@
 package selitskiyapp.hometasks.financialassistant.presentation.recyclers.operations
 
+import android.annotation.SuppressLint
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import selitskiyapp.hometasks.financialassistant.domain.models.BaseItem
@@ -35,6 +36,7 @@ class OperationsAdapter(
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun submitList(data: List<BaseItem?>) {
         items = data
         notifyDataSetChanged()

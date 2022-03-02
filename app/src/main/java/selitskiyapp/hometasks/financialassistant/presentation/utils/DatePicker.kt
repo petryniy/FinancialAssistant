@@ -1,17 +1,14 @@
 package selitskiyapp.hometasks.financialassistant.presentation.utils
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.datepicker.MaterialDatePicker
-import selitskiyapp.hometasks.financialassistant.presentation.view.bottoms.BottomSheetFilterFragment
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
-
 
 class DatePicker @Inject constructor() {
 

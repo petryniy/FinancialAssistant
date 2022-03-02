@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="176dp"
         android:focusable="false"
-        android:hint="Выберите счёт"
+        android:hint="@string/bottomFilterHintMoneyHolder"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/radio_group"
@@ -59,6 +59,7 @@
             app:layout_constraintEnd_toEndOf="@+id/tilFilterMoneyHolder"
             app:layout_constraintStart_toStartOf="@+id/tilFilterMoneyHolder"
             app:layout_constraintTop_toTopOf="@+id/tilFilterMoneyHolder" />
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <RadioGroup

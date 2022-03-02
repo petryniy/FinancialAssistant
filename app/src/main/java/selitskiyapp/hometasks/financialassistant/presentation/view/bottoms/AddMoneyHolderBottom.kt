@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -68,12 +67,14 @@ class AddMoneyHolderBottom : BottomSheetDialogFragment() {
 
     private fun initSaveButton(id: Int?) = with(binding) {
 
-        button.setOnClickListener {
+        buttonSave.setOnClickListener {
             when {
-                tilName.editText?.text.isNullOrEmpty() -> tilName.error = "Вы не ввели значение"
-                tilType.editText?.text.isNullOrEmpty() -> tilType.error = "Вы не выбрали тип"
+                tilName.editText?.text.isNullOrEmpty() -> tilName.error =
+                    getString(R.string.errorMonyHolderText)
+                tilType.editText?.text.isNullOrEmpty() -> tilType.error =
+                    getString(R.string.errorMonyHolderType)
                 tilBalance.editText?.text.isNullOrEmpty() -> tilBalance.error =
-                    "Вы не ввели текущий баланс"
+                    getString(R.string.errorMonyHolderBalance)
                 else -> {
                     if (id != null && id != 0) updateMoneyHolder(id) else addMoneyHolder()
                     dismiss()

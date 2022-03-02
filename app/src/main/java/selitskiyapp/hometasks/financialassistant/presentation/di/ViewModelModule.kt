@@ -1,8 +1,0 @@
-package selitskiyapp.hometasks.financialassistant.presentation.di
-
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
-import selitskiyapp.hometasks.financialassistant.domain.repository.MoneyHoldersRepository
-import selitskiyapp.hometasks.financialassistant.presentation.viewModels.OperationsFragmentViewModel

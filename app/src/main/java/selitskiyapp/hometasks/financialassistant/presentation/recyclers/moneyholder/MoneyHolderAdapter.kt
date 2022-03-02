@@ -1,5 +1,6 @@
 package selitskiyapp.hometasks.financialassistant.presentation.recyclers.moneyholder
 
+import android.annotation.SuppressLint
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import selitskiyapp.hometasks.financialassistant.domain.models.MoneyHolder
@@ -21,6 +22,7 @@ class MoneyHolderAdapter(
 
     override fun getItemCount() = items.size
 
+    @SuppressLint("NotifyDataSetChanged")
     fun submitList(data: List<MoneyHolder?>) {
         items = data
         notifyDataSetChanged()

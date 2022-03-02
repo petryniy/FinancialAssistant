@@ -1,39 +1,54 @@
 package selitskiyapp.hometasks.financialassistant.presentation.viewModels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
-import selitskiyapp.hometasks.financialassistant.domain.models.MoneyHolder
-import selitskiyapp.hometasks.financialassistant.presentation.view.fragments.MoneyHolderFragment
-import selitskiyapp.hometasks.financialassistant.presentation.view.fragments.OperationsFragment
+import selitskiyapp.hometasks.financialassistant.domain.repository.MoneyHoldersRepository
+import selitskiyapp.hometasks.financialassistant.domain.repository.OperationsRepository
 import javax.inject.Inject
 
 @HiltViewModel
-class ActivityMainViewModel @Inject constructor(): ViewModel() {
+class ActivityMainViewModel @Inject constructor(
 
-    private val _balance = MutableStateFlow<Long?>(null)
-    val balance: StateFlow<Long?> get() = _balance
+    private val moneyHoldersRepository: MoneyHoldersRepository,
+    private val operationsRepository: OperationsRepository
 
-    init {
-        getBalance()
-    }
+) : ViewModel() {
 
-    private fun getBalance() {
-        viewModelScope.launch {
-            _balance.value = MoneyHolderFragment.moneyHoldersSumBalance +
-                    OperationsFragment.operationsSumValue
-            Log.d("ActivityMainViewModelbalance", "initBalance ${_balance.value}")
+    var moneyHoldersSumBalance: Long = 0
+    var operationsSumValue: Long = 0
 
-        }
-    }
+//    viewModel.viewModelScope.launch {
+//        viewModel.moneyHoldersSumBalance.collect {
+//            if (it != null) {
+//                MoneyHolderFragment.moneyHoldersSumBalance = it
+//            }
+//            Log.d("myDebug", "moneyHoldersSumBalance ${MoneyHolderFragment.moneyHoldersSumBalance}")
+//        }
+//    }
+//
 
-//    binding.textViewBalanceValue.text = getString(
-//    R.string.msg_currency_byn_amount_format,
-//    (MoneyHolderFragment.moneyHoldersSumBalance +
-//    OperationsFragment.operationsSumValue) / 100f
+//    val operationsSumValue = operationsRepository.getOperationsSumValue()
+//    lifecycleScope.launchWhenResumed {
+//        viewModel.operationsSumValue.collect {
+//            if (it != null) {
+//                OperationsFragment.operationsSumValue = it
+//            }
+//            Log.d("myDebug", "operationsSumValue ${OperationsFragment.operationsSumValue}")
+//        }
+//    }
+//    private val _balance = MutableStateFlow<Long?>(null)
+//    val balance: StateFlow<Long?> get() = _balance
+//
+//    init {
+//        getBalance()
+//    }
+//
+//    private fun getBalance() {
+//        viewModelScope.launch {
+//            _balance.value = moneyHoldersSumBalance operationsSumValue
+//
+//            Log.d("ActivityMainViewModelbalance", "initBalance ${_balance.value}")
+//
+//        }
+//    }
 }

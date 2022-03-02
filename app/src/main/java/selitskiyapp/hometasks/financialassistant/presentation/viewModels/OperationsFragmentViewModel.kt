@@ -23,8 +23,6 @@ class OperationsFragmentViewModel @Inject constructor(
 
     fun getFilteredOperationsListFlow(filter: Filter): Flow<List<OperationWithMoneyHolder?>> {
 
-//        getAllOperationsListFlow()
-
         return when (filter) {
             is Filter.EmptyFilter -> getAllOperationsListFlow()
 
@@ -50,9 +48,7 @@ class OperationsFragmentViewModel @Inject constructor(
         }
     }
 
-    fun getAllOperationsListFlow() = operationsRepository.getAllOperations()
-
-    val operationsSumValue = operationsRepository.getOperationsSumValue()
+    private fun getAllOperationsListFlow() = operationsRepository.getAllOperations()
 
     fun getOperationById(id: Int) {
         viewModelScope.launch {

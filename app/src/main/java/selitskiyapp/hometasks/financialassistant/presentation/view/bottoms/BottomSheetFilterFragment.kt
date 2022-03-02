@@ -1,7 +1,6 @@
 package selitskiyapp.hometasks.financialassistant.presentation.view.bottoms
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -17,6 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
+import selitskiyapp.hometasks.financialassistant.R
 import selitskiyapp.hometasks.financialassistant.databinding.BottomSheetFilterBinding
 import selitskiyapp.hometasks.financialassistant.domain.models.Filter
 import selitskiyapp.hometasks.financialassistant.presentation.recyclers.moneyholder.MoneyHolderArrayAdapter
@@ -29,16 +29,10 @@ import java.time.format.DateTimeFormatter
 
 @AndroidEntryPoint
 class BottomSheetFilterFragment : BottomSheetDialogFragment() {
-    companion object {
-        const val TAG = "BottomRadioGroupFragment"
-    }
 
     private lateinit var binding: BottomSheetFilterBinding
     private val moneyHoldersFragmentViewModel: MoneyHolderFragmentViewModel by viewModels()
     private val sharedViewModel: FilterSharedViewModel by activityViewModels()
-    private var currentSelectedDate: Long? = null
-    private var moneyHolderId: Int? = null
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -64,7 +58,6 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment() {
                     conditionEditText(filterDate)
 
                     filterDate.setOnClickListener {
-//                        DatePicker().showDatePicker(childFragmentManager, TAG)
                         showDatePicker()
                     }
 
@@ -88,7 +81,6 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment() {
                     tilFilterMoneyHolder.visibility = VISIBLE
 
                     actvFilterMoneyHolder.setOnDismissListener {
-                        Log.d("observe", "$moneyHolderId")
                         moneyHolderId?.let { it1 -> Filter.MoneyHolderFilter(it1) }?.let { it2 ->
                             sharedViewModel.setFilter(
                                 it2
@@ -112,7 +104,7 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment() {
 
         val dataPicker =
             MaterialDatePicker.Builder.datePicker()
-                .setTitleText("Выберете дату")
+                .setTitleText(getString(R.string.datePickerText))
                 .setSelection(selectedDateInMillis)
                 .build()
                 .apply {
@@ -122,6 +114,7 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment() {
                         )
                     }
                 }
+
         dataPicker.show(childFragmentManager, TAG)
     }
 
@@ -143,21 +136,25 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment() {
 
     private fun setEditTextVisibility(editText: EditText?) = with(binding) {
         when (editText) {
+
             filterDate -> {
                 filterDate.visibility = VISIBLE
                 filterCategory.visibility = GONE
                 tilFilterMoneyHolder.visibility = GONE
             }
+
             filterCategory -> {
                 filterCategory.visibility = VISIBLE
                 filterDate.visibility = GONE
                 tilFilterMoneyHolder.visibility = GONE
             }
+
             tilFilterMoneyHolder -> {
                tilFilterMoneyHolder.visibility = VISIBLE
                 filterDate.visibility = GONE
                 filterCategory.visibility = GONE
             }
+
         }
     }
 
@@ -167,6 +164,7 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment() {
 
                 dismiss()
                 return@OnEditorActionListener true
+
             }
             false
         }
@@ -187,6 +185,12 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment() {
                 }
             }
         }
+    }
+
+    companion object {
+        const val TAG = "BottomRadioGroupFragment"
+        private var currentSelectedDate: Long? = null
+        private var moneyHolderId: Int? = null
     }
 }
 

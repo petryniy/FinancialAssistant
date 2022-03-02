@@ -1,20 +1,17 @@
 package selitskiyapp.hometasks.financialassistant.presentation.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import selitskiyapp.hometasks.financialassistant.R
 import selitskiyapp.hometasks.financialassistant.databinding.ActivityMainBinding
 import selitskiyapp.hometasks.financialassistant.presentation.viewModels.ActivityMainViewModel
@@ -24,14 +21,13 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private val binding: ActivityMainBinding by viewBinding()
     private val viewModel: ActivityMainViewModel by viewModels()
-    private var balance: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         initBottomMenu()
 
-        initBalance()
+//        initBalance()
 
         initFilterButton()
 
@@ -60,22 +56,26 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         }
     }
 
-    private fun initBalance() {
-
-        viewModel.viewModelScope.launch {
-            viewModel.balance.collect {
-                if (it != null) {
-                    balance = it
-                }
-
-            }
-        }
-        Log.d("balance", "initBalance $balance")
-
-
+//    private fun initBalance() {
+//
+//        viewModel.viewModelScope.launch {
+//            viewModel.balance.collect {
+//                if (it != null) {
+//                    balance = it
+//                }
+//
+//            }
+//        }
+//        Log.d("balance", "initBalance $balance")
+//
+//
 //        binding.textViewBalanceValue.text = getString(
 //            R.string.msg_currency_byn_amount_format, balance / 100f
 //        )
+//    }
+
+    companion object {
+        private var balance: Long = 0
     }
 
 }

@@ -7,7 +7,6 @@ import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 import selitskiyapp.hometasks.financialassistant.data.storage.models.OperationEntity
 import selitskiyapp.hometasks.financialassistant.data.storage.models.OperationWithMoneyHolderEntity
-import selitskiyapp.hometasks.financialassistant.domain.models.OperationWithMoneyHolder
 
 @Dao
 interface OperationsDAO {

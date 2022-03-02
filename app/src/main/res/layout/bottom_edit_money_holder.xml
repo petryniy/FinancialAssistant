@@ -1,5 +1,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bottom_edit_money_holder"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -18,15 +19,20 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="16sp"
         android:id="@+id/textEdViewName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewEdType" />
+        app:layout_constraintTop_toBottomOf="@+id/imageViewEdType"
+        tools:text="textEdViewName"/>
 
     <TextView
+        android:textStyle="bold"
         android:id="@+id/textViewEdBalance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,6 +44,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textEdViewName" />
 
     <TextView
+        android:textStyle="bold"
         android:id="@+id/textViewCurrency"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
@@ -56,7 +63,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginVertical="40dp"
-        android:src="@android:drawable/ic_menu_edit"
+        android:src="@drawable/ic_edit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/imageViewEdDelete"
         app:layout_constraintStart_toStartOf="parent"
@@ -69,21 +76,10 @@
         android:layout_height="50dp"
         android:layout_marginVertical="40dp"
         android:layout_marginBottom="40dp"
-        android:src="@android:drawable/ic_menu_delete"
+        android:src="@drawable/ic_delete"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageViewEdEdit"
         app:layout_constraintTop_toBottomOf="@+id/textViewCurrency" />
-
-    <ImageView
-        android:id="@+id/imageViewBack"
-        android:layout_width="40dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="?attr/homeAsUpIndicator" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

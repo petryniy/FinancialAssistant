@@ -87,17 +87,17 @@ class AddOperationBottom : BottomSheetDialogFragment() {
 
                             chipGroupType.check(
                                 when (item.category) {
-                                    "Машина" -> chipCar.id
+                                    getString(R.string.categoryCar) -> chipCar.id
 
-                                    "Продукты" -> chipProducts.id
+                                    getString(R.string.categoryProd) -> chipProducts.id
 
-                                    "Животные" -> chipPets.id
+                                    getString(R.string.categoryPets) -> chipPets.id
 
-                                    "Дети" -> chipChildren.id
+                                    getString(R.string.categoryChild) -> chipChildren.id
 
-                                    "Дом" -> chipHouse.id
+                                    getString(R.string.categoryHouse) -> chipHouse.id
 
-                                    "Отдых" -> chipRelax.id
+                                    getString(R.string.categoryRelax) -> chipRelax.id
 
                                     else -> {
                                         0
@@ -120,24 +120,24 @@ class AddOperationBottom : BottomSheetDialogFragment() {
             when {
                 !initTypeItem() -> Toast.makeText(
                     context,
-                    "Вы не выбрали расход/доход!",
+                    getString(R.string.errorAddOperationType),
                     Toast.LENGTH_LONG
                 ).show()
 
                 tilAddValue.editText?.text.isNullOrEmpty() ->
-                    tilAddValue.error = "Вы не ввели значение"
+                    tilAddValue.error = getString(R.string.errorAddOperationValue)
 
                 !initCategory() -> Toast.makeText(
                     context,
-                    "Вы не выбрали категорию расхода!",
+                    getString(R.string.errorAddOperationCategory),
                     Toast.LENGTH_LONG
                 ).show()
 
-                tilAddOperation.editText?.text.isNullOrEmpty() ->
-                    tilAddOperation.error = "Вы не выбрали счёт"
+                tilAddMoneyHolder.editText?.text.isNullOrEmpty() ->
+                    tilAddMoneyHolder.error = getString(R.string.errorAddOperationMoneyHolder)
 
                 tilAddDate.editText?.text.isNullOrEmpty() ->
-                    tilAddDate.error = "Вы не выбрали дату"
+                    tilAddDate.error = getString(R.string.errorAddOperationDate)
 
                 else -> {
                     addOperation()
@@ -161,7 +161,7 @@ class AddOperationBottom : BottomSheetDialogFragment() {
             )
         }
 
-        Toast.makeText(requireContext(), "Операция добавлена!", Toast.LENGTH_SHORT)
+        Toast.makeText(requireContext(), getString(R.string.toastAddOperation), Toast.LENGTH_SHORT)
             .show()
 
         if (operation != null) {
@@ -169,35 +169,9 @@ class AddOperationBottom : BottomSheetDialogFragment() {
         }
     }
 
-    private fun isFieldsEmpty(): Boolean = with(binding) {
-        when {
-            !initTypeItem() -> Toast.makeText(
-                context,
-                "Вы не выбрали расход/доход!",
-                Toast.LENGTH_LONG
-            ).show()
-
-            tilAddValue.editText?.text.isNullOrEmpty() ->
-                tilAddValue.error = "Вы не ввели значение"
-
-            !initCategory() -> Toast.makeText(
-                context,
-                "Вы не выбрали категорию расхода!",
-                Toast.LENGTH_LONG
-            ).show()
-
-            tilAddOperation.editText?.text.isNullOrEmpty() ->
-                tilAddOperation.error = "Вы не выбрали счёт"
-
-            tilAddDate.editText?.text.isNullOrEmpty() ->
-                tilAddDate.error = "Вы не выбрали дату"
-        }
-        return true
-    }
-
     private fun initTextFields() = with(binding) {
         tilAddValue.editText?.doAfterTextChanged { tilAddValue.error = null }
-        tilAddOperation.editText?.doAfterTextChanged { tilAddOperation.error = null }
+        tilAddMoneyHolder.editText?.doAfterTextChanged { tilAddMoneyHolder.error = null }
         tilAddDate.editText?.doAfterTextChanged { tilAddDate.error = null }
         tilAddValue.editText?.filters = arrayOf(AmountInputFilter())
         binding.tilAddDateClick.setOnClickListener { showDatePicker() }
@@ -207,37 +181,37 @@ class AddOperationBottom : BottomSheetDialogFragment() {
         chipGroupType.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 chipCar.id -> {
-                    category = "Машина"
+                    category = getString(R.string.categoryCar)
                     categoryDrawable = R.drawable.ic_car
                     initCategoryBoolean = true
                 }
 
                 chipProducts.id -> {
-                    category = "Продукты"
+                    category = getString(R.string.categoryProd)
                     categoryDrawable = R.drawable.ic_products
                     initCategoryBoolean = true
                 }
 
                 chipPets.id -> {
-                    category = "Животные"
+                    category = getString(R.string.categoryPets)
                     categoryDrawable = R.drawable.ic_pets
                     initCategoryBoolean = true
                 }
 
                 chipChildren.id -> {
-                    category = "Дети"
+                    category = getString(R.string.categoryChild)
                     categoryDrawable = R.drawable.ic_child
                     initCategoryBoolean = true
                 }
 
                 chipHouse.id -> {
-                    category = "Дом"
+                    category = getString(R.string.categoryHouse)
                     categoryDrawable = R.drawable.ic_house
                     initCategoryBoolean = true
                 }
 
                 chipRelax.id -> {
-                    category = "Отдых"
+                    category = getString(R.string.categoryRelax)
                     categoryDrawable = R.drawable.ic_coffee
                     initCategoryBoolean = true
                 }
@@ -272,7 +246,7 @@ class AddOperationBottom : BottomSheetDialogFragment() {
 
         val dataPicker =
             MaterialDatePicker.Builder.datePicker()
-                .setTitleText("Выберете дату")
+                .setTitleText(getString(R.string.datePickerText))
                 .setSelection(selectedDateInMillis)
                 .build()
                 .apply {

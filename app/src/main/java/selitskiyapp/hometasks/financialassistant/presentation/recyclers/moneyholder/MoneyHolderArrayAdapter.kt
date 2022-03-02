@@ -10,6 +10,7 @@ import selitskiyapp.hometasks.financialassistant.databinding.ItemMoneyHolderAuto
 import selitskiyapp.hometasks.financialassistant.domain.models.MoneyHolder
 
 class MoneyHolderArrayAdapter(
+
     private val mContext: Context,
     val list: List<MoneyHolder?>,
 
