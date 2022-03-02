@@ -15,11 +15,8 @@
     <string name="update_news_title">Update news</string>
     <string name="filter_news_title">Filter news</string>
 
-
-
-
-
     <string name="msg_currency_byn_amount_format">%1$.2f</string>
+
     <string name="errorMonyHolderText">Вы не ввели значение</string>
     <string name="errorMonyHolderType">Вы не выбрали тип</string>
     <string name="errorMonyHolderBalance">Вы не ввели текущий баланс</string>

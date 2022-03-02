@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,6 +43,8 @@ class AddOperationBottom : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val operationId: Int = requireArguments().getInt(EditOperationBottom.OPERATION_ID_FROM_EDIT)
+
         initActvAddOperationAdapter()
 
         initTextFields()
@@ -50,11 +53,10 @@ class AddOperationBottom : BottomSheetDialogFragment() {
 
         initTypeItem()
 
-        initSaveButton()
-
-        val operationId: Int = requireArguments().getInt(EditOperationBottom.OPERATION_ID_FROM_EDIT)
+        initSaveButton(operationId)
 
         putFieldsFromOperation(operationId)
+
     }
 
     private fun putFieldsFromOperation(operationId: Int?) {
@@ -72,14 +74,13 @@ class AddOperationBottom : BottomSheetDialogFragment() {
                         binding.run {
 
                             if (item.value > 0) {
-                                chipGroupDC.check(chipCredit.id)
-                            } else {
                                 chipGroupDC.check(chipDebit.id)
+                            } else {
+                                chipGroupDC.check(chipCredit.id)
                             }
 
                             tilAddValue.editText?.setText(
-                                root.context
-                                    .getString(
+                                root.context.getString(
                                         R.string.msg_currency_byn_amount_format,
                                         item.value.div(100f)
                                     )
@@ -115,13 +116,12 @@ class AddOperationBottom : BottomSheetDialogFragment() {
         }
     }
 
-    private fun initSaveButton() = with(binding) {
+    private fun initSaveButton(operationId: Int?) = with(binding) {
+
         buttonOperationSave.setOnClickListener {
             when {
                 !initTypeItem() -> Toast.makeText(
-                    context,
-                    getString(R.string.errorAddOperationType),
-                    Toast.LENGTH_LONG
+                    context, getString(R.string.errorAddOperationType), Toast.LENGTH_LONG
                 ).show()
 
                 tilAddValue.editText?.text.isNullOrEmpty() ->
@@ -140,13 +140,41 @@ class AddOperationBottom : BottomSheetDialogFragment() {
                     tilAddDate.error = getString(R.string.errorAddOperationDate)
 
                 else -> {
-                    addOperation()
+
+                    if (operationId != null && operationId != 0) updateOperation(operationId)
+                    else addOperation()
 
                     dismiss()
+
+                    findNavController().navigate(R.id.addOperationBottom_to_operationsFragment)
+
                 }
             }
         }
     }
+
+    private fun updateOperation(operationId: Int?) = with(binding) {
+        val operation = moneyHolderId?.let { it ->
+            Operation(
+                id = operationId ?: 0,
+                category = category,
+                moneyHolderId = it,
+                value = tilAddValue.editText?.text.toString().toFloat()
+                    .let { (it * value).toLong() },
+                categoryDrawable = categoryDrawable,
+                date = tilAddDate.editText?.text.toString(),
+                comment = tilAddComments.editText?.text.toString()
+            )
+        }
+
+        if (operation != null) {
+            operationsViewModel.updateOperation(operation)
+        }
+
+        Toast.makeText(requireContext(), getString(R.string.toastAddOperation), Toast.LENGTH_SHORT)
+            .show()
+    }
+
 
     private fun addOperation() = with(binding) {
         val operation = moneyHolderId?.let { it1 ->

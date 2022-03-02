@@ -48,8 +48,9 @@ class EditMoneyHolderBottom : BottomSheetDialogFragment() {
                     binding.run {
                         moneyHolder?.type?.let { imageViewEdType.setImageResource(it) }
                         textEdViewName.text = moneyHolder?.name
-                        textViewEdBalance.text = root.context.getString(R.string.msg_currency_byn_amount_format,
+                        textViewEdBalance.text = getString(R.string.msg_currency_byn_amount_format,
                             moneyHolder?.balance?.div(100f) ?: 100f)
+
                     }
                 }
             }

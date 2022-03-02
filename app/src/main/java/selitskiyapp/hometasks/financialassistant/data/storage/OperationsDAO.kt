@@ -17,7 +17,7 @@ interface OperationsDAO {
 
     @Query("SELECT * FROM operations " +
             "JOIN moneyHolder as emb_ ON operations.id = :id")
-    fun getOperationById(id: Int): Flow<OperationWithMoneyHolderEntity?>
+    fun getOperationById(id: Int): Flow<OperationWithMoneyHolderEntity>
 
     @Insert
     suspend fun addOperations(operationEntity: OperationEntity)
