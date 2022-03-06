@@ -1,9 +1,11 @@
 package selitskiyapp.hometasks.financialassistant.domain.di
 
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.scopes.ViewModelScoped
 import selitskiyapp.hometasks.financialassistant.data.RepositoryImpl
 import selitskiyapp.hometasks.financialassistant.data.storage.MoneyHolderDao
 import selitskiyapp.hometasks.financialassistant.data.storage.OperationsDAO
@@ -12,14 +14,14 @@ import selitskiyapp.hometasks.financialassistant.domain.repository.OperationsRep
 
 @Module
 @InstallIn(ViewModelComponent::class)
-class DomainModule {
+abstract class DomainModule {
 
-    @Provides
-    fun provideMoneyHoldersRepository(
-        operationsDAO: OperationsDAO, moneyHolderDao: MoneyHolderDao): MoneyHoldersRepository =
-        RepositoryImpl(operationsDAO = operationsDAO, moneyHolderDao = moneyHolderDao)
+    @Binds
+    @ViewModelScoped
+    abstract fun provideMoneyHoldersRepository(repository: RepositoryImpl): MoneyHoldersRepository
 
-    @Provides
-    fun provideOperationRepository(operationsDAO: OperationsDAO, moneyHolderDao: MoneyHolderDao): OperationsRepository =
-        RepositoryImpl(operationsDAO = operationsDAO, moneyHolderDao = moneyHolderDao)
+
+    @Binds
+    @ViewModelScoped
+    abstract fun provideOperationRepository(repository: RepositoryImpl): OperationsRepository
 }

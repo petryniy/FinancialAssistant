@@ -31,7 +31,7 @@ class RepositoryImpl @Inject constructor(
     }
 
     override fun getOperationById(id: Int): Flow<OperationWithMoneyHolder?> {
-        return operationsDAO.getOperationById(id).map { it?.toOperationWithMoneyHolder() }
+        return operationsDAO.getOperationById(id).map { it.toOperationWithMoneyHolder() }
             .flowOn(Dispatchers.IO)
     }
 
