@@ -9,7 +9,7 @@
     android:orientation="vertical"
     tools:context=".presentation.view.MainActivity">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/topMenu"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -34,7 +34,10 @@
             android:textAppearance="?attr/textAppearanceSubtitle1"
             android:textColor="#050000"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textViewBalanceValue"
@@ -42,6 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="4dp"
             android:layout_marginVertical="4dp"
+            android:layout_marginTop="8dp"
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
@@ -49,21 +53,25 @@
             android:textAppearance="?attr/textAppearanceSubtitle1"
             android:textColor="#050000"
             android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textViewBalance"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="textViewBalanceValue" />
 
         <ImageView
+            android:layout_marginEnd="20dp"
             android:id="@+id/imageViewFilter"
-            android:layout_width="50dp"
+            android:layout_width="48dp"
             android:layout_height="50dp"
-            android:layout_gravity="end"
-            android:layout_marginHorizontal="4dp"
-            android:layout_marginVertical="4dp"
-            android:layout_marginStart="30dp"
+            android:contentDescription="@string/description"
             android:src="@drawable/ic_filter"
             android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:visibility="visible" />
-        
-    </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container"
